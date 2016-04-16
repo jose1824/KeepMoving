@@ -1,0 +1,128 @@
+<resources>
+    <!-- App Name-->
+    <string name="app_name">Keep Moving</string>
+
+    <!--Pantalla Principal-->
+    <string name="crear_cuenta_principal">Crear una cuenta</string>
+    <string name="email_login_principal">Email:</string>
+    <string name="text_button_principal">Login</string>
+    <string name="text_reset_password">¿Olvidaste tu contraseña?.</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="java_reset_password_snack">Por favor ingresa tu Email para el reset de password.</string>
+    <string name="java_correo_inexistente_snack">El correo electronico no está registrado."</string>
+    <string name="java_error_firebase_snack">No se pudo completar la acción.</string>
+    <string name="java_alert_title">Restablecer Password</string>
+    <string name="java_alert_mensaje">Se envió la contraseña al email</string>
+    <string name="java_alert_positivebutton">Confirmar</string>
+
+    <!--Pantalla Elección Usuario-->
+    <string name="titulo_quien_eres">¿Quién eres?</string>
+    <string name="soy_un_usuario">Soy una persona y quiero interactuar con la comunidad.</string>
+    <string name="soy_una_academia">Soy una academia y quiero ofrecer mis servicios.</string>
+    <string name="registrar_cuenta_usuario">Registrarme</string>
+
+    <!-- Hints-->
+    <string name="hint_correo_principal">ejemplo@hotmail.com</string>
+    <string name="hint_password_principal">Password</string>
+    <string name="hint_nombre_completo">Nombre completo</string>
+    <string name="hint_nombre_usuario">Nombre de usuario</string>
+    <string name="hint_confirm_password">Comfirmar password</string>
+    <string name="hint_nombre_academia">Nombre de la academia</string>
+    <string name="hint_telefono_academia">Telefono</string>
+    <string name="hint_direccion_academia">Dirección</string>
+    <string name="hint_descripcion_academia">Descripción</string>
+    <string name="hint_encargado_academia">Nombre del encargado</string>
+    <string name="hint_contra_actual">Contraseña actual</string>
+    <string name="hint_contra_nueva">Contraseña nueva</string>
+    <string name="hint_contra_nueva_conf">Comfirmar contraseña nueva</string>
+
+    <!--Pantalla Inicial -->
+    <string name="acercate">acércate, mira y\naprende</string>
+    <string name="deliza">desliza para iniciar</string>
+
+    <!--Pantalla Crear Cuenta Personal -->
+    <string name="crear_cuenta_personal">Crear una cuenta Personal</string>
+    <string name="action_aceptar">Aceptar</string>
+    <!--snacks-->
+    <string name="java_nombre_rechazado_snack">El nombre solo puede tener letras
+        con acentos y con una longitud de entre 4 y 100.</string>
+    <string name="java_nombre_usuario_rechazado_snack">El usuario solo puede tener letras y numeros</string>
+    <string name="java_email_rechazado_snack">El correo no tiene el formato correcto.</string>
+    <string name="java_contra_rechazada_snack">La contraseña debe tener mínimo 4 y máximo 16
+        caracteres del 0-9 y de la a-z ó A-Z</string>
+    <string name="java_contra_diferente_snack">Las contraseñas no coinciden</string>
+    <string name="java_bien_snack">Usuario registrado con exito</string>
+    <string name="java_mal_snack">Ha ocurridó un error</string>
+    <!--errores input-->
+    <string name="java_error_nombre">El nombre ingresado no es valido</string>
+    <string name="java_error_email">El correo ingresado no es valido</string>
+    <string name="java_error_contra">La contraseña no es válida.</string>
+
+    <!--Pantallla Crear Cuenta Academia-->
+    <string name="crear_cuenta_academia">Crear una cuenta de academia</string>
+    <!--errores input-->
+    <string name="java_error_nombreacademia">Nombre de academia no valido.</string>
+    <string name="java_error_telefonoacademia">El telefono introducido no es valido.</string>
+    <string name="java_error_direccionacademia">La dirección introducida no es valida</string>
+    <string name="java_error_encargadoacademia">El nombre del encargado introducido no es valido</string>
+    <string name="java_error_descripcionacademia">La descripción introducida no es valida</string>
+    <!--snacks-->
+    <string name="java_nomacademia_novalido_snack">El nombre de la academia solo puede
+        tener letras y numeros.</string>
+    <string name="java_telefono_snack">El telefono solo puede tener de 8 a 14 numeros.</string>
+    <string name="java_direccion_snack">El formato de la dirección no es el correcto.</string>
+    <string name="java_descripcion_snack">La descripción no acepta caracteres especiales con
+        excepcion de signos de puntiación.</string>
+    <string name="java_faltantes_snack">Aun faltan introducir datos.</string>
+    <string name="java_error_falta">Falta llenar este campo.</string>
+
+    <!--Pantalla Acerca de -->
+    <string name="acerca">Acerca del producto</string>
+    <string name="version_acerca">Version: 0.1 (Version Alfa)</string>
+    <string name="anio">Año: 2016</string>
+    <string name="info_acerca1">Keep Moving es una aplicación desarrollada por estudiantes del
+        Instituto Politecnico Nacional en la UPIICSA.</string>
+    <string name="info_acerca2">Queda estrictamente prohibido lucrar, distribuir y/o modificar
+        el producto sin autorización previa.</string>
+    <string name="info_acerca3">Para más información, envié sus comentarios y le
+        responderemos a la brevedad.</string>
+    <!-- Nombres :3 -->
+    <string name="angi">Angela Hernandez</string>
+    <string name="emmanuel">Emmanuel Castañeda</string>
+    <string name="chucho">Jesús Guzmán</string>
+    <string name="sergio">Sergio Canseco</string>
+
+    <!--Pantalla eventos -->
+    <string name="eventos">Eventos</string>
+    <string name="title_activity_pantalla_evento">PantallaEvento</string>
+
+    <!--Pantalla Configuracion-->
+    <string name="configuracion">Configuración</string>
+    <string name="conf_general">General</string>
+    <string name="conf_inf">Información de perfil</string>
+    <string name="conf_cambia">Cambia o actualiza tu información personal.</string>
+    <string name="conf_seguridad">Seguridad</string>
+    <string name="conf_contra">Contraseña</string>
+    <string name="conf_clave">Cambia o actualiza tu clave de acceso.</string>
+    <string name="conf_extras">Extras</string>
+    <string name="conf_acerca">Acerca de la aplicación</string>
+    <string name="conf_conoce">Conoce quien esta detras de Keep Moving.</string>
+
+    <!--Pantalla conf contraseña -->
+    <string name="java_contra_cambiada_snack">La contraseña ha sido cambiada con exito</string>
+
+    <!--Pantalla conf datos usuario -->
+    <string name="java_datos_bien_snack">Los datos han sido cambiados correctamente.</string>
+
+    <!--navigation drawer-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="nav_eventos">Eventos</string>
+    <string name="nav_agenda">Agenda</string>
+    <string name="nav_academias">Academias</string>
+    <string name="nav_tutoriales">Tutotiales</string>
+    <string name="nav_tips">Tips</string>
+    <string name="nav_configuracion">Configuración</string>
+
+</resources>

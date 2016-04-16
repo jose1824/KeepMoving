@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#512da8</color>
+    <color name="colorPrimary">#673ab7</color>
+    <color name="colorAccent">#7c4dff</color>
+    <color name="colorLightPrimary">#d1c4e9</color>
+    <color name="colorPrincipalText">#FFFFFF</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecundaryText">#727272</color>
+    <color name="colorDivider">#B6B6B6</color>
+    <color name="colorFloatingAcerca">#CD96E3</color>
+    <color name="colorTransparent">#00FFFFFF</color>
+    <!--Color Usuario -->
+    <color name="fondo_imagen_usuario">#E7E7E6</color>
+    <!--Color Acerca de -->
+    <color name="colorTextAcerca">#BFBFBF</color>
+
+</resources>

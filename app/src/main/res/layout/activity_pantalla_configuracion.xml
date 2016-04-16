@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pantalla_configuracion_coordinator"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            </android.support.design.widget.AppBarLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context=".ClasesViews.PantallaConfiguracion"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:orientation="vertical"
+                    android:id="@+id/conf_seccion1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_general"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/big_text"
+                        android:id="@+id/textView1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_inf"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/textView2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_cambia"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/textView3" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c0c0c0"
+                        android:id="@+id/linea1"
+                        android:layout_marginTop="16dp"/>
+
+                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_elements_big"
+                    android:gravity="left"
+                    android:orientation="vertical"
+                    android:id="@+id/conf_seccion2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_seguridad"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/big_text"
+                        android:id="@+id/textView4" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_contra"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/textView5" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_clave"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/textView6" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c0c0c0"
+                        android:id="@+id/linea2"
+                        android:layout_marginTop="16dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/padding_elements_big"
+                    android:gravity="left"
+                    android:orientation="vertical"
+                    android:id="@+id/conf_seccion3">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_extras"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/big_text"
+                        android:id="@+id/textView7" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_acerca"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/textView8" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="@string/conf_conoce"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/textView9" />
+
+                </LinearLayout>
+
+             </LinearLayout>
+
+        </LinearLayout>
+
+     </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

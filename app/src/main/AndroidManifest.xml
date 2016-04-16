@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.shipp.keepmoving">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ClasesViews.PantallaPrincipal" />
+        <activity android:name=".ClasesViews.PantallaEleccionUsuario" />
+        <activity android:name=".ClasesViews.PantallaInicial">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ClasesViews.PantallaCrearCuentaPersonal" />
+        <activity android:name=".ClasesViews.PantallaCrearCuentaAcademia" />
+        <activity android:name=".ClasesViews.PantallaAcercaDe" />
+        <activity android:name=".ClasesViews.PantallaEvento" />
+        <activity android:name=".ClasesViews.PantallaConfiguracion" />
+        <activity android:name=".ClasesViews.PantallaConfPassword" />
+        <activity android:name=".ClasesViews.PantallaConfInformacion" />
+        <activity android:name=".ClasesViews.PantallaAgregarEvento"></activity>
+    </application>
+
+</manifest>
