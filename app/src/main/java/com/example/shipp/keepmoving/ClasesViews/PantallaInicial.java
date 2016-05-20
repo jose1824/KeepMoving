@@ -37,7 +37,7 @@ public class PantallaInicial extends AppCompatActivity {
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
                 finish();
             }
         });

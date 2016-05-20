@@ -2,6 +2,8 @@ package com.example.shipp.keepmoving.ClasesViews;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -11,14 +13,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.shipp.keepmoving.Clases.Usuario;
 import com.example.shipp.keepmoving.ClasesAdapters.TabAdapterMainUsuario;
+import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 //Activity contenedora de los tabs
 
 public class PantallaMainUsuario extends AppCompatActivity {
 
     private TabLayout tablay;
     private Toolbar toolbar;
+    FirebaseControl firebaseControl;
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +39,10 @@ public class PantallaMainUsuario extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         inicializaCompoinentes();
+        Firebase.setAndroidContext(this);
+
+        //PRUEBA
+        obtenerFirebaseDatos();
 
         //Agregar nuevas tabs
         tablay.addTab(tablay.newTab().setIcon(R.mipmap.ic_book_black_24dp));//Agenda 0
@@ -92,8 +106,43 @@ public class PantallaMainUsuario extends AppCompatActivity {
 
     }
 
+    private void obtenerFirebaseDatos(){
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Usuario user = dataSnapshot.getValue(Usuario.class);
+                Snackbar.make(coordinatorLayout, dataSnapshot.getKey() + " = " +
+                        user.getAliasUsuario(),
+                        Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
     private void inicializaCompoinentes(){
         tablay = (TabLayout) findViewById(R.id.tab_layoutMain);
+        firebaseControl = new FirebaseControl();
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_Main_coordinator);
     }
 
     @Override
@@ -132,6 +181,7 @@ public class PantallaMainUsuario extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                obtenerFirebaseDatos();//PRUEBA
             }
         });
 
