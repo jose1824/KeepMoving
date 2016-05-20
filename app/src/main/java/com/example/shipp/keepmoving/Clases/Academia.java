@@ -13,6 +13,7 @@ public class Academia {
     private String encargadoAcademia;
     private String descripcionAdademia;
     private String passwordAcademia;
+    private int Imagen;
 
     public Academia() {
     }
@@ -28,6 +29,11 @@ public class Academia {
         this.encargadoAcademia = encargadoAcademia;
         this.descripcionAdademia = descripcionAdademia;
         this.passwordAcademia = passwordAcademia;
+    }
+
+    public Academia(String nombreAcademia, int imagen) {
+        this.nombreAcademia = nombreAcademia;
+        Imagen = imagen;
     }
 
     public String getAcademiaUID() {
@@ -64,5 +70,9 @@ public class Academia {
 
     public String getPasswordAcademia() {
         return passwordAcademia;
+    }
+
+    public int getImagen() {
+        return Imagen;
     }
 }

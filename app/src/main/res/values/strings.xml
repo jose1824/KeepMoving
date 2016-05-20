@@ -2,6 +2,15 @@
     <!-- App Name-->
     <string name="app_name">Keep Moving</string>
 
+    <!--Toolbar-->
+    <string name="action_configuraciones">Configuración</string>
+    <string name="action_cerrar">Cerra sesión</string>
+
+    <!--Splash Screen-->
+    <string name="splash_retry">REINTENTAR</string>
+    <string name="splash_salir">SALIR DE LA APLICACIÓN</string>
+    <string name="splash_noInternet">Necesita una conexión a internet</string>
+
     <!--Pantalla Principal-->
     <string name="crear_cuenta_principal">Crear una cuenta</string>
     <string name="email_login_principal">Email:</string>
@@ -10,10 +19,14 @@
     <string name="crear_cuenta">Crear cuenta</string>
     <string name="java_reset_password_snack">Por favor ingresa tu Email para el reset de password.</string>
     <string name="java_correo_inexistente_snack">El correo electronico no está registrado."</string>
+    <string name="java_contraseña_incorrecta">La contraseña ingresada es incorrecta.</string>
     <string name="java_error_firebase_snack">No se pudo completar la acción.</string>
     <string name="java_alert_title">Restablecer Password</string>
     <string name="java_alert_mensaje">Se envió la contraseña al email</string>
     <string name="java_alert_positivebutton">Confirmar</string>
+    <string name="java_progress_title">Iniciando sesión</string>
+    <string name="java_progress_message">Por favor espere...</string>
+
 
     <!--Pantalla Elección Usuario-->
     <string name="titulo_quien_eres">¿Quién eres?</string>
@@ -92,10 +105,6 @@
     <string name="chucho">Jesús Guzmán</string>
     <string name="sergio">Sergio Canseco</string>
 
-    <!--Pantalla eventos -->
-    <string name="eventos">Eventos</string>
-    <string name="title_activity_pantalla_evento">PantallaEvento</string>
-
     <!--Pantalla Configuracion-->
     <string name="configuracion">Configuración</string>
     <string name="conf_general">General</string>
@@ -108,21 +117,30 @@
     <string name="conf_acerca">Acerca de la aplicación</string>
     <string name="conf_conoce">Conoce quien esta detras de Keep Moving.</string>
 
+    <!--Pantalla Tabs Main Usuario-->
+    <string name="tabUser_cerrar_title">Cerrar sesión.</string>
+    <string name="tabUser_cerrar_message">¿Desea cerrar su sesión actual?</string>
+
     <!--Pantalla conf contraseña -->
     <string name="java_contra_cambiada_snack">La contraseña ha sido cambiada con exito</string>
 
     <!--Pantalla conf datos usuario -->
     <string name="java_datos_bien_snack">Los datos han sido cambiados correctamente.</string>
 
-    <!--navigation drawer-->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
-    <string name="nav_eventos">Eventos</string>
-    <string name="nav_agenda">Agenda</string>
-    <string name="nav_academias">Academias</string>
-    <string name="nav_tutoriales">Tutotiales</string>
-    <string name="nav_tips">Tips</string>
-    <string name="nav_configuracion">Configuración</string>
+    <!--Fragment Academias-->
+    <string name="academias">Academias</string>
 
+    <!--Fragment Agenda-->
+    <string name="agenda">Agenda</string>
+
+    <!--Fragment Tips-->
+    <string name="tips">Tips</string>
+    <string name="nombre_transicion_imagen">Tip</string>
+
+    <!--Fragment Eventos -->
+    <string name="eventos">Eventos</string>
+    <string name="title_activity_pantalla_evento">PantallaEvento</string>
+
+    <!--Fragment PerfilAcademia-->
+    <string name="perfil_academia">Perfil de academia</string>
 </resources>

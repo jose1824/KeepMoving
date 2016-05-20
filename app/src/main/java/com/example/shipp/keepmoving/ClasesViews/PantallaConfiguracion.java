@@ -30,7 +30,7 @@ public class PantallaConfiguracion extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaEvento.class);
+                Intent i = new Intent(getApplicationContext(), PantallaMainUsuario.class);
                 startActivity(i);
                 finish();
             }

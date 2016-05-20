@@ -1,7 +1,9 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -40,6 +42,10 @@ public class PantallaPrincipal extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
                 startActivity(i);
                 finish();
+
+                /*Intent i = new Intent(getApplicationContext(), PantallaMainUsuario.class);
+                startActivity(i);
+                finish();*/
             }
         });
 
@@ -56,13 +62,20 @@ public class PantallaPrincipal extends AppCompatActivity {
                 if (validacionesLogin.validacionEmail(correo_electronico) &&
                         validacionesLogin.validacionContrasena(password)){
 
+                    ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
+                            getResources().getString(R.string.java_progress_message),
+                            correo_electronico,
+                            password,
+                            ref);
+                    asyncTask.execute();
+                    /*
                     ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
                             //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                             txtMail.setError(null);
                             txtPassword.setError(null);
-                            startActivity(new Intent(getApplicationContext(), PantallaEvento.class));
+                            startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
                         }
 
                         @Override
@@ -84,7 +97,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                             }
                         }
                     });
-
+                    */
                 }else{
                     if (validacionesLogin.validacionEmail(correo_electronico) == false
                             && validacionesLogin.validacionContrasena(password) == false){
@@ -202,6 +215,71 @@ public class PantallaPrincipal extends AppCompatActivity {
             }
         });*/
         builder.show();
+    }
+
+    class ClaseAsyncTask extends AsyncTask {
+        ProgressDialog pDialog;
+        private String progressTitle;
+        private String progressMessage;
+        private Firebase ref;
+        private String correo_electronico;
+        private String password;
+
+        public ClaseAsyncTask( String progressTitle, String progressMessage,
+                               String correo_electronico, String password, Firebase ref) {
+            //this.activity = activity;
+            this.progressTitle = progressTitle;
+            this.progressMessage = progressMessage;
+            this.correo_electronico = correo_electronico;
+            this.password = password;
+            this.ref = ref;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
+                @Override
+                public void onAuthenticated(AuthData authData) {
+                    startActivity (new Intent(getApplicationContext(), PantallaMainUsuario.class));
+                    finish();
+                }
+
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    // there was an error
+                    switch (firebaseError.getCode()) {
+                        case FirebaseError.USER_DOES_NOT_EXIST:
+                            txtPassword.setError(null);
+                            txtMail.setError(getResources().getString(R.string.java_correo_inexistente_snack));
+                            limpiaCorreo();
+                            break;
+                        case FirebaseError.INVALID_PASSWORD:
+                            txtMail.setError(null);
+                            txtPassword.setError(getResources().getString(R.string.java_contraseña_incorrecta));
+                            break;
+                        default:
+                            limpiaCampos();
+                            break;
+                    }
+
+                }
+            });
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(PantallaPrincipal.this);
+            pDialog.setTitle(progressTitle);
+            pDialog.setMessage(progressMessage);
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
     }
 
 }

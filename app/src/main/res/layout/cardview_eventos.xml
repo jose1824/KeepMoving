@@ -4,14 +4,15 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:elevation="2dp"
     card_view:cardCornerRadius="4dp"
     android:layout_margin="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/padding_elements_big">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,44 +32,43 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/padding_elements">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/padding_elements"
+                android:paddingTop="@dimen/padding_elements_big"
+                android:paddingRight="@dimen/padding_bordes_grid"
+                android:paddingLeft="@dimen/padding_bordes_grid"
                 android:text="Nombre del evento"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/normal_text" />
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/tv_fechahora"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/padding_elements"
                 android:text="Fecha y hora"
-                android:textSize="@dimen/normal_text"
+                android:textSize="14sp"
                 android:layout_below="@id/title"
-                android:textColor="@color/colorPrimaryText"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"/>
+                android:paddingRight="@dimen/padding_bordes_grid"
+                android:paddingLeft="@dimen/padding_bordes_grid"
+                android:textColor="@color/subtitle_cards"/>
 
             <TextView
                 android:id="@+id/tv_descripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/padding_elements"
+                android:paddingTop="@dimen/fab_margin"
+                android:paddingBottom="@dimen/padding_elements_big"
+                android:paddingRight="@dimen/padding_bordes_grid"
+                android:paddingLeft="@dimen/padding_bordes_grid"
                 android:textColor="@color/colorPrimaryText"
                 android:text="Descripción"
-                android:textSize="@dimen/normal_text"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="5dp"/>
+                android:textSize="14sp"/>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

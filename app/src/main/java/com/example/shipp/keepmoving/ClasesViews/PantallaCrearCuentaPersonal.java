@@ -114,6 +114,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         imgUsuario = (ImageView) findViewById(R.id.personal_imagen_perfil);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         dateFechaNac = (DatePicker) findViewById(R.id.personal_date);
+        firebaseControl = new FirebaseControl();
     }//End inicializa componentes
 
     public void mandarUsuario(){
@@ -125,7 +126,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 txtPassword.getEditText().getText().toString());
 
         final String confPassword = txtConfPassword.getEditText().getText().toString();
-        final Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase());
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
 
         //Instancia para acceder a las validaciones propias de los campos
         ValidacionesNuevoUsuario validacionesUsuario = new ValidacionesNuevoUsuario();

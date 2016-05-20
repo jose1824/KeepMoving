@@ -14,5 +14,10 @@
     <color name="fondo_imagen_usuario">#E7E7E6</color>
     <!--Color Acerca de -->
     <color name="colorTextAcerca">#BFBFBF</color>
+    <!--Color blanco background-->
+    <color name="colorBackground">#FFFFFF</color>
 
+    <color name="background_footer">#90000000</color>
+
+    <color name="subtitle_cards">#BDBDBD</color>
 </resources>
