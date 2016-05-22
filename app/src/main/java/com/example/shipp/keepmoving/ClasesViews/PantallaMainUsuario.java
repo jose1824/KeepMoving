@@ -41,8 +41,7 @@ public class PantallaMainUsuario extends AppCompatActivity {
         inicializaCompoinentes();
         Firebase.setAndroidContext(this);
 
-        //PRUEBA
-        obtenerFirebaseDatos();
+
 
         //Agregar nuevas tabs
         tablay.addTab(tablay.newTab().setIcon(R.mipmap.ic_book_black_24dp));//Agenda 0

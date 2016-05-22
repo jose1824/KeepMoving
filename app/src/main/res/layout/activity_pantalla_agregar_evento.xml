@@ -45,14 +45,209 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="@dimen/padding_elements"
-                    android:id="@+id/academia_imagen_perfil"
+                    android:id="@+id/agregar_foto_perfil"
                     android:layout_gravity="center_horizontal|bottom"
                     android:src="@drawable/personal_usuario" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context=".ClasesViews.PantallaAgregarEvento"
+                android:orientation="vertical"
+                android:id="@+id/evento_formulario">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:id="@+id/imageView"
+                        android:src="@mipmap/ic_supervisor_account_black_24dp"
+                        android:layout_gravity="center_vertical|left" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/evento_et_1"
+                        android:theme="@style/EditTheme"
+                        android:textColorHint="@color/colorPrimaryText">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_nombre_evento"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/EditTheme"
+                            android:textColorHint="@color/colorPrimaryText" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:id="@+id/imageView1"
+                        android:src="@mipmap/ic_location_on_black_24dp"
+                        android:layout_gravity="center_vertical|left" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btn_rastrear_direccion"
+                        android:background="@color/colorPrimary"
+                        android:src="@mipmap/ic_location_searching_white_24dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_gravity="center_vertical|left"/>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/evento_et_2"
+                        android:theme="@style/EditTheme"
+                        android:textColorHint="@color/colorPrimaryText">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_direccion_academia"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/EditTheme"
+                            android:textColorHint="@color/colorPrimaryText" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:id="@+id/imageView3"
+                        android:src="@mipmap/ic_add_black_24dp"
+                        android:layout_gravity="center_vertical|left" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/evento_et_3"
+                        android:theme="@style/EditTheme"
+                        android:textColorHint="@color/colorPrimaryText">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_descripcion_academia"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/EditTheme"
+                            android:textColorHint="@color/colorPrimaryText" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:paddingTop="@dimen/padding_elements"
+                    android:gravity="center_horizontal"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/agregar_evento_fecha"
+                        android:textSize="@dimen/big_text"
+                        android:id="@+id/titulo_DatePicker" />
+
+                    <DatePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/personal_date" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:paddingTop="@dimen/padding_elements"
+                    android:gravity="center_horizontal"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/agregar_evento_hora_inicio"
+                        android:textSize="@dimen/big_text"
+                        android:id="@+id/titulo_TimePickerInicio" />
+
+                    <TimePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/timePickerInicio" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:paddingTop="@dimen/padding_elements"
+                    android:gravity="center_horizontal"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/agregar_evento_hora_fin"
+                        android:textSize="@dimen/big_text"
+                        android:id="@+id/titulo_timePickerFin" />
+
+                    <TimePicker
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/timePickerFin" />
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:src="@mipmap/ic_add_a_photo_white_24dp"
+        app:layout_anchor="@id/evento_fotografia"
+        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

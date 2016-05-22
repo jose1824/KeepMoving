@@ -48,6 +48,7 @@
     <string name="hint_contra_actual">Contraseña actual</string>
     <string name="hint_contra_nueva">Contraseña nueva</string>
     <string name="hint_contra_nueva_conf">Comfirmar contraseña nueva</string>
+    <string name="hint_nombre_evento">Nombre del evento</string>
 
     <!--Pantalla Inicial -->
     <string name="acercate">acércate, mira y\naprende</string>
@@ -117,6 +118,12 @@
     <string name="conf_acerca">Acerca de la aplicación</string>
     <string name="conf_conoce">Conoce quien esta detras de Keep Moving.</string>
 
+    <!--Pantalla evento -->
+    <string name="agregar_evento">Agregar evento</string>
+    <string name="agregar_evento_fecha">Fecha del evento</string>
+    <string name="agregar_evento_hora_inicio">Hora de inicio</string>
+    <string name="agregar_evento_hora_fin">Hora de fin</string>
+
     <!--Pantalla Tabs Main Usuario-->
     <string name="tabUser_cerrar_title">Cerrar sesión.</string>
     <string name="tabUser_cerrar_message">¿Desea cerrar su sesión actual?</string>
@@ -143,4 +150,5 @@
 
     <!--Fragment PerfilAcademia-->
     <string name="perfil_academia">Perfil de academia</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

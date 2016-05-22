@@ -53,8 +53,6 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_crear_cuenta_academia);
 
-
-
         if (savedInstanceState != null){
             onRestoreInstanceState(savedInstanceState);
         }
