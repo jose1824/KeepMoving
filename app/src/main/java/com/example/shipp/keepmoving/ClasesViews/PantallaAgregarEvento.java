@@ -11,7 +11,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
@@ -19,6 +23,7 @@ import com.example.shipp.keepmoving.R;
 import com.firebase.client.Firebase;
 
 public class PantallaAgregarEvento extends AppCompatActivity {
+    private ImageButton obtenerDireccion;
     private ImageView imgAcademia;
     private final static int SELECT_PHOTO = 12345;
     CoordinatorLayout coordinatorLayout;
@@ -60,10 +65,35 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_solo_palomita, menu);
+        return true;
+    }//End oncreate options
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //Al apretar el icono de hecho en toolbar
+        if (id == R.id.action_aceptar) {
+            mandarEvento();
+            return true;
+        }//end if
+
+        return super.onOptionsItemSelected(item);
+    }//End on options
+
     private void inicializaComponentes(){
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_AgregarEvento_coordinator);
         imgAcademia = (ImageView) findViewById(R.id.agregar_foto_perfil);
+        obtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+    }
+
+    private void mandarEvento(){
+
     }
 
     private void seleccionarFoto(){

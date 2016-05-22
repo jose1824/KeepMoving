@@ -128,6 +128,10 @@
     <string name="tabUser_cerrar_title">Cerrar sesión.</string>
     <string name="tabUser_cerrar_message">¿Desea cerrar su sesión actual?</string>
 
+    <!--Maps Activity -->
+    <string name="map_ubicacion_actual">Ubicación actual</string>
+    <string name="aceptar">Aceptar</string>
+
     <!--Pantalla conf contraseña -->
     <string name="java_contra_cambiada_snack">La contraseña ha sido cambiada con exito</string>
 
