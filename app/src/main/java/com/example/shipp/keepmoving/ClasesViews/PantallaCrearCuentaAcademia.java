@@ -82,6 +82,15 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             }
         });
 
+        btnObtenerDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                i.putExtra("activityAnterior", "activityAcademia");
+                startActivity(i);
+            }
+        });
+
     }//End on create
 
     @Override

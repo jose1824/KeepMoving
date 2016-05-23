@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import com.example.shipp.keepmoving.R;
 import com.firebase.client.Firebase;
 
 public class PantallaAgregarEvento extends AppCompatActivity {
+    private TextInputLayout txtDireccion;
     private ImageButton obtenerDireccion;
     private ImageView imgAcademia;
     private final static int SELECT_PHOTO = 12345;
@@ -55,7 +57,24 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             }
         });//End toolbar listener
         inicializaComponentes();
+
         Firebase.setAndroidContext(this);
+
+        txtDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtDireccion.setError(getResources().getString(R.string.java_error_editText));
+            }
+        });
+
+        obtenerDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                i.putExtra("activityAnterior", "activityEvento");
+                startActivity(i);
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +106,12 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
     private void inicializaComponentes(){
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_AgregarEvento_coordinator);
+        txtDireccion = (TextInputLayout) findViewById(R.id.evento_et_2);
+
+        MapsActivity map = new MapsActivity();
+        txtDireccion.getEditText().setText(map.getDireccion());
+        txtDireccion.setOnKeyListener(null);//El Edit text no se podra editar pero si copiar y pegar su contenido
+
         imgAcademia = (ImageView) findViewById(R.id.agregar_foto_perfil);
         obtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
         fab = (FloatingActionButton) findViewById(R.id.fab);

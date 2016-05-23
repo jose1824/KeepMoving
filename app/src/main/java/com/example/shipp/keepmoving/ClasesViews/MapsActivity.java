@@ -2,6 +2,7 @@ package com.example.shipp.keepmoving.ClasesViews;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
@@ -34,6 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     private String direccion;
+    private String activityAnterior;
 
     public String getDireccion() {
         return direccion;
@@ -62,10 +64,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         aceptarDireccion = (Button) findViewById(R.id.btn_aceptar_direccion);
+
+        //Obtener el dato que se paso del intent
+        Bundle bundle = getIntent().getExtras();
+        activityAnterior = bundle.getString("activityAnterior");
+
         aceptarDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (activityAnterior.equals("activityEvento")) {
+                    startActivity(new Intent(getApplicationContext(), PantallaAgregarEvento.class));
+                }
+                if (activityAnterior.equals("activityAcademia")) {
+                    startActivity(new Intent(getApplicationContext(), PantallaCrearCuentaAcademia.class));
+                }
+
             }
         });
 

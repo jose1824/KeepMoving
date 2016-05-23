@@ -1,8 +1,11 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
 import android.content.Intent;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,8 +15,9 @@ import com.example.shipp.keepmoving.R;
 
 public class PantallaInicial extends AppCompatActivity {
     private Button inicial_btn_1;
+    private GestureDetectorCompat gestureDetectorCompat;
 
-    ImageView imageView1; //PROVISONAL
+    ImageView imageView1;//PROVISIONAL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,28 @@ public class PantallaInicial extends AppCompatActivity {
 
     private void inicializaComponentes(){
         inicial_btn_1 = (Button) findViewById(R.id.inicial_btn_1);
+        gestureDetectorCompat = new GestureDetectorCompat(this, new MyGestureListener());
+        imageView1 = (ImageView) findViewById(R.id.imageView1);//PROVISIONAL
+    }
 
-        imageView1 = (ImageView) findViewById(R.id.imageView1); //PROVISIONAL
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gestureDetectorCompat.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocidadX,
+                               float velocidadY) {
+
+            if (event2.getX() < event1.getX()) {
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+            }
+
+            return true;
+        }
     }
 
 }

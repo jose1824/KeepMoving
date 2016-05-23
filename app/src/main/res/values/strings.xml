@@ -118,11 +118,13 @@
     <string name="conf_acerca">Acerca de la aplicación</string>
     <string name="conf_conoce">Conoce quien esta detras de Keep Moving.</string>
 
-    <!--Pantalla evento -->
+    <!--Pantalla Agregar evento -->
     <string name="agregar_evento">Agregar evento</string>
     <string name="agregar_evento_fecha">Fecha del evento</string>
     <string name="agregar_evento_hora_inicio">Hora de inicio</string>
     <string name="agregar_evento_hora_fin">Hora de fin</string>
+    <string name="java_error_editText">Por favor, obtenga la dirección por medio del boton
+        a la derecha.</string>
 
     <!--Pantalla Tabs Main Usuario-->
     <string name="tabUser_cerrar_title">Cerrar sesión.</string>

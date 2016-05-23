@@ -7,9 +7,12 @@ import android.os.AsyncTask;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
@@ -28,6 +31,7 @@ public class PantallaPrincipal extends AppCompatActivity {
     private Button btnReset;
     CoordinatorLayout coordinatorLayout;
     FirebaseControl firebaseControl;
+    private GestureDetectorCompat gestureDetectorCompat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +46,6 @@ public class PantallaPrincipal extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
                 startActivity(i);
                 finish();
-
-                /*Intent i = new Intent(getApplicationContext(), PantallaMainUsuario.class);
-                startActivity(i);
-                finish();*/
             }
         });
 
@@ -182,6 +182,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnRegistro = (Button) findViewById(R.id.principal_btn_2);
         btnReset = (Button) findViewById(R.id.principal_btn_3);
         firebaseControl = new FirebaseControl();
+        gestureDetectorCompat = new GestureDetectorCompat(this, new MyGestureListener2());
     }
 
     private void limpiaCampos(){
@@ -215,6 +216,20 @@ public class PantallaPrincipal extends AppCompatActivity {
             }
         });*/
         builder.show();
+    }
+
+    class MyGestureListener2 extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocidadX,
+                               float velocidadY) {
+
+            if (event2.getX() > event1.getX()) {
+                startActivity(new Intent(getApplicationContext(), PantallaInicial.class));
+            }
+
+            return true;
+        }
     }
 
     class ClaseAsyncTask extends AsyncTask {
