@@ -153,7 +153,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
     private void mandarEvento(){
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
-        Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(),
+        Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(), //Instancia
                 txtDireccion.getEditText().getText().toString().trim(),
                 longitud,
                 latitud,
