@@ -8,29 +8,57 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 
+import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
+import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesEvento;
+import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesNuevaAcademia;
 import com.example.shipp.keepmoving.R;
 import com.firebase.client.Firebase;
 
+import java.io.ByteArrayOutputStream;
+import java.sql.Time;
+import java.util.Random;
+
 public class PantallaAgregarEvento extends AppCompatActivity {
+    private TextInputLayout txtTitulo;
     private TextInputLayout txtDireccion;
+    private TextInputLayout txtDescripcion;
+    private DatePicker dateEvento;
+    private TimePicker timeInicio;
+    private TimePicker timeFin;
     private ImageButton obtenerDireccion;
-    private ImageView imgAcademia;
+    private ImageView imgEvento;
+
     private final static int SELECT_PHOTO = 12345;
     CoordinatorLayout coordinatorLayout;
     FirebaseControl firebaseControl;
     FloatingActionButton fab;
+
+    String imagenBase64;
+    int horaInicioHr;
+    int horaInicioMin;
+    int horaFinHr;
+    int horaFinMin;
+    int diaEvento;
+    int mesEvento;
+    int anioEvento;
+    double latitud;
+    double longitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +85,6 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             }
         });//End toolbar listener
         inicializaComponentes();
-
         Firebase.setAndroidContext(this);
 
         txtDireccion.setOnClickListener(new View.OnClickListener() {
@@ -106,19 +133,72 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
     private void inicializaComponentes(){
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_AgregarEvento_coordinator);
-        txtDireccion = (TextInputLayout) findViewById(R.id.evento_et_2);
+        txtTitulo = (TextInputLayout) findViewById(R.id.evento_et_1);
 
+        txtDireccion = (TextInputLayout) findViewById(R.id.evento_et_2);
         MapsActivity map = new MapsActivity();
         txtDireccion.getEditText().setText(map.getDireccion());
-        txtDireccion.setOnKeyListener(null);//El Edit text no se podra editar pero si copiar y pegar su contenido
+        txtDireccion.getEditText().setOnKeyListener(null); //El Edit text no se podra editar pero si copiar y pegar su contenido
+        txtDireccion.getEditText().setKeyListener(null);
 
-        imgAcademia = (ImageView) findViewById(R.id.agregar_foto_perfil);
+        txtDescripcion = (TextInputLayout) findViewById(R.id.evento_et_3);
+        dateEvento = (DatePicker) findViewById(R.id.evento_date);
+        timeInicio = (TimePicker) findViewById(R.id.timePickerInicio);
+        timeFin = (TimePicker) findViewById(R.id.timePickerFin);
+        imgEvento = (ImageView) findViewById(R.id.agregar_foto_evento);
         obtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        firebaseControl = new FirebaseControl();
     }
 
     private void mandarEvento(){
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(),
+                txtDireccion.getEditText().getText().toString().trim(),
+                longitud,
+                latitud,
+                txtDescripcion.getEditText().getText().toString().trim(),
+                horaInicioHr,
+                horaInicioMin,
+                horaFinHr,
+                horaFinMin,
+                diaEvento,
+                mesEvento,
+                anioEvento,
+                imagenBase64);
 
+        ValidacionesEvento valEvento = new ValidacionesEvento();
+        //Instancia para acceder a la validacion de descripcion y direccion
+        ValidacionesNuevaAcademia valAcademia = new ValidacionesNuevaAcademia();
+
+        if (valEvento.validarTitulo(ev.getTitulo()) &&
+                valAcademia.validacionDireccion(ev.getDireccionEvento()) &&
+                valAcademia.validacionDescripcion(ev.getDescripcion()) &&
+                longitud != 0.0 &&
+                latitud != 0.0 ) {
+
+            Firebase evento = ref.child("evento").child("EventoN"  + mesEvento + diaEvento +
+                    anioEvento + horaFinHr + horaFinMin + horaInicioHr + horaInicioMin  +
+                    numAleatorio() + numAleatorio() + numAleatorio() +
+                    numAleatorio() + numAleatorio());//Pooner un ID con hora fin e inicio y cinco minutos aleatorios
+
+            evento.setValue(ev);
+            Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
+                    Snackbar.LENGTH_SHORT).show();
+
+            startActivity(new Intent(getApplicationContext(), PantallaMainAcademia.class));
+            finish();
+
+        }
+        else {
+
+        }
+
+    }
+
+    public int numAleatorio(){
+        Random rd = new Random();
+        return  rd.nextInt() * 9 + 1;
     }
 
     private void seleccionarFoto(){
@@ -146,10 +226,14 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-            imgAcademia.setImageBitmap(bitmap);
+            imgEvento.setImageBitmap(bitmap);
 
             // Do something with the bitmap
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream .toByteArray();
 
+            imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
             // At the end remember to close the cursor or you will end with the RuntimeException!
             cursor.close();

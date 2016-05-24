@@ -10,6 +10,7 @@ public class Usuario {
     private String passwordUsuario;
     private String emailUsuario;
     private String aliasUsuario;
+    private String imagenUsuario64;
 
     public Usuario(){
 

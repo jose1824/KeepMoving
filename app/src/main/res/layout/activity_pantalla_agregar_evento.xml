@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingTop="@dimen/padding_elements"
-                    android:id="@+id/agregar_foto_perfil"
+                    android:id="@+id/agregar_foto_evento"
                     android:layout_gravity="center_horizontal|bottom"
                     android:src="@drawable/personal_usuario" />
 
@@ -189,7 +189,7 @@
                     <DatePicker
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/personal_date" />
+                        android:id="@+id/evento_date" />
 
                 </LinearLayout>
 

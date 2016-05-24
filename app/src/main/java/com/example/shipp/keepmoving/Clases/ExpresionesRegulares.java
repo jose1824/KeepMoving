@@ -15,8 +15,9 @@ public class ExpresionesRegulares {
     private final String expresionUrl = "^(https?|ftp|file)://" +
             "[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
     private final String expresionTelefono = "\\d{8,14}";
-    private final String expresionDireccion = "[A-Za-záéíóúÁÉÍÓÚ0-9#.]{4,100}";
+    private final String expresionDireccion = "[A-Za-záéíóúÁÉÍÓÚ0-9#-/.]{4,100}";
     private final String expresionDescripcion = "[A-Za-záéíóúÁÉÍÓÚ0-9#.-_,;:¿?!¡$()]{4,100}";
+    private final String expresionEvento = "[A-Za-záéíóúÁÉÍÓÚ0!?-9#.]{4,100}";
 
     public ExpresionesRegulares(){    }
 
@@ -48,5 +49,9 @@ public class ExpresionesRegulares {
 
     public String getExpresionDescripcion() {
         return expresionDescripcion;
+    }
+
+    public String getExpresionEvento() {
+        return expresionEvento;
     }
 }

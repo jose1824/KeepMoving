@@ -1,10 +1,12 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -24,10 +26,12 @@ import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesLogin;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesNuevoUsuario;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.Calendar;
+import java.util.Map;
 
 public class PantallaCrearCuentaPersonal extends AppCompatActivity {
     private TextInputLayout txtNombreCompleto;
@@ -119,7 +123,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
 
     public void mandarUsuario(){
         //Instancia para acceder a los atroibutos del usuario
-        Usuario user = new Usuario(false,
+         final Usuario user = new Usuario(false,
                 txtNombreCompleto.getEditText().getText().toString().trim(),
                 txtNombreUsuario.getEditText().getText().toString().trim(),
                 txtEmail.getEditText().getText().toString().trim(),
@@ -142,21 +146,53 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 valLogin.validacionContrasena(user.getPasswordUsuario()) &&
                 user.getPasswordUsuario().equals(confPassword)){
 
+
+            ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
+                    getResources().getString(R.string.java_progress_message),
+                    ref,
+                    user,
+                    txtEmail.getEditText().getText().toString().trim(),
+                    txtPassword.getEditText().getText().toString());
+            asyncTask.execute();
+
+            /*
             ref.createUser(user.getEmailUsuario(),
-                    user.getPasswordUsuario(), new Firebase.ResultHandler() {
+                    user.getPasswordUsuario(), new Firebase.ValueResultHandler<Map<String, Object>>() {
                         @Override
-                        public void onSuccess() {
+                        public void onSuccess(Map<String, Object> result) {
+
+                            Firebase usuario = ref.child("usuarios").child(result.get("uid") + "");
+                            usuario.setValue(user);
                             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                                     Snackbar.LENGTH_SHORT).show();
+
+                            startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
                         }
 
                         @Override
                         public void onError(FirebaseError firebaseError) {
-                            Snackbar.make(coordinatorLayout, R.string.java_mal_snack,
-                                    Snackbar.LENGTH_SHORT).show();
+                            switch(firebaseError.getCode()){
+                                case FirebaseError.UNKNOWN_ERROR:
+                                    Snackbar.make(coordinatorLayout, R.string.error_unknown,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case FirebaseError.NETWORK_ERROR:
+                                    Snackbar.make(coordinatorLayout, R.string.error_network,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case FirebaseError.USER_CODE_EXCEPTION:
+                                    Snackbar.make(coordinatorLayout, R.string.error_user,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case FirebaseError.DISCONNECTED:
+                                    Snackbar.make(coordinatorLayout, R.string.error_disconnected,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                            }
+
                         }
                     });
-
+                */
         }//End if Principal
         else{
 
@@ -258,5 +294,82 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             cursor.close();
         }
     }
+
+    class ClaseAsyncTask extends AsyncTask {
+        ProgressDialog pDialog;
+        private String progressTitle;
+        private String progressMessage;
+        private Firebase ref;
+        private Usuario user;
+        private String correo_electronico;
+        private String password;
+
+        public ClaseAsyncTask(String progressTitle, String progressMessage, Firebase ref,
+                              Usuario user, String correo_electronico, String password) {
+            this.progressTitle = progressTitle;
+            this.progressMessage = progressMessage;
+            this.ref = ref;
+            this.user = user;
+            this.correo_electronico = correo_electronico;
+            this.password = password;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            ref.createUser(user.getEmailUsuario(),
+                    user.getPasswordUsuario(), new Firebase.ValueResultHandler<Map<String, Object>>() {
+                        @Override
+                        public void onSuccess(Map<String, Object> result) {
+
+                            Firebase usuario = ref.child("usuarios").child(result.get("uid") + "");
+                            usuario.setValue(user);
+                            Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
+                                    Snackbar.LENGTH_SHORT).show();
+
+                            startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(FirebaseError firebaseError) {
+                            switch(firebaseError.getCode()){
+                                case FirebaseError.UNKNOWN_ERROR:
+                                    Snackbar.make(coordinatorLayout, R.string.error_unknown,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case FirebaseError.NETWORK_ERROR:
+                                    Snackbar.make(coordinatorLayout, R.string.error_network,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case FirebaseError.USER_CODE_EXCEPTION:
+                                    Snackbar.make(coordinatorLayout, R.string.error_user,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                                case FirebaseError.DISCONNECTED:
+                                    Snackbar.make(coordinatorLayout, R.string.error_disconnected,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                        }
+                    });
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(PantallaCrearCuentaPersonal.this);
+            pDialog.setTitle(progressTitle);
+            pDialog.setMessage(progressMessage);
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+    }
+
 
 }

@@ -89,6 +89,12 @@
         excepcion de signos de puntiación.</string>
     <string name="java_faltantes_snack">Aun faltan introducir datos.</string>
     <string name="java_error_falta">Falta llenar este campo.</string>
+    <string name="error_unknown">Ha ocurrido un error durante el proceso.</string>
+    <string name="error_disconnected">Ha ocurrido un error al tratar de conectarse
+        al servidor.</string>
+    <string name="error_network">Ha ocurrido un error al tratar de conectarse
+        a internet.</string>
+    <string name="error_user">El usuario ya existe. Intente con otro.</string>
 
     <!--Pantalla Acerca de -->
     <string name="acerca">Acerca del producto</string>
