@@ -18,14 +18,16 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:elevation="12dp">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    android:elevation="12dp" />
             </android.support.design.widget.AppBarLayout>
 
             <LinearLayout
@@ -51,13 +53,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
                         android:paddingLeft="@dimen/padding_elements"
                         android:text="@string/conf_general"
-                        android:textColor="@color/colorPrimaryText"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/big_text"
-                        android:id="@+id/textView1" />
+                        android:id="@+id/textView1"/>
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_elements"
@@ -65,17 +68,19 @@
                         android:text="@string/conf_inf"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView2" />
+                        android:id="@+id/textView2" />-->
 
-                    <TextView
+
+
+                    <Button
+                        android:id="@+id/conf_actualiza_informacion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements"
-                        android:paddingLeft="@dimen/padding_elements"
                         android:text="@string/conf_cambia"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView3" />
+                        android:textSize="@dimen/small_text"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -98,13 +103,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
                         android:paddingLeft="@dimen/padding_elements"
                         android:text="@string/conf_seguridad"
-                        android:textColor="@color/colorPrimaryText"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/big_text"
                         android:id="@+id/textView4" />
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_elements"
@@ -112,17 +118,17 @@
                         android:text="@string/conf_contra"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView5" />
+                        android:id="@+id/textView5" />-->
 
-                    <TextView
+                    <Button
+                        android:id="@+id/conf_cambia_contrasenia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements"
-                        android:paddingLeft="@dimen/padding_elements"
                         android:text="@string/conf_clave"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView6" />
+                        android:textSize="@dimen/small_text"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -145,23 +151,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
                         android:paddingLeft="@dimen/padding_elements"
                         android:text="@string/conf_extras"
-                        android:textColor="@color/colorPrimaryText"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/big_text"
                         android:id="@+id/textView7" />
 
-                    <TextView
+                    <Button
+                        android:id="@+id/conf_acerca_nosotros"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements"
-                        android:paddingLeft="@dimen/padding_elements"
                         android:text="@string/conf_acerca"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView8" />
+                        android:textSize="@dimen/small_text"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        />
 
-                    <TextView
+
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="@dimen/padding_elements"
@@ -169,7 +177,7 @@
                         android:text="@string/conf_conoce"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView9" />
+                        android:id="@+id/textView9" />-->
 
                 </LinearLayout>
 

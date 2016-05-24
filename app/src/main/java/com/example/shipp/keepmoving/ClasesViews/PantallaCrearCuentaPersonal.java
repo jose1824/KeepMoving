@@ -166,7 +166,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                                     Snackbar.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
+                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                         }
 
                         @Override
@@ -326,7 +326,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                                     Snackbar.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
+                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                             finish();
                         }
 

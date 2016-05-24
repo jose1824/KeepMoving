@@ -3,16 +3,18 @@ package com.example.shipp.keepmoving.ClasesViews;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.shipp.keepmoving.R;
 
 public class PantallaConfiguracion extends AppCompatActivity {
-    private LinearLayout seccionExtras;
-    private LinearLayout seccionSeguridad;
-    private LinearLayout seccionGeneral;
+    private Button btn_seccionExtras;
+    private Button btn_seccionSeguridad;
+    private Button btn_seccionGeneral;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,27 +32,27 @@ public class PantallaConfiguracion extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaMainUsuario.class);
+                Intent i = new Intent(getApplicationContext(), PantallaTabsUsuario.class);
                 startActivity(i);
                 finish();
             }
         });//End toolbar listener
 
-        seccionGeneral.setOnClickListener(new View.OnClickListener() {
+        btn_seccionGeneral.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), PantallaConfInformacion.class));
             }
         });
 
-        seccionSeguridad.setOnClickListener(new View.OnClickListener() {
+        btn_seccionSeguridad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), PantallaConfPassword.class));
             }
         });
 
-        seccionExtras.setOnClickListener(new View.OnClickListener() {
+        btn_seccionExtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), PantallaAcercaDe.class));
@@ -60,8 +62,8 @@ public class PantallaConfiguracion extends AppCompatActivity {
     }
 
     private void inicializaComponentes(){
-        seccionGeneral = (LinearLayout) findViewById(R.id.conf_seccion1);
-        seccionSeguridad = (LinearLayout) findViewById(R.id.conf_seccion2);
-        seccionExtras = (LinearLayout) findViewById(R.id.conf_seccion3);
+        btn_seccionGeneral = (Button) findViewById(R.id.conf_actualiza_informacion);
+        btn_seccionSeguridad = (Button) findViewById(R.id.conf_cambia_contrasenia);
+        btn_seccionExtras = (Button) findViewById(R.id.conf_acerca_nosotros);
     }
 }

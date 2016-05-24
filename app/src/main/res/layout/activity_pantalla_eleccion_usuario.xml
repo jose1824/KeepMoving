@@ -19,7 +19,8 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:elevation="0dp">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -56,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:id="@+id/imageView"
-                    android:src="@drawable/ic_face_white_24dp"/>
+                    android:src="@drawable/ic_face_white_24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

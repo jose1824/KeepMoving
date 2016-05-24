@@ -106,6 +106,7 @@
         el producto sin autorización previa.</string>
     <string name="info_acerca3">Para más información, envié sus comentarios y le
         responderemos a la brevedad.</string>
+    <string name="info_ana">Ana :3</string>
     <!-- Nombres :3 -->
     <string name="angi">Angela Hernandez</string>
     <string name="emmanuel">Emmanuel Castañeda</string>
@@ -116,12 +117,12 @@
     <string name="configuracion">Configuración</string>
     <string name="conf_general">General</string>
     <string name="conf_inf">Información de perfil</string>
-    <string name="conf_cambia">Cambia o actualiza tu información personal.</string>
+    <string name="conf_cambia">Actualiza tu información personal.</string>
     <string name="conf_seguridad">Seguridad</string>
     <string name="conf_contra">Contraseña</string>
     <string name="conf_clave">Cambia o actualiza tu clave de acceso.</string>
     <string name="conf_extras">Extras</string>
-    <string name="conf_acerca">Acerca de la aplicación</string>
+    <string name="conf_acerca">Acerca de nosotros</string>
     <string name="conf_conoce">Conoce quien esta detras de Keep Moving.</string>
 
     <!--Pantalla Agregar evento -->

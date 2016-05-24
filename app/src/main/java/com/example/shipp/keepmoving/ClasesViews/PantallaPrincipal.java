@@ -59,7 +59,9 @@ public class PantallaPrincipal extends AppCompatActivity {
                 //Instancia para acceder a las validaciones propias de los campos
                 ValidacionesLogin validacionesLogin = new ValidacionesLogin();
 
-                if (validacionesLogin.validacionEmail(correo_electronico) &&
+                startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+
+                /*if (validacionesLogin.validacionEmail(correo_electronico) &&
                         validacionesLogin.validacionContrasena(password)){
 
                     ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
@@ -75,7 +77,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                             //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                             txtMail.setError(null);
                             txtPassword.setError(null);
-                            startActivity(new Intent(getApplicationContext(), PantallaMainUsuario.class));
+                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                         }
 
                         @Override
@@ -98,7 +100,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                         }
                     });
                     */
-                }else{
+                /*}else{
                     if (validacionesLogin.validacionEmail(correo_electronico) == false
                             && validacionesLogin.validacionContrasena(password) == false){
 
@@ -133,6 +135,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                                 Snackbar.LENGTH_LONG).show();
                     }
                 }
+            }*/
             }
         });
 
@@ -255,7 +258,7 @@ public class PantallaPrincipal extends AppCompatActivity {
             ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
-                    startActivity (new Intent(getApplicationContext(), PantallaMainUsuario.class));
+                    startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                     finish();
                 }
 
