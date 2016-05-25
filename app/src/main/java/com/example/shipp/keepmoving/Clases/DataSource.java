@@ -12,7 +12,7 @@ public class DataSource {
 
     public static List ACADEMIAS = new ArrayList<Academia>();
 
-    static {
+    static { //Se llena dinamicamente
         ACADEMIAS.add(new Academia("Academia 1", R.mipmap.ic_account_circle_black_24dp));
         ACADEMIAS.add(new Academia("Academia 2", R.mipmap.ic_done_black_24dp));
     }
