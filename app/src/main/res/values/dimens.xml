@@ -30,5 +30,5 @@
     <dimen name="list_item_maringTop">8dp</dimen>
     <dimen name="text_size_item">16sp</dimen>
 
-
+    <dimen name="size_direction_button">40dp</dimen>
 </resources>

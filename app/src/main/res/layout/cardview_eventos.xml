@@ -22,8 +22,9 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="400dp"
+                android:layout_height="225dp"
+                android:background="@color/colorPrimary"
                 android:id="@+id/imageView"
                 android:src="@mipmap/ic_launcher" />
 
@@ -56,11 +57,21 @@
                 android:paddingLeft="@dimen/padding_bordes_grid"
                 android:textColor="@color/subtitle_cards"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBackground"
+                android:textColor="@color/colorPrimary"
+                android:paddingLeft="@dimen/padding_bordes_grid"
+                android:paddingTop="@dimen/padding_bordes_grid"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:text="@string/evento_favoritos"/>
+
             <TextView
                 android:id="@+id/tv_descripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/fab_margin"
+                android:paddingTop="@dimen/padding_bordes_grid"
                 android:paddingBottom="@dimen/padding_elements_big"
                 android:paddingRight="@dimen/padding_bordes_grid"
                 android:paddingLeft="@dimen/padding_bordes_grid"

@@ -41,7 +41,9 @@
         <activity android:name=".ClasesViews.PantallaConfInformacion" />
         <activity android:name=".ClasesViews.PantallaAgregarEvento" />
         <activity android:name=".ClasesViews.PantallaMainAcademia" />
-        <activity android:name=".ClasesViews.SplashScreen" />
+        <activity android:name=".ClasesViews.SplashScreen" >
+
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

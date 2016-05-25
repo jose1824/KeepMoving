@@ -131,32 +131,85 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements_small"
+                        android:paddingTop="@dimen/padding_elements"
                         android:paddingLeft="@dimen/padding_elements_big"
                         android:text="@string/emmanuel"
                         android:textColor="@color/colorTextAcerca"
                         android:textSize="@dimen/normal_text"
                         android:id="@+id/textView7" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements_small"
-                        android:paddingLeft="@dimen/padding_elements_big"
-                        android:text="@string/chucho"
-                        android:textColor="@color/colorTextAcerca"
-                        android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView8" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_elements"
+                            android:paddingLeft="@dimen/padding_elements_big"
+                            android:text="@string/chucho1"
+                            android:textColor="@color/colorTextAcerca"
+                            android:textSize="@dimen/normal_text"
+                            android:id="@+id/textView8" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_elements"
+                            android:text="@string/chucho2"
+                            android:textColor="@color/colorTextAcerca"
+                            android:textSize="@dimen/normal_text"
+                            android:id="@+id/textViewClicJ" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_elements"
+                            android:text="@string/chucho3"
+                            android:textColor="@color/colorTextAcerca"
+                            android:textSize="@dimen/normal_text"
+                            android:id="@+id/textView82" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements_small"
-                        android:paddingLeft="@dimen/padding_elements_big"
-                        android:text="@string/sergio"
-                        android:textColor="@color/colorTextAcerca"
-                        android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView9" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_elements"
+                            android:paddingLeft="@dimen/padding_elements_big"
+                            android:text="@string/sergio1"
+                            android:textColor="@color/colorTextAcerca"
+                            android:textSize="@dimen/normal_text"
+                            android:id="@+id/textView9" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_elements"
+                            android:text="@string/sergio2"
+                            android:textColor="@color/colorTextAcerca"
+                            android:textSize="@dimen/normal_text"
+                            android:id="@+id/textViewClic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/padding_elements"
+                            android:text="@string/sergio3"
+                            android:textColor="@color/colorTextAcerca"
+                            android:textSize="@dimen/normal_text"
+                            android:id="@+id/textView92" />
+
+                    </LinearLayout>
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,15 +231,6 @@
                         android:textSize="@dimen/normal_text"
                         android:id="@+id/textView11" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/padding_elements"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:text="@string/info_ana"
-                        android:textColor="@color/colorTextAcerca"
-                        android:textSize="@dimen/normal_text"
-                        android:id="@+id/textView12" />
 
                 </LinearLayout>
 

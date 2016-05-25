@@ -69,15 +69,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView1"
-                        android:src="@mipmap/ic_account_circle_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
-
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
                         android:layout_width="match_parent"
@@ -92,6 +83,7 @@
                             android:hint="@string/hint_nombre_academia"
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
+                            android:drawableLeft="@mipmap/ic_account_circle_black_24dp"
                             android:inputType="textPersonName"
                             android:textColorHint="@color/colorPrimaryText"
                             android:id="@+id/cuenta_academia_nombre" />
@@ -104,14 +96,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView2"
-                        android:src="@mipmap/ic_phone_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
 
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
@@ -127,6 +111,7 @@
                             android:hint="@string/hint_telefono_academia"
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
+                            android:drawableLeft="@mipmap/ic_phone_black_24dp"
                             android:textColorHint="@color/colorPrimaryText"
                             android:inputType="phone" />
                     </android.support.design.widget.TextInputLayout>
@@ -137,15 +122,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView3"
-                        android:src="@mipmap/ic_email_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
 
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
@@ -162,6 +138,7 @@
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
                             android:textColorHint="@color/colorPrimaryText"
+                            android:drawableLeft="@mipmap/ic_email_black_24dp"
                             android:id="@+id/cuenta_academia_correo"
                             android:inputType="textEmailAddress" />
                     </android.support.design.widget.TextInputLayout>
@@ -173,18 +150,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView4"
-                        android:src="@mipmap/ic_location_on_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
-
                     <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/size_direction_button"
+                        android:layout_height="@dimen/size_direction_button"
                         android:id="@+id/btn_rastrear_direccion"
                         android:background="@color/colorPrimary"
                         android:src="@mipmap/ic_location_searching_white_24dp"
@@ -204,6 +172,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_direccion_academia"
                             android:textColor="@color/colorPrimaryText"
+                            android:drawableLeft="@mipmap/ic_location_on_black_24dp"
                             android:theme="@style/EditTheme"
                             android:textColorHint="@color/colorPrimaryText" />
                     </android.support.design.widget.TextInputLayout>
@@ -215,14 +184,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView5"
-                        android:src="@mipmap/ic_supervisor_account_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
 
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
@@ -237,6 +198,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_encargado_academia"
                             android:textColor="@color/colorPrimaryText"
+                            android:drawableLeft="@mipmap/ic_supervisor_account_black_24dp"
                             android:theme="@style/EditTheme"
                             android:textColorHint="@color/colorPrimaryText" />
                     </android.support.design.widget.TextInputLayout>
@@ -248,14 +210,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView6"
-                        android:src="@mipmap/ic_add_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
 
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
@@ -270,6 +224,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_descripcion_academia"
                             android:textColor="@color/colorPrimaryText"
+                            android:drawableLeft="@mipmap/ic_add_black_24dp"
                             android:theme="@style/EditTheme"
                             android:textColorHint="@color/colorPrimaryText" />
                     </android.support.design.widget.TextInputLayout>
@@ -281,14 +236,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView7"
-                        android:src="@mipmap/ic_https_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
 
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
@@ -305,6 +252,7 @@
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
                             android:inputType="textPassword"
+                            android:drawableLeft="@mipmap/ic_https_black_24dp"
                             android:textColorHint="@color/colorPrimaryText"
                             android:id="@+id/cuenta_personal_password" />
                     </android.support.design.widget.TextInputLayout>
@@ -315,15 +263,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:paddingTop="@dimen/padding_elements"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/padding_elements"
-                        android:id="@+id/imageView8"
-                        android:src="@mipmap/ic_https_black_24dp"
-                        android:layout_gravity="center_vertical|left" />
 
                     <android.support.design.widget.TextInputLayout
                         android:paddingTop="@dimen/padding_elements"
@@ -340,6 +279,7 @@
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
                             android:textColorHint="@color/colorPrimaryText"
+                            android:drawableLeft="@mipmap/ic_https_black_24dp"
                             android:id="@+id/cuenta_personal_conf_password"
                             android:inputType="textPassword" />
                     </android.support.design.widget.TextInputLayout>

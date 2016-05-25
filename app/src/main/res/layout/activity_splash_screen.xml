@@ -14,7 +14,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
@@ -23,13 +23,9 @@
             android:contextClickable="false"
             android:clickable="true"
             android:orientation="vertical"
+            android:gravity="center_horizontal"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -37,21 +33,20 @@
                     android:id="@+id/logoPrincipal"
                     android:src="@drawable/keep_logo"/>
 
-                <ProgressBar
-                    android:id="@+id/progressDemo"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="152dp"
-                    android:layout_height="152dp"
-                    android:layout_centerInParent="true"
-                    android:indeterminate="false"
-                    android:progress="10"
-                    android:rotation="-90"
-                    android:progressDrawable="@drawable/circular_progress_bar" />
-
-            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:max="500"
+                android:progress="0"
+                android:progressDrawable="@drawable/circular" />
 
         </LinearLayout>
 
     </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
+

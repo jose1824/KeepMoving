@@ -69,15 +69,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                            <ImageView
-                                android:paddingTop="@dimen/padding_elements"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/padding_elements"
-                                android:id="@+id/imageView"
-                                android:src="@mipmap/ic_account_circle_black_24dp"
-                                android:layout_gravity="center_vertical|left" />
-
                             <android.support.design.widget.TextInputLayout
                                 android:paddingTop="@dimen/padding_elements"
                                 android:layout_width="match_parent"
@@ -93,6 +84,7 @@
                                     android:textColor="@color/colorPrimaryText"
                                     android:theme="@style/EditTheme"
                                     android:inputType="textPersonName"
+                                    android:drawableLeft="@mipmap/ic_account_circle_black_24dp"
                                     android:textColorHint="@color/colorPrimaryText"
                                     android:id="@+id/cuenta_personal_nombre_completo" />
                             </android.support.design.widget.TextInputLayout>
@@ -103,15 +95,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
-                        <ImageView
-                            android:paddingTop="@dimen/padding_elements"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/padding_elements"
-                            android:id="@+id/imageView1"
-                            android:src="@mipmap/ic_supervisor_account_black_24dp"
-                            android:layout_gravity="center_vertical|left" />
 
                         <android.support.design.widget.TextInputLayout
                             android:paddingTop="@dimen/padding_elements"
@@ -128,6 +111,7 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:theme="@style/EditTheme"
                                 android:inputType="textPersonName"
+                                android:drawableLeft="@mipmap/ic_supervisor_account_black_24dp"
                                 android:textColorHint="@color/colorPrimaryText"
                                 android:id="@+id/cuenta_personal_usuario" />
                         </android.support.design.widget.TextInputLayout>
@@ -139,14 +123,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:paddingTop="@dimen/padding_elements"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/padding_elements"
-                            android:id="@+id/imageView2"
-                            android:src="@mipmap/ic_email_black_24dp"
-                            android:layout_gravity="center_vertical|left" />
 
                         <android.support.design.widget.TextInputLayout
                             android:paddingTop="@dimen/padding_elements"
@@ -163,6 +139,7 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:theme="@style/EditTheme"
                                 android:textColorHint="@color/colorPrimaryText"
+                                android:drawableLeft="@mipmap/ic_email_black_24dp"
                                 android:id="@+id/cuenta_personal_correo"
                                 android:inputType="textEmailAddress" />
                         </android.support.design.widget.TextInputLayout>
@@ -185,15 +162,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:paddingTop="@dimen/padding_elements"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/padding_elements"
-                            android:id="@+id/imageView3"
-                            android:src="@mipmap/ic_https_black_24dp"
-                            android:layout_gravity="center_vertical|left" />
-
                         <android.support.design.widget.TextInputLayout
                             android:paddingTop="@dimen/padding_elements"
                             android:layout_width="match_parent"
@@ -209,6 +177,7 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:theme="@style/EditTheme"
                                 android:inputType="textPassword"
+                                android:drawableLeft="@mipmap/ic_https_black_24dp"
                                 android:textColorHint="@color/colorPrimaryText"
                                 android:id="@+id/cuenta_personal_password" />
                         </android.support.design.widget.TextInputLayout>
@@ -219,15 +188,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
-                        <ImageView
-                            android:paddingTop="@dimen/padding_elements"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/padding_elements"
-                            android:id="@+id/imageView4"
-                            android:src="@mipmap/ic_https_black_24dp"
-                            android:layout_gravity="center_vertical|left" />
 
                         <android.support.design.widget.TextInputLayout
                             android:paddingTop="@dimen/padding_elements"
@@ -244,6 +204,7 @@
                                 android:textColor="@color/colorPrimaryText"
                                 android:theme="@style/EditTheme"
                                 android:textColorHint="@color/colorPrimaryText"
+                                android:drawableLeft="@mipmap/ic_https_black_24dp"
                                 android:id="@+id/cuenta_personal_conf_password"
                                 android:inputType="textPassword" />
                         </android.support.design.widget.TextInputLayout>

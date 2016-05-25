@@ -95,10 +95,11 @@
     <string name="error_network">Ha ocurrido un error al tratar de conectarse
         a internet.</string>
     <string name="error_user">El usuario ya existe. Intente con otro.</string>
+    <string name="java_progress_titleCrear">Creando su perfil.</string>
 
     <!--Pantalla Acerca de -->
     <string name="acerca">Acerca del producto</string>
-    <string name="version_acerca">Version: 0.1 (Version Alfa)</string>
+    <string name="version_acerca">Version: 0.6.5 (Version Alfa)</string>
     <string name="anio">Año: 2016</string>
     <string name="info_acerca1">Keep Moving es una aplicación desarrollada por estudiantes del
         Instituto Politecnico Nacional en la UPIICSA.</string>
@@ -106,12 +107,20 @@
         el producto sin autorización previa.</string>
     <string name="info_acerca3">Para más información, envié sus comentarios y le
         responderemos a la brevedad.</string>
-    <string name="info_ana">Ana :3</string>
+    <string name="info_ana">Ana :3</string> <!--Aqui has el cambio que quyieras sergio -->
     <!-- Nombres :3 -->
     <string name="angi">Angela Hernandez</string>
     <string name="emmanuel">Emmanuel Castañeda</string>
-    <string name="chucho">Jesús Guzmán</string>
-    <string name="sergio">Sergio Canseco</string>
+    <!-- Mensaje jesus -->
+    <string name="chucho1">Jesús Guz </string>
+    <string name="chucho2">má</string>
+    <string name="chucho3">n</string>
+    <string name="mensajeChucho">M Y J\nTe amo mari azulina amor.</string>
+    <!--Mensaje sergio <3-->
+    <string name="sergio1">Sergio C</string>
+    <string name="sergio2">an</string> <!-- ME LA DEBES WE, TE HICE TU MENSAJE BONITO :3 -->
+    <string name="sergio3">seco</string>
+
 
     <!--Pantalla Configuracion-->
     <string name="configuracion">Configuración</string>
@@ -160,6 +169,7 @@
     <!--Fragment Eventos -->
     <string name="eventos">Eventos</string>
     <string name="title_activity_pantalla_evento">PantallaEvento</string>
+    <string name="evento_favoritos">Favoritos</string>
 
     <!--Fragment PerfilAcademia-->
     <string name="perfil_academia">Perfil de academia</string>

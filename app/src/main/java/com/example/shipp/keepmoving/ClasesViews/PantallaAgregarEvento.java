@@ -1,10 +1,12 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -24,14 +26,17 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 
 import com.example.shipp.keepmoving.Clases.Evento;
+import com.example.shipp.keepmoving.Clases.Usuario;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesEvento;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesNuevaAcademia;
 import com.example.shipp.keepmoving.R;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Time;
+import java.util.Map;
 import java.util.Random;
 
 public class PantallaAgregarEvento extends AppCompatActivity {
@@ -137,7 +142,9 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
         txtDireccion = (TextInputLayout) findViewById(R.id.evento_et_2);
         MapsActivity map = new MapsActivity();
-        txtDireccion.getEditText().setText(map.getDireccion());
+        if (map.getDireccion() != null || map.getDireccion() != "") {
+            txtDireccion.getEditText().setText(map.getDireccion());
+        }
         txtDireccion.getEditText().setOnKeyListener(null); //El Edit text no se podra editar pero si copiar y pegar su contenido
         txtDireccion.getEditText().setKeyListener(null);
 
@@ -177,6 +184,13 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                 longitud != 0.0 &&
                 latitud != 0.0 ) {
 
+            ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_titleCrear),
+                    getResources().getString(R.string.java_progress_message),
+                    ref,
+                    ev);
+            asyncTask.execute();
+
+            /*
             Firebase evento = ref.child("evento").child("EventoN"  + mesEvento + diaEvento +
                     anioEvento + horaFinHr + horaFinMin + horaInicioHr + horaInicioMin  +
                     numAleatorio() + numAleatorio() + numAleatorio() +
@@ -188,7 +202,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
             startActivity(new Intent(getApplicationContext(), PantallaMainAcademia.class));
             finish();
-
+            */
         }
         else {
 
@@ -238,6 +252,52 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             // At the end remember to close the cursor or you will end with the RuntimeException!
             cursor.close();
         }
+    }
+
+    class ClaseAsyncTask extends AsyncTask {
+        ProgressDialog pDialog;
+        private String progressTitle;
+        private String progressMessage;
+        private Firebase ref;
+        private Evento evento;
+
+        public ClaseAsyncTask(String progressTitle, String progressMessage, Firebase ref, Evento evento) {
+            this.progressTitle = progressTitle;
+            this.progressMessage = progressMessage;
+            this.ref = ref;
+            this.evento = evento;
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+
+            Firebase evento = ref.child("evento").child("EventoN"  + mesEvento + diaEvento +
+                    anioEvento + horaFinHr + horaFinMin + horaInicioHr + horaInicioMin  +
+                    numAleatorio() + numAleatorio() + numAleatorio() +
+                    numAleatorio() + numAleatorio());//Pooner un ID con hora fin e inicio y cinco minutos aleatorios
+
+            evento.setValue(evento);
+            Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
+                    Snackbar.LENGTH_SHORT).show();
+
+            startActivity(new Intent(getApplicationContext(), PantallaMainAcademia.class));
+            finish();
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(PantallaAgregarEvento.this);
+            pDialog.setTitle(progressTitle);
+            pDialog.setMessage(progressMessage);
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
     }
 
 }

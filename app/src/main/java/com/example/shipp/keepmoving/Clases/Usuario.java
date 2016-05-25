@@ -16,18 +16,22 @@ public class Usuario {
 
     }
 
-    public Usuario(boolean confAcademia, String nombreUsuario, String aliasUsuario,
-                   String emailUsuario, String passwordUsuario){
-
+    public Usuario(boolean confAcademia, String nombreUsuario, String passwordUsuario,
+                   String emailUsuario, String aliasUsuario, String imagenUsuario64) {
         this.confAcademia = confAcademia;
         this.nombreUsuario = nombreUsuario;
+        this.passwordUsuario = passwordUsuario;
         this.emailUsuario = emailUsuario;
         this.aliasUsuario = aliasUsuario;
-        this.passwordUsuario = passwordUsuario;
+        this.imagenUsuario64 = imagenUsuario64;
     }
 
     public String getUsuarioUID() {
         return usuarioUID;
+    }
+
+    public boolean isConfAcademia() {
+        return confAcademia;
     }
 
     public String getNombreUsuario() {
@@ -46,7 +50,7 @@ public class Usuario {
         return aliasUsuario;
     }
 
-    public boolean isConfAcademia() {
-        return confAcademia;
+    public String getImagenUsuario64() {
+        return imagenUsuario64;
     }
 }

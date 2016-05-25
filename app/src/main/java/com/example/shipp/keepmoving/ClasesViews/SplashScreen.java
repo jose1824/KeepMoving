@@ -1,17 +1,25 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 
 import com.example.shipp.keepmoving.R;
 
 public class SplashScreen extends AppCompatActivity {
+    private ProgressBar progressBar;
+    private int progressStatus = 0;
+    private Handler handler = new Handler();
+
     boolean mostartInternetDialog;
 
     @Override
@@ -27,6 +35,13 @@ public class SplashScreen extends AppCompatActivity {
         else{
             mostartInternetDialog= true;
         }
+/*
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        ObjectAnimator animation = ObjectAnimator.ofInt (progressBar, "progress", 0, 500); // see this max value coming back here, we animale towards that value
+        animation.setDuration (5000); //in milliseconds
+        animation.setInterpolator (new DecelerateInterpolator());
+        animation.start ();
+*/
 
         validarInternet();
 

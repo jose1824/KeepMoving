@@ -15,6 +15,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -45,6 +47,8 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
     CoordinatorLayout coordinatorLayout;
     FirebaseControl firebaseControl;
     FloatingActionButton fab;
+
+    String imagenBase64;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +131,8 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 txtNombreCompleto.getEditText().getText().toString().trim(),
                 txtNombreUsuario.getEditText().getText().toString().trim(),
                 txtEmail.getEditText().getText().toString().trim(),
-                txtPassword.getEditText().getText().toString());
+                txtPassword.getEditText().getText().toString(),
+                 imagenBase64);
 
         final String confPassword = txtConfPassword.getEditText().getText().toString();
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
@@ -147,12 +152,12 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 user.getPasswordUsuario().equals(confPassword)){
 
 
-            ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
+            ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_titleCrear),
                     getResources().getString(R.string.java_progress_message),
                     ref,
                     user,
-                    txtEmail.getEditText().getText().toString().trim(),
-                    txtPassword.getEditText().getText().toString());
+                    user.getEmailUsuario(),
+                    user.getPasswordUsuario());
             asyncTask.execute();
 
             /*
@@ -288,7 +293,11 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             imgUsuario.setImageBitmap(bitmap);
 
             // Do something with the bitmap
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream .toByteArray();
 
+            imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
             // At the end remember to close the cursor or you will end with the RuntimeException!
             cursor.close();
@@ -316,8 +325,8 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            ref.createUser(user.getEmailUsuario(),
-                    user.getPasswordUsuario(), new Firebase.ValueResultHandler<Map<String, Object>>() {
+            ref.createUser(correo_electronico,
+                    password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                         @Override
                         public void onSuccess(Map<String, Object> result) {
 

@@ -42,7 +42,7 @@ public class AcademiaAdapter extends ArrayAdapter<Academia> {
         ImageView imagen = (ImageView) listItemView.findViewById(R.id.imagen_academia);
 
         titulo.setText(item.getNombreAcademia());
-        imagen.setImageResource(item.getImagen());
+        imagen.setImageBitmap(item.getImagenBitmap());
 
         return listItemView;
     }

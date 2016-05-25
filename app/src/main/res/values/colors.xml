@@ -15,7 +15,7 @@
     <!--Color Acerca de -->
     <color name="colorTextAcerca">#BFBFBF</color>
     <!--Color blanco background-->
-    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorBackground">#ffffff</color>
 
     <color name="background_footer">#90000000</color>
 
