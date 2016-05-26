@@ -57,6 +57,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
     FloatingActionButton fab;
 
     String imagenBase64;
+    double latitudAcademia;
+    double longitudAcademia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         if (savedInstanceState != null){
             onRestoreInstanceState(savedInstanceState);
         }
+
+        imagenBase64 = "";
 
         //Inicializacion de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -156,6 +160,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                 txtCorreoAcademia.getEditText().getText().toString().trim(),
                 txtTelefonoAcademia.getEditText().getText().toString().trim(),
                 txtDireccionAcademia.getEditText().getText().toString().trim(),
+                latitudAcademia,
+                longitudAcademia,
                 txtEncargadoAcademia.getEditText().getText().toString().trim(),
                 txtDescripcionAcademia.getEditText().getText().toString().trim(),
                 txtPaswwordAcademia.getEditText().getText().toString().trim(),
@@ -245,7 +251,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (validacionesAcademia.validacionDireccion(acad.getDireccionAcademia()) == false){
 
                 limpiarDireccionAcademia();
-                txtDireccionAcademia.setError("" + R.string.java_error_direccionacademia);
+                txtDireccionAcademia.setError(getResources().getString(R.string.java_error_direccionacademia));
                 Snackbar.make(coordinatorLayout, R.string.java_direccion_snack,
                         Snackbar.LENGTH_SHORT).show();
 

@@ -107,7 +107,7 @@ public class PantallaMainAcademia extends AppCompatActivity {
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(getApplicationContext(), PantallaInicial.class));
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
                 finish();
             }
         });

@@ -228,7 +228,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                                float velocidadY) {
 
             if (event2.getX() > event1.getX()) {
-                startActivity(new Intent(getApplicationContext(), PantallaInicial.class));
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
             }
 
             return true;

@@ -14,9 +14,13 @@ import android.widget.TextView;
 
 import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.ClasesAdapters.EventoAdapter;
+import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.ClasesViews.PantallaAgregarEvento;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +33,11 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
     private TextView navTextUsuario;
     private TextView navTextCorreo;
     FloatingActionButton fab;
+    FirebaseControl firebaseControl;
 
     RecyclerView recList;
     CoordinatorLayout cLayout;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +48,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         cLayout.findViewById(R.id.eventos_coordinator);
 
         inicializaComponentes();
+        Firebase.setAndroidContext(getActivity().getApplicationContext());
 
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -66,10 +73,39 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
     private void inicializaComponentes(){
         fab = (FloatingActionButton) cLayout.findViewById(R.id.fab);
         recList = (RecyclerView) cLayout.findViewById(R.id.recyclerView);
+        firebaseControl = new FirebaseControl();
     }//End inicializaComponentes
 
     private List<Evento> createList(int size) {
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        List<Evento> result = new ArrayList<Evento>();
+        ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    Evento ev = new Evento();
+                    ev.titulo = Evento.TITULO_PREFIX + child.child("evento").child("titulo").getValue();
+                    ev.fechaHora = Evento.FECHA_PREFIX +
+                            child.child("evento").child("diaEvento").getValue() + "/" +
+                            child.child("evento").child("mesEvento").getValue() + "/" +
+                            child.child("evento").child("anioEvento").getValue() + "\t" +
+                            child.child("evento").child("horaInicioHr").getValue() + ":" +
+                            child.child("evento").child("diaEvento").getValue() + " - " +
+                            child.child("evento").child("diaEvento").getValue() + ":" +
+                            child.child("evento").child("diaEvento").getValue();
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + child.child("evento").child("descripcion").getValue();
+                    result.add(ev); //ARREGLAR
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+/*
         List<Evento> result = new ArrayList<Evento>();
         for (int i=1; i <= size; i++) {
             Evento ev = new Evento();
@@ -80,7 +116,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
             result.add(ev);
 
         }
-
+*/
         return result;
     }//end lisst
 

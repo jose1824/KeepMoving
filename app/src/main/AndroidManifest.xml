@@ -26,13 +26,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ClasesViews.PantallaPrincipal" />
         <activity android:name=".ClasesViews.PantallaEleccionUsuario" />
-        <activity android:name=".ClasesViews.PantallaInicial">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ClasesViews.PantallaCrearCuentaPersonal" />
         <activity android:name=".ClasesViews.PantallaCrearCuentaAcademia" />
         <activity android:name=".ClasesViews.PantallaAcercaDe" />
@@ -42,7 +35,11 @@
         <activity android:name=".ClasesViews.PantallaAgregarEvento" />
         <activity android:name=".ClasesViews.PantallaMainAcademia" />
         <activity android:name=".ClasesViews.SplashScreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

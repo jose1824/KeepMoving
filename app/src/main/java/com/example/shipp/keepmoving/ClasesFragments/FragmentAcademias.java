@@ -70,9 +70,9 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    String academiaNombre = (String) child.child("academia").getValue();
+                    String academiaNombre = (String) child.child("academia").child("nombreAcademia").getValue();
 
-                    String academiaImagen = (String) child.child("academia").getValue();
+                    String academiaImagen = (String) child.child("academia").child("imagenAcademia64").getValue();
                     byte[] decodedString = Base64.decode(academiaImagen, Base64.URL_SAFE);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 

@@ -112,6 +112,7 @@
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
                             android:drawableLeft="@mipmap/ic_phone_black_24dp"
+                            android:maxLength="10"
                             android:textColorHint="@color/colorPrimaryText"
                             android:inputType="phone" />
                     </android.support.design.widget.TextInputLayout>

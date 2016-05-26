@@ -54,7 +54,7 @@ public class SplashScreen extends AppCompatActivity {
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
 
-            startActivity(new Intent(getApplicationContext(), PantallaInicial.class));
+            startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
             finish();
 
         }//End if esta conectado
