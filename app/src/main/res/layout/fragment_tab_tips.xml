@@ -11,42 +11,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/padding_fragments_tab">
-
-
-
-                <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context=".ClasesFragments.FragmentTips"
+            android:orientation="vertical"
+            android:id="@+id/laytipentos">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <GridView
+                    android:id="@+id/grid"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    tools:context=".ClasesFragments.FragmentTips"
-                    android:orientation="vertical"
-                    android:id="@+id/laytipentos">
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    <GridView
-                        android:id="@+id/grid"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:columnWidth="@dimen/size_grid"
-                        android:horizontalSpacing="@dimen/espacio_grid"
-                        android:numColumns="auto_fit"
-                        android:padding="@dimen/espacio_grid"
-                        android:verticalSpacing="@dimen/espacio_grid" />
-                    </ScrollView>
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
+                    android:columnWidth="@dimen/size_grid"
+                    android:horizontalSpacing="@dimen/espacio_grid"
+                    android:numColumns="auto_fit"
+                    android:padding="@dimen/espacio_grid"
+                    android:verticalSpacing="@dimen/espacio_grid" />
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package com.example.shipp.keepmoving.ClasesFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 
+import com.example.shipp.keepmoving.Clases.Tip;
 import com.example.shipp.keepmoving.ClasesAdapters.AdapterTips;
+import com.example.shipp.keepmoving.ClasesViews.DetalleTips;
 import com.example.shipp.keepmoving.R;
 /**
  * Created by xubudesktop1 on 18/05/16.
@@ -39,7 +42,14 @@ public class FragmentTips extends android.support.v4.app.Fragment implements Ada
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Tip item = (Tip) parent.getItemAtPosition(position);
+        //Create intent
+        Intent intent = new Intent(getActivity(), DetalleTips.class);
+        intent.putExtra("titulo", item.getTitulo());
+        intent.putExtra("imagen", item.getIdImagen());
 
+        //Start details activity
+        startActivity(intent);
     }
 
 }
