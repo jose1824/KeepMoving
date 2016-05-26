@@ -78,7 +78,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
     private List<Evento> createList(int size) {
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
-        List<Evento> result = new ArrayList<Evento>();
+        final List<Evento> result = new ArrayList<Evento>();
         ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

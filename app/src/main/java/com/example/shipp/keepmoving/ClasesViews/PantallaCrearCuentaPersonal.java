@@ -291,16 +291,17 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
             imgUsuario.setImageBitmap(bitmap);
+            cursor.close();
 
             // Do something with the bitmap
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream .toByteArray();
 
-            imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);*/
 
             // At the end remember to close the cursor or you will end with the RuntimeException!
-            cursor.close();
+
         }
     }
 

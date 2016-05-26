@@ -50,7 +50,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
-        llenarList();
+        //llenarList();
 
         adaptador = new AcademiaAdapter(getActivity().getApplicationContext(), DataSource.ACADEMIAS);
         lista.setAdapter(adaptador);
@@ -79,14 +79,9 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
                     DataSource.ACADEMIAS.add(new Academia(academiaNombre, decodedByte));
                 }
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
-
     }
-
-
 }

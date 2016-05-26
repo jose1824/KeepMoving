@@ -21,7 +21,6 @@ public class PantallaTabsAcademia extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private Toolbar toolbar;
-    FirebaseControl firebaseControl;
     CoordinatorLayout coordinatorLayout;
 
     @Override
@@ -85,7 +84,7 @@ public class PantallaTabsAcademia extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayoutPantallaTabAcademias);
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_configuraciones, menu);
         return super.onCreateOptionsMenu(menu);
@@ -96,7 +95,7 @@ public class PantallaTabsAcademia extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_config:
-                startActivity(new Intent(getApplicationContext(), PantallaConfiguracion.class));
+                //startActivity(new Intent(getApplicationContext(), PantallaConfiguracion.class));
                 break;
             case R.id.action_cerrar:
                 cerrarSesion();
@@ -114,6 +113,8 @@ public class PantallaTabsAcademia extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+                ref.unauth();
                 finish();
             }
         });
@@ -128,5 +129,9 @@ public class PantallaTabsAcademia extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-}*/
+
+    @Override
+    public void onBackPressed() {
+        recreate();
+    }
 }

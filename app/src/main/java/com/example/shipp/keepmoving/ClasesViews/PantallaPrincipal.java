@@ -15,12 +15,17 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesLogin;
 import com.example.shipp.keepmoving.R;
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import com.firebase.client.realtime.util.StringListReader;
 
 
 public class PantallaPrincipal extends AppCompatActivity {
@@ -31,7 +36,7 @@ public class PantallaPrincipal extends AppCompatActivity {
     private Button btnReset;
     CoordinatorLayout coordinatorLayout;
     FirebaseControl firebaseControl;
-    private GestureDetectorCompat gestureDetectorCompat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +64,10 @@ public class PantallaPrincipal extends AppCompatActivity {
                 //Instancia para acceder a las validaciones propias de los campos
                 ValidacionesLogin validacionesLogin = new ValidacionesLogin();
 
-                startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+                //startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
 
-                /*if (validacionesLogin.validacionEmail(correo_electronico) &&
-                        validacionesLogin.validacionContrasena(password)){
+                if (validacionesLogin.validacionEmail(correo_electronico) &&
+                        validacionesLogin.validacionContrasena(password)) {
 
                     ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
                             getResources().getString(R.string.java_progress_message),
@@ -100,7 +105,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                         }
                     });
                     */
-                /*}else{
+                }else{
                     if (validacionesLogin.validacionEmail(correo_electronico) == false
                             && validacionesLogin.validacionContrasena(password) == false){
 
@@ -135,8 +140,8 @@ public class PantallaPrincipal extends AppCompatActivity {
                                 Snackbar.LENGTH_LONG).show();
                     }
                 }
-            }*/
             }
+            //}
         });
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +190,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnRegistro = (Button) findViewById(R.id.principal_btn_2);
         btnReset = (Button) findViewById(R.id.principal_btn_3);
         firebaseControl = new FirebaseControl();
-        gestureDetectorCompat = new GestureDetectorCompat(this, new MyGestureListener2());
     }
 
     private void limpiaCampos(){
@@ -221,20 +225,6 @@ public class PantallaPrincipal extends AppCompatActivity {
         builder.show();
     }
 
-    class MyGestureListener2 extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocidadX,
-                               float velocidadY) {
-
-            if (event2.getX() > event1.getX()) {
-                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
-            }
-
-            return true;
-        }
-    }
-
     class ClaseAsyncTask extends AsyncTask {
         ProgressDialog pDialog;
         private String progressTitle;
@@ -242,6 +232,7 @@ public class PantallaPrincipal extends AppCompatActivity {
         private Firebase ref;
         private String correo_electronico;
         private String password;
+        boolean tipoUsuario;
 
         public ClaseAsyncTask( String progressTitle, String progressMessage,
                                String correo_electronico, String password, Firebase ref) {
@@ -255,11 +246,14 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
+
+
             ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
                     startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-                    finish();
+                    String uId = authData.getUid();
+                    comprobacionTipoUsuario(uId);
                 }
 
                 @Override
@@ -270,13 +264,16 @@ public class PantallaPrincipal extends AppCompatActivity {
                             txtPassword.setError(null);
                             txtMail.setError(getResources().getString(R.string.java_correo_inexistente_snack));
                             limpiaCorreo();
+                            pDialog.dismiss();
                             break;
                         case FirebaseError.INVALID_PASSWORD:
                             txtMail.setError(null);
                             txtPassword.setError(getResources().getString(R.string.java_contraseña_incorrecta));
+                            pDialog.dismiss();
                             break;
                         default:
                             limpiaCampos();
+                            pDialog.dismiss();
                             break;
                     }
 
@@ -294,10 +291,40 @@ public class PantallaPrincipal extends AppCompatActivity {
             pDialog.setTitle(progressTitle);
             pDialog.setMessage(progressMessage);
             pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
+            pDialog.setCancelable(true);
             pDialog.show();
+        }
+
+        private void comprobacionTipoUsuario(String uId){
+            Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase() + "usuarios/" + uId);
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    boolean confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
+                    if (confAcademia){
+                        Toast.makeText(getApplicationContext(), "" + confAcademia, Toast.LENGTH_LONG).show();
+                        pDialog.dismiss();
+                        startActivity (new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+                        finish();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "" + confAcademia, Toast.LENGTH_LONG).show();
+                        pDialog.dismiss();
+                        startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                        finish();
+                    }
+                }
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
         }
 
     }
 
+    @Override
+    public void onBackPressed(){
+        recreate();
+    }
 }

@@ -132,6 +132,8 @@ public class PantallaTabsUsuario extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase());
+                ref.unauth();
                 finish();
             }
         });
@@ -145,6 +147,11 @@ public class PantallaTabsUsuario extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        recreate();
     }
 }
 

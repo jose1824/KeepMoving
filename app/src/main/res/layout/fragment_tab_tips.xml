@@ -6,15 +6,13 @@
     android:id="@+id/tips_coordinator"
     android:fitsSystemWindows="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/padding_fragments_tab">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/padding_fragments_tab">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+
 
                 <LinearLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,20 +27,26 @@
                     android:orientation="vertical"
                     android:id="@+id/laytipentos">
 
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
                     <GridView
                         android:id="@+id/grid"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:columnWidth="@dimen/size_grid"
                         android:horizontalSpacing="@dimen/espacio_grid"
                         android:numColumns="auto_fit"
                         android:padding="@dimen/espacio_grid"
                         android:verticalSpacing="@dimen/espacio_grid" />
+                    </ScrollView>
+
 
                 </LinearLayout>
 
-            </ScrollView>
+            </LinearLayout>
 
-        </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
