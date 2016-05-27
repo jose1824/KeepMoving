@@ -89,10 +89,10 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         int day = c.get(Calendar.DAY_OF_MONTH);
         dateFechaNac.init(year, month, day, null);
         //La fecha esta comprendida entre 5 años menos de la actual a 100 años mas
-        c.add(Calendar.DATE, -1825);
-        dateFechaNac.setMinDate(c.getTimeInMillis());
-        c.add(Calendar.DATE, 36500);
-        dateFechaNac.setMaxDate(c.getTimeInMillis());
+        Calendar cA = Calendar.getInstance();
+        cA.add(Calendar.DATE, -1825);
+        dateFechaNac.setMinDate(cA.getTimeInMillis());
+        dateFechaNac.setMaxDate(System.currentTimeMillis() - 1000 );
     }//Ennd on create
 
     @Override
@@ -132,10 +132,10 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         //Instancia para acceder a los atroibutos del usuario
          final Usuario user = new Usuario(false,
                 txtNombreCompleto.getEditText().getText().toString().trim(),
-                txtNombreUsuario.getEditText().getText().toString().trim(),
-                txtEmail.getEditText().getText().toString().trim(),
                 txtPassword.getEditText().getText().toString(),
-                 imagenBase64);
+                txtEmail.getEditText().getText().toString().trim(),
+                txtNombreUsuario.getEditText().getText().toString().trim(),
+                imagenBase64);
 
         final String confPassword = txtConfPassword.getEditText().getText().toString();
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
@@ -152,7 +152,8 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 validacionesUsuario.validacionNombreUsuario(user.getAliasUsuario()) &&
                 valLogin.validacionEmail(user.getEmailUsuario()) &&
                 valLogin.validacionContrasena(user.getPasswordUsuario()) &&
-                user.getPasswordUsuario().equals(confPassword)){
+                user.getPasswordUsuario().equals(confPassword) &&
+                user.getImagenUsuario64() != null){
 
 
             ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_titleCrear),
@@ -247,6 +248,10 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 Snackbar.make(coordinatorLayout, R.string.java_contra_diferente_snack,
                         Snackbar.LENGTH_SHORT).show();
             }//End if contraseñas no coinciden
+            if (user.getImagenUsuario64() == null){
+                Snackbar.make(coordinatorLayout, R.string.java_img_no_existe,
+                        Snackbar.LENGTH_SHORT).show();
+            }
 
         }//Emd else principal
     }//End mandarUsuario
@@ -277,7 +282,6 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         try {
             // When an Image is picked
             if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK
@@ -297,20 +301,27 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 String imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
                 // Set the Image in ImageView after decoding the String
-                imgUsuario.setImageBitmap(BitmapFactory
-                        .decodeFile(imgDecodableString));
+                Bitmap bitmapBandera = BitmapFactory.decodeFile(imgDecodableString);
+                int largoImagen = bitmapBandera.getHeight(), anchoImagen = bitmapBandera.getWidth();
 
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
-                imgUsuario.setImageBitmap(bitmap);
+                if (largoImagen > 1280 && anchoImagen > 960){
+                    Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
+                            Snackbar.LENGTH_SHORT).show();
+                }else {
+                    imgUsuario.setImageBitmap(BitmapFactory
+                            .decodeFile(imgDecodableString));
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+                    imgUsuario.setImageBitmap(bitmap);
 
-                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
 
+                    imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                }
             } else {
                 Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
                         Snackbar.LENGTH_SHORT).show();
@@ -319,7 +330,6 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_no_eligio_imagen),
                     Snackbar.LENGTH_SHORT).show();
         }
-
     }
 
     class ClaseAsyncTask extends AsyncTask {
@@ -352,8 +362,9 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                             usuario.setValue(user);
                             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                                     Snackbar.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                            pDialog.dismiss();
+                            ref.unauth();
+                            startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
                             finish();
                         }
 
@@ -363,18 +374,30 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                                 case FirebaseError.UNKNOWN_ERROR:
                                     Snackbar.make(coordinatorLayout, R.string.error_unknown,
                                             Snackbar.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
                                     break;
                                 case FirebaseError.NETWORK_ERROR:
                                     Snackbar.make(coordinatorLayout, R.string.error_network,
                                             Snackbar.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
                                     break;
                                 case FirebaseError.USER_CODE_EXCEPTION:
                                     Snackbar.make(coordinatorLayout, R.string.error_user,
                                             Snackbar.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
                                     break;
                                 case FirebaseError.DISCONNECTED:
                                     Snackbar.make(coordinatorLayout, R.string.error_disconnected,
                                             Snackbar.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
+                                    break;
+                                case FirebaseError.EMAIL_TAKEN:
+                                    Snackbar.make(coordinatorLayout, R.string.error_disconnected,
+                                            Snackbar.LENGTH_SHORT).show();
+                                    pDialog.dismiss();
+                                    break;
+                                default:
+                                    pDialog.dismiss();
                                     break;
                             }
 

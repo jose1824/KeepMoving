@@ -13,10 +13,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.shipp.keepmoving.ClasesAdapters.TabAdapterMainUsuario;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 public class PantallaTabsUsuario extends AppCompatActivity {
@@ -131,10 +133,10 @@ public class PantallaTabsUsuario extends AppCompatActivity {
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
-                Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase());
+                Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
                 ref.unauth();
                 finish();
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

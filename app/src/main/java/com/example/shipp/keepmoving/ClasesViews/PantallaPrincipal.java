@@ -57,8 +57,8 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-                finish();
+                /*startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                finish();*/
 
                 final String correo_electronico = txtMail.getEditText().getText().toString().trim();
                 final String password = txtPassword.getEditText().getText().toString();
@@ -305,16 +305,15 @@ public class PantallaPrincipal extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     boolean confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
                     if (confAcademia){
-                        Toast.makeText(getApplicationContext(), "" + confAcademia, Toast.LENGTH_LONG).show();
                         pDialog.dismiss();
-                        startActivity (new Intent(getApplicationContext(), PantallaTabsAcademia.class));
                         finish();
+                        startActivity (new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "" + confAcademia, Toast.LENGTH_LONG).show();
                         pDialog.dismiss();
-                        startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                         finish();
+                        startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                     }
                 }
                 @Override

@@ -77,7 +77,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+/*
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     Evento ev = new Evento();
                     Evento evento = dataSnapshot.getValue(Evento.class);
@@ -90,7 +90,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
                             evento.getHoraFinHr() + ":" + evento.getHoraFinMin();
                     ev.descripcion = Evento.DESCRIPCION_PREFIX + evento.getDescripcion();
                     result.add(ev);
-/*
+
                     ev.titulo = Evento.TITULO_PREFIX + child.child("evento").child("titulo").getValue();
                     ev.fechaHora = Evento.FECHA_PREFIX +
                             child.child("evento").child("diaEvento").getValue() + "/" +
@@ -101,9 +101,9 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
                             child.child("evento").child("diaEvento").getValue() + ":" +
                             child.child("evento").child("diaEvento").getValue();
                     ev.descripcion = Evento.DESCRIPCION_PREFIX + child.child("evento").child("descripcion").getValue();
-*/
-                }
 
+                }
+*/
             }
 
             @Override
