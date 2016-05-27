@@ -29,9 +29,6 @@ import java.util.List;
  * Created by xubudesktop1 on 18/05/16.
  */
 public class FragmentEventos  extends android.support.v4.app.Fragment{
-
-    private TextView navTextUsuario;
-    private TextView navTextCorreo;
     FloatingActionButton fab;
     FirebaseControl firebaseControl;
 
@@ -68,8 +65,6 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         return cLayout;
     }
 
-
-
     private void inicializaComponentes(){
         fab = (FloatingActionButton) cLayout.findViewById(R.id.fab);
         recList = (RecyclerView) cLayout.findViewById(R.id.recyclerView);
@@ -85,6 +80,17 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     Evento ev = new Evento();
+                    Evento evento = dataSnapshot.getValue(Evento.class);
+                    System.out.println(child.child("evento").getChildrenCount());
+
+                    ev.titulo = Evento.TITULO_PREFIX  + evento.getTitulo();
+                    ev.fechaHora = Evento.FECHA_PREFIX + evento.getDiaEvento() + "/" +
+                            evento.getMesEvento() + "/" + evento.getDiaEvento() + "\t" +
+                            evento.getHoraInicioHr() + ":" + evento.getHoraInicioMin() + " - " +
+                            evento.getHoraFinHr() + ":" + evento.getHoraFinMin();
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + evento.getDescripcion();
+                    result.add(ev);
+/*
                     ev.titulo = Evento.TITULO_PREFIX + child.child("evento").child("titulo").getValue();
                     ev.fechaHora = Evento.FECHA_PREFIX +
                             child.child("evento").child("diaEvento").getValue() + "/" +
@@ -95,7 +101,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
                             child.child("evento").child("diaEvento").getValue() + ":" +
                             child.child("evento").child("diaEvento").getValue();
                     ev.descripcion = Evento.DESCRIPCION_PREFIX + child.child("evento").child("descripcion").getValue();
-                    result.add(ev); //ARREGLAR
+*/
                 }
 
             }

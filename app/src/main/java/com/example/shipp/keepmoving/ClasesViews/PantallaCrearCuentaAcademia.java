@@ -59,6 +59,31 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
     String imagenBase64;
     double latitudAcademia;
     double longitudAcademia;
+    String direccion;
+
+    public double getLatitudAcademia() {
+        return latitudAcademia;
+    }
+
+    public void setLatitudAcademia(double latitudAcademia) {
+        this.latitudAcademia = latitudAcademia;
+    }
+
+    public double getLongitudAcademia() {
+        return longitudAcademia;
+    }
+
+    public void setLongitudAcademia(double longitudAcademia) {
+        this.longitudAcademia = longitudAcademia;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,23 +204,23 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         ValidacionesNuevoUsuario validacionesUsuario = new ValidacionesNuevoUsuario();
 
         if ( acad.getNombreAcademia().equals("")){
-            txtNombreAcademia.setError("" + R.string.java_error_falta);
-            Snackbar.make(coordinatorLayout, R.string.java_faltantes_snack,
+            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
         }
         if ( acad.getCorreoAcademia().equals("")){
-            txtCorreoAcademia.setError("" + R.string.java_error_falta);
-            Snackbar.make(coordinatorLayout, R.string.java_faltantes_snack,
+            txtCorreoAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
         }
         if ( acad.getTelefonoAcademia().equals("")){
-            txtNombreAcademia.setError("" + R.string.java_error_falta);
-            Snackbar.make(coordinatorLayout, R.string.java_faltantes_snack,
+            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
         }
         if ( acad.getNombreAcademia().equals("")){
-            txtNombreAcademia.setError("" + R.string.java_error_falta);
-            Snackbar.make(coordinatorLayout, R.string.java_faltantes_snack,
+            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
         }
 
@@ -224,8 +249,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (validacionesUsuario.validacionNombreUsuario(acad.getNombreAcademia()) == false){
 
                 limpiarNombreAcademia();
-                txtNombreAcademia.setError("" + R.string.java_error_nombreacademia);
-                Snackbar.make(coordinatorLayout, R.string.java_nombre_rechazado_snack,
+                txtNombreAcademia.setError(getResources().getString(R.string.java_error_nombreacademia));
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_nombre_rechazado_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if nombre mal
@@ -233,8 +258,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (valLogin.validacionEmail(acad.getCorreoAcademia()) == false){
 
                 limpiarCorreoAcademia();
-                txtCorreoAcademia.setError("" + R.string.java_error_email);
-                Snackbar.make(coordinatorLayout, R.string.java_email_rechazado_snack,
+                txtCorreoAcademia.setError(getResources().getString(R.string.java_error_email));
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_email_rechazado_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if correo mal
@@ -242,8 +267,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (validacionesAcademia.validacionTelefono(acad.getTelefonoAcademia()) == false){
 
                 limpiarTelefonoAcademia();
-                txtTelefonoAcademia.setError("" + R.string.java_error_telefonoacademia);
-                Snackbar.make(coordinatorLayout, R.string.java_telefono_snack,
+                txtTelefonoAcademia.setError(getResources().getString(R.string.java_error_telefonoacademia));
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_telefono_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if telefono mal
@@ -252,7 +277,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
                 limpiarDireccionAcademia();
                 txtDireccionAcademia.setError(getResources().getString(R.string.java_error_direccionacademia));
-                Snackbar.make(coordinatorLayout, R.string.java_direccion_snack,
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_direccion_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if direccion mal
@@ -260,8 +285,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) == false){
 
                 limpiarDireccionAcademia();
-                txtEncargadoAcademia.setError("" + R.string.java_error_encargadoacademia);
-                Snackbar.make(coordinatorLayout, R.string.java_nombre_rechazado_snack,
+                txtEncargadoAcademia.setError(getResources().getString(R.string.java_error_encargadoacademia));
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_nombre_rechazado_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//Nombre de encargado mal
@@ -269,8 +294,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) == false){
 
                 limpiarEncargadoAcademia();
-                txtEncargadoAcademia.setError("" + R.string.java_error_encargadoacademia);
-                Snackbar.make(coordinatorLayout, R.string.java_nombre_rechazado_snack,
+                txtEncargadoAcademia.setError(getResources().getString(R.string.java_error_encargadoacademia));
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_nombre_rechazado_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if Nombre de encargado mal
@@ -278,8 +303,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (validacionesAcademia.validacionDescripcion(acad.getDescripcionAdademia()) == false){
 
                 limpiarDescripcionAcademia();
-                txtDescripcionAcademia.setError("" + R.string.java_error_descripcionacademia);
-                Snackbar.make(coordinatorLayout, R.string.java_descripcion_snack,
+                txtDescripcionAcademia.setError(getResources().getString(R.string.java_error_descripcionacademia));
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_descripcion_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if  descripcion mal
@@ -287,7 +312,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (valLogin.validacionContrasena(acad.getPasswordAcademia()) == false){
 
                 limpiarPasswordAcademia();
-                Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_contra_rechazada_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if contraseña mal
@@ -295,7 +320,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (acad.getPasswordAcademia().equals(confPassword) == false){
 
                 limpiarPasswordAcademia();
-                Snackbar.make(coordinatorLayout, R.string.java_contra_diferente_snack,
+                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_contra_diferente_snack),
                         Snackbar.LENGTH_SHORT).show();
 
             }//Contraseñas no coinciden
@@ -343,34 +368,46 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Here we need to check if the activity that was triggers was the Image Gallery.
-        // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
-        // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
-        if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
-            // Let's read picked image data - its URI
-            Uri pickedImage = data.getData();
-            // Let's read picked image path using content resolver
-            String[] filePath = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-            cursor.moveToFirst();
-            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+        try {
+            // When an Image is picked
+            if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-            imgAcademia.setImageBitmap(bitmap);
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
 
-            imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+                // Set the Image in ImageView after decoding the String
+                imgAcademia.setImageBitmap(BitmapFactory
+                        .decodeFile(imgDecodableString));
 
-            // Do something with the bitmap
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+                imgAcademia.setImageBitmap(bitmap);
 
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
 
-            // At the end remember to close the cursor or you will end with the RuntimeException!
-            cursor.close();
+                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            } else {
+                Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
+                        Snackbar.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_no_eligio_imagen),
+                    Snackbar.LENGTH_SHORT).show();
         }
     }
 

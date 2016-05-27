@@ -149,65 +149,106 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:paddingTop="@dimen/padding_elements"
-                    android:gravity="center_horizontal"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/agregar_evento_fecha"
-                        android:textSize="@dimen/big_text"
-                        android:id="@+id/titulo_DatePicker" />
+                    <ImageButton
+                        android:layout_width="@dimen/size_direction_button"
+                        android:layout_height="@dimen/size_direction_button"
+                        android:id="@+id/btn_dateEvento"
+                        android:background="@color/colorPrimary"
+                        android:src="@mipmap/ic_date_range_white_24dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_gravity="center_vertical|left"/>
 
-                    <DatePicker
-                        android:layout_width="wrap_content"
+                    <android.support.design.widget.TextInputLayout
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/evento_date" />
+                        android:id="@+id/evento_et_4"
+                        android:theme="@style/EditTheme"
+                        android:textColorHint="@color/colorPrimaryText">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_direccion_academia"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/EditTheme"
+                            android:textColorHint="@color/colorPrimaryText" />
+                    </android.support.design.widget.TextInputLayout>
+
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:paddingTop="@dimen/padding_elements"
-                    android:gravity="center_horizontal"
                     android:layout_height="match_parent">
 
+                    <ImageButton
+                        android:layout_width="@dimen/size_direction_button"
+                        android:layout_height="@dimen/size_direction_button"
+                        android:id="@+id/btn_tineEventoIni"
+                        android:background="@color/colorPrimary"
+                        android:src="@mipmap/ic_date_range_white_24dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_gravity="center_vertical|left"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <android.support.design.widget.TextInputLayout
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/agregar_evento_hora_inicio"
-                        android:textSize="@dimen/big_text"
-                        android:id="@+id/titulo_TimePickerInicio" />
+                        android:id="@+id/evento_et_5"
+                        android:theme="@style/EditTheme"
+                        android:textColorHint="@color/colorPrimaryText">
 
-                    <TimePicker
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/timePickerInicio" />
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_hora_inicio"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/EditTheme"
+                            android:textColorHint="@color/colorPrimaryText" />
+                    </android.support.design.widget.TextInputLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:paddingTop="@dimen/padding_elements"
-                    android:gravity="center_horizontal"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/agregar_evento_hora_fin"
-                        android:textSize="@dimen/big_text"
-                        android:id="@+id/titulo_timePickerFin" />
+                    <ImageButton
+                        android:layout_width="@dimen/size_direction_button"
+                        android:layout_height="@dimen/size_direction_button"
+                        android:id="@+id/btn_tineEventoFin"
+                        android:background="@color/colorPrimary"
+                        android:src="@mipmap/ic_date_range_white_24dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_gravity="center_vertical|left"/>
 
-                    <TimePicker
-                        android:layout_width="wrap_content"
+                    <android.support.design.widget.TextInputLayout
+                        android:paddingTop="@dimen/padding_elements"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/timePickerFin" />
+                        android:id="@+id/evento_et_6"
+                        android:theme="@style/EditTheme"
+                        android:textColorHint="@color/colorPrimaryText">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_hora_fin"
+                            android:textColor="@color/colorPrimaryText"
+                            android:theme="@style/EditTheme"
+                            android:textColorHint="@color/colorPrimaryText" />
+                    </android.support.design.widget.TextInputLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

@@ -49,6 +49,8 @@
     <string name="hint_contra_nueva">Contraseña nueva</string>
     <string name="hint_contra_nueva_conf">Comfirmar contraseña nueva</string>
     <string name="hint_nombre_evento">Nombre del evento</string>
+    <string name="hint_hora_inicio">Hora de inicio del evento.</string>
+    <string name="hint_hora_fin">Hora de fin del evento.</string>
 
     <!--Pantalla Inicial -->
     <string name="acercate">acércate, mira y\naprende</string>
@@ -71,6 +73,8 @@
     <string name="java_error_nombre">El nombre ingresado no es valido</string>
     <string name="java_error_email">El correo ingresado no es valido</string>
     <string name="java_error_contra">La contraseña no es válida.</string>
+    <string name="java_no_eligio_imagen">No ha seleccionado una imagen.</string>
+    <string name="java_error_imagen">Algo salió mal</string>
 
     <!--Pantallla Crear Cuenta Academia-->
     <string name="crear_cuenta_academia">Crear una cuenta de academia</string>

@@ -73,10 +73,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 if (activityAnterior.equals("activityEvento")) {
+                    PantallaAgregarEvento pantallaAgregarEvento = new PantallaAgregarEvento();
+                    pantallaAgregarEvento.setDireccion(direccion);
+                    pantallaAgregarEvento.setLatitud(lattitud);
+                    pantallaAgregarEvento.setLongitud(longitud);
                     startActivity(new Intent(getApplicationContext(), PantallaAgregarEvento.class));
                 }
-                if (activityAnterior.equals("activityAcademia")) {
+                else if (activityAnterior.equals("activityAcademia")) {
+                    PantallaCrearCuentaAcademia pantallaCrearCuentaAcademia = new PantallaCrearCuentaAcademia();
+                    pantallaCrearCuentaAcademia.setDireccion(direccion);
+                    pantallaCrearCuentaAcademia.setLatitudAcademia(lattitud);
+                    pantallaCrearCuentaAcademia.setLongitudAcademia(longitud);
                     startActivity(new Intent(getApplicationContext(), PantallaCrearCuentaAcademia.class));
+                }
+                else {
+                    System.out.println(activityAnterior);;
                 }
 
             }
@@ -158,6 +169,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     .draggable(true));
 
                 direccion = marcador.getTitle();
+                lattitud = marcador.getPosition().latitude;
+                longitud = marcador.getPosition().longitude;
             }
         });
 

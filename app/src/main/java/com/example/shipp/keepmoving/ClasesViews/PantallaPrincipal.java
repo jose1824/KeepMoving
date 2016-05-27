@@ -57,6 +57,9 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                finish();
+
                 final String correo_electronico = txtMail.getEditText().getText().toString().trim();
                 final String password = txtPassword.getEditText().getText().toString();
                 final Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase());

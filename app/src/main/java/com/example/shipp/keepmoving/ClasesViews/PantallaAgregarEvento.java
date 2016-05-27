@@ -62,8 +62,34 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     int diaEvento;
     int mesEvento;
     int anioEvento;
-    double latitud;
-    double longitud;
+    private double latitud;
+    private double longitud;
+    private String direccion;
+
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,15 +169,13 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         txtDireccion = (TextInputLayout) findViewById(R.id.evento_et_2);
         MapsActivity map = new MapsActivity();
         if (map.getDireccion() != null || map.getDireccion() != "") {
-            txtDireccion.getEditText().setText(map.getDireccion());
+            txtDireccion.getEditText().setText(getDireccion());
         }
         txtDireccion.getEditText().setOnKeyListener(null); //El Edit text no se podra editar pero si copiar y pegar su contenido
         txtDireccion.getEditText().setKeyListener(null);
 
         txtDescripcion = (TextInputLayout) findViewById(R.id.evento_et_3);
-        dateEvento = (DatePicker) findViewById(R.id.evento_date);
-        timeInicio = (TimePicker) findViewById(R.id.timePickerInicio);
-        timeFin = (TimePicker) findViewById(R.id.timePickerFin);
+
         imgEvento = (ImageView) findViewById(R.id.agregar_foto_evento);
         obtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -159,11 +183,15 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     }
 
     private void mandarEvento(){
+        if (getDireccion() != null || getDireccion() != "") {
+            txtDireccion.getEditText().setText(getDireccion());
+        }
+
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(), //Instancia
                 txtDireccion.getEditText().getText().toString().trim(),
-                longitud,
-                latitud,
+                getLongitud(),
+                getLatitud(),
                 txtDescripcion.getEditText().getText().toString().trim(),
                 horaInicioHr,
                 horaInicioMin,
@@ -225,32 +253,46 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Here we need to check if the activity that was triggers was the Image Gallery.
-        // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
-        // If the resultCode is RESULT_OK and there is some data we know that an image was picked.
-        if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK && data != null) {
-            // Let's read picked image data - its URI
-            Uri pickedImage = data.getData();
-            // Let's read picked image path using content resolver
-            String[] filePath = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-            cursor.moveToFirst();
-            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+        try {
+            // When an Image is picked
+            if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-            imgEvento.setImageBitmap(bitmap);
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
-            // Do something with the bitmap
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream .toByteArray();
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
 
-            imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+                // Set the Image in ImageView after decoding the String
+                imgEvento.setImageBitmap(BitmapFactory
+                        .decodeFile(imgDecodableString));
 
-            // At the end remember to close the cursor or you will end with the RuntimeException!
-            cursor.close();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+                imgEvento.setImageBitmap(bitmap);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            } else {
+                Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
+                        Snackbar.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_no_eligio_imagen),
+                    Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -280,7 +322,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                     Snackbar.LENGTH_SHORT).show();
 
-            startActivity(new Intent(getApplicationContext(), PantallaMainAcademia.class));
+            startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
             finish();
 
             return null;
