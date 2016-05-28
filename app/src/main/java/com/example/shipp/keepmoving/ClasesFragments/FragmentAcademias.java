@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by xubudesktop1 on 17/05/16.
@@ -50,7 +53,11 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
-        //llenarList();
+        llenarList();
+
+        for (Object a: DataSource.ACADEMIAS){
+            System.out.println(a);
+        }
 
         adaptador = new AcademiaAdapter(getActivity().getApplicationContext(), DataSource.ACADEMIAS);
         lista.setAdapter(adaptador);
@@ -65,8 +72,41 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
     private void llenarList(){
         final ArrayList<Academia> academiaList = new ArrayList<Academia>();
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
-        ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/academias");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("There are " + dataSnapshot.getChildrenCount() + " blog posts");
+                for (DataSnapshot data: dataSnapshot.getChildren()){
+                    String uIdBranch = (String) String.valueOf(data.getKey());
+                    System.out.println(uIdBranch);
+
+                    Firebase firebaseList = new Firebase("https://keep-moving-data.firebaseio.com/academias" + uIdBranch);
+                    firebaseList.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
+                            String imagen64Academia = (String) dataSnapshot.child("imagenAcademia64").getValue();
+
+                            DataSource.ACADEMIAS.add(new Academia(nombreAcademia, imagen64Academia));
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+                            Snackbar.make(cLayout, "No se pudo cargar el contenido", Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        /*ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
@@ -82,6 +122,6 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
             }
-        });
+        });*/
     }
 }
