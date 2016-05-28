@@ -95,7 +95,7 @@ public class PantallaTabsAcademia extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_config:
-                //startActivity(new Intent(getApplicationContext(), PantallaConfiguracion.class));
+                startActivity(new Intent(getApplicationContext(), PantallaConfiguracionAcademia.class));
                 break;
             case R.id.action_cerrar:
                 cerrarSesion();

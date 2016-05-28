@@ -44,6 +44,14 @@ public class PantallaEleccionUsuario extends AppCompatActivity {
                 finish();
             }
         });
+        java_pantalla_eleccion_btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), PantallaCrearCuentaAcademia.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
     }
 

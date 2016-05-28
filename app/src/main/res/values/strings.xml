@@ -135,9 +135,11 @@
     <string name="conf_general">General</string>
     <string name="conf_inf">Información de perfil</string>
     <string name="conf_cambia">Actualiza tu información personal.</string>
+    <string name="conf_cambia_academia">Actualiza la información de tu academia.</string>
     <string name="conf_seguridad">Seguridad</string>
     <string name="conf_contra">Contraseña</string>
     <string name="conf_clave">Cambia o actualiza tu clave de acceso.</string>
+    <string name="conf_clave_academia">Cambia o actualiza tu clave de acceso.</string>
     <string name="conf_extras">Extras</string>
     <string name="conf_acerca">Acerca de nosotros</string>
     <string name="conf_conoce">Conoce quien esta detras de Keep Moving.</string>

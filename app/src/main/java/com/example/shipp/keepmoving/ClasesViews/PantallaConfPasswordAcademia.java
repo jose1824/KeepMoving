@@ -27,12 +27,10 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class PantallaConfPassword extends AppCompatActivity {
+public class PantallaConfPasswordAcademia extends AppCompatActivity {
     private TextInputLayout txtPasswordActual;
     private TextInputLayout txtPasswordNueva;
     private TextInputLayout txtPasswordConf;
@@ -44,11 +42,10 @@ public class PantallaConfPassword extends AppCompatActivity {
     private String uId;
     private String email;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_conf_password);
+        setContentView(R.layout.activity_pantalla_conf_password_academia);
 
         Firebase.setAndroidContext(this);
         //Inicializacion de la toolbar
@@ -84,7 +81,7 @@ public class PantallaConfPassword extends AppCompatActivity {
             }
         });
 
-    }//End on create
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,15 +103,6 @@ public class PantallaConfPassword extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }//End on options
-
-    private void inicializaComponentes(){
-        txtPasswordActual = (TextInputLayout) findViewById(R.id.confPassword_et_1);
-        txtPasswordNueva = (TextInputLayout) findViewById(R.id.confPassword_et_2);
-        txtPasswordConf = (TextInputLayout) findViewById(R.id.confPassword_et_3);
-        imgViewConfPass = (ImageView) findViewById(R.id.conImgPass);
-        txtViewConfPass = (TextView) findViewById(R.id.confUsuarioNombrePass);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_confPassword_coordinator);
-    }//End inicializa componentes
 
     private void cambiarPassword(final String uId, String email){
         final String passActual = txtPasswordActual.getEditText().getText().toString();
@@ -169,26 +157,38 @@ public class PantallaConfPassword extends AppCompatActivity {
 
     }//End cambia password
 
+    private void actualizaBranch(String uId, String pass){
+        Firebase refAcademia = new Firebase("https://keep-moving-data.firebaseio.com/academias/" + uId);
+        Firebase refUsuario = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
+        Map<String, Object> academia = new HashMap<String, Object>();
+        academia.put("passwordAcademia", pass);
+
+        refUsuario.updateChildren(academia);
+        refAcademia.updateChildren(academia);
+    }
+
     private void limpiarCampos(){
         txtPasswordConf.getEditText().setText("");
         txtPasswordNueva.getEditText().setText("");
         txtPasswordActual.getEditText().setText("");
     }
 
-    private void actualizaBranch(String uId, String pass){
-        Firebase refUsuario = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
-        Map<String, Object> usuario = new HashMap<String, Object>();
-        usuario.put("passwordUsuario", pass);
-        refUsuario.updateChildren(usuario);
-    }
+    private void inicializaComponentes(){
+        txtPasswordActual = (TextInputLayout) findViewById(R.id.confPassword_et_1_academia);
+        txtPasswordNueva = (TextInputLayout) findViewById(R.id.confPassword_et_2_academia);
+        txtPasswordConf = (TextInputLayout) findViewById(R.id.confPassword_et_3_academia);
+        imgViewConfPass = (ImageView) findViewById(R.id.conImgPassAcademia);
+        txtViewConfPass = (TextView) findViewById(R.id.confUsuarioNombrePass_academia);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_confPassword_coordinator_academia);
+    }//End inicializa componentes
 
     private void cargaInformacion(String uId){
         Firebase refUsuario = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
         refUsuario.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String aliasUsuario = (String) dataSnapshot.child("aliasUsuario").getValue();
-                String fotoUsuario = (String) dataSnapshot.child("imagenUsuario64").getValue();
+                String aliasUsuario = (String) dataSnapshot.child("nombreAcademia").getValue();
+                String fotoUsuario = (String) dataSnapshot.child("imagenAcademia64").getValue();
 
                 byte[] decodedString  = Base64.decode(fotoUsuario, Base64.DEFAULT);
                 Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -227,7 +227,7 @@ public class PantallaConfPassword extends AppCompatActivity {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(getApplicationContext(), PantallaConfiguracion.class);
+                Intent i = new Intent(getApplicationContext(), PantallaConfiguracionAcademia.class);
                 startActivity(i);
                 finish();
             }
@@ -242,5 +242,4 @@ public class PantallaConfPassword extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
 }

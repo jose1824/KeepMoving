@@ -59,6 +59,9 @@
         <activity android:name=".ClasesViews.PantallaTabsUsuario" />
         <activity android:name=".ClasesViews.PantallaTabsAcademia" />
         <activity android:name=".ClasesViews.DetalleTips" />
+        <activity android:name=".ClasesViews.PantallaConfiguracionAcademia" />
+        <activity android:name=".ClasesViews.PantallaConfInformacionAcademia" />
+        <activity android:name=".ClasesViews.PantallaConfPasswordAcademia"></activity>
     </application>
 
 </manifest>

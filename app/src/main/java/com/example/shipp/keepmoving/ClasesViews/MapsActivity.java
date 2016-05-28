@@ -69,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle bundle = getIntent().getExtras();
         activityAnterior = bundle.getString("activityAnterior");
 
-        aceptarDireccion.setOnClickListener(new View.OnClickListener() {
+        /*aceptarDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (activityAnterior.equals("activityEvento")) {
@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
             }
-        });
+        });*/
 
     }
 

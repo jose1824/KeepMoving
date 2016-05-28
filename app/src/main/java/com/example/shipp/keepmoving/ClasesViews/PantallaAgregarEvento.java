@@ -73,30 +73,6 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     private String direccion;
 
 
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +92,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
+                Intent i = new Intent(getApplicationContext(), PantallaTabsAcademia.class);
                 startActivity(i);
                 finish();
             }
@@ -227,10 +203,6 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         txtTitulo = (TextInputLayout) findViewById(R.id.evento_et_1);
 
         txtDireccion = (TextInputLayout) findViewById(R.id.evento_et_2);
-        MapsActivity map = new MapsActivity();
-        if (map.getDireccion() != null || map.getDireccion() != "") {
-            txtDireccion.getEditText().setText(getDireccion());
-        }
         txtDireccion.getEditText().setOnKeyListener(null); //El Edit text no se podra editar pero si copiar y pegar su contenido
         txtDireccion.getEditText().setKeyListener(null);
 
@@ -326,8 +298,8 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(), //Instancia
                 txtDireccion.getEditText().getText().toString().trim(),
-                getLongitud(),
-                getLatitud(),
+                longitud,
+                latitud,
                 txtDescripcion.getEditText().getText().toString().trim(),
                 horaInicioHr,
                 horaInicioMin,

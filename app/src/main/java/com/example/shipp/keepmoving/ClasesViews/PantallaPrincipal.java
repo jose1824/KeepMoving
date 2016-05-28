@@ -254,7 +254,6 @@ public class PantallaPrincipal extends AppCompatActivity {
             ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
                 @Override
                 public void onAuthenticated(AuthData authData) {
-                    startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
                     String uId = authData.getUid();
                     comprobacionTipoUsuario(uId);
                 }

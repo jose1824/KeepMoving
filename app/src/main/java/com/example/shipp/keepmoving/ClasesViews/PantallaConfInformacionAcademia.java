@@ -1,7 +1,6 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,18 +13,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,31 +32,33 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.shipp.keepmoving.Clases.Academia;
-import com.example.shipp.keepmoving.Clases.Usuario;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
-import com.example.shipp.keepmoving.ClasesFragments.FragmentTips;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesLogin;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesNuevaAcademia;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesNuevoUsuario;
+import com.example.shipp.keepmoving.ClasesViews.PantallaEleccionUsuario;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class PantallaCrearCuentaAcademia extends AppCompatActivity {
+public class PantallaConfInformacionAcademia extends AppCompatActivity {
+
     private TextInputLayout txtNombreAcademia;
     private TextInputLayout txtTelefonoAcademia;
     private TextInputLayout txtCorreoAcademia;
     private TextInputLayout txtDireccionAcademia;
     private TextInputLayout txtEncargadoAcademia;
     private TextInputLayout txtDescripcionAcademia;
-    private TextInputLayout txtPaswwordAcademia;
-    private TextInputLayout txtPasswordConfAcademia;
     private ImageButton btnObtenerDireccion;
     private ImageView imgAcademia;
     private final static int SELECT_PHOTO = 12345;
@@ -78,34 +74,13 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
     private double longitudAcademia;
     private String direccion;
 
-    /*public double getLatitudAcademia() {
-        return latitudAcademia;
-    }
+    private String uId;
 
-    public void setLatitudAcademia(double latitudAcademia) {
-        this.latitudAcademia = latitudAcademia;
-    }
-
-    public double getLongitudAcademia() {
-        return longitudAcademia;
-    }
-
-    public void setLongitudAcademia(double longitudAcademia) {
-        this.longitudAcademia = longitudAcademia;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pantalla_crear_cuenta_academia);
+        setContentView(R.layout.activity_pantalla_conf_informacion_academia);
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
@@ -116,21 +91,36 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         //Inicializacion de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.crear_cuenta_academia));
+        getSupportActionBar().setTitle("Actualizar datos");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
-                startActivity(i);
-                finish();
+                dialogoRegresar();
             }
         });//End toolbar listener
+        Firebase.setAndroidContext(this);
+
+        Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        ref.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    uId = authData.getUid();
+                    cargaInformacion(uId);
+                } else {
+                    Snackbar.make(coordinatorLayout, R.string.conf_in_usuario,
+                            Snackbar.LENGTH_LONG).show();
+                    Intent i = new Intent(getApplicationContext(), PantallaConfiguracionAcademia.class);
+                    startActivity(i);
+                    finish();
+                }
+            }
+        });
         inicializaComponentes();
         //validarInternet();
-        Firebase.setAndroidContext(this);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,8 +142,65 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                 }
             }
         });
+    }
 
-    }//End on create
+    private void cargaInformacion(String uId){
+        Firebase refUsuario = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
+        refUsuario.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String imagenAcademia64 = (String) dataSnapshot.child("imagenAcademia64").getValue();
+                String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
+                String telefonoAcademia = (String) dataSnapshot.child("telefonoAcademia").getValue();
+                String correoAcademia = (String) dataSnapshot.child("correoAcademia").getValue();
+                String direccionAcademia = (String) dataSnapshot.child("direccionAcademia").getValue();
+                String encargadoAcademia = (String) dataSnapshot.child("encargadoAcademia").getValue();
+                String descripcionAcademia = (String) dataSnapshot.child("descripcionAdademia").getValue();
+                Double latitudAcademiaRec = (Double) dataSnapshot.child("latitudAcademia").getValue();
+                Double longitudAcademiaRec = (Double) dataSnapshot.child("longitudAcademia").getValue();
+
+                byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
+                Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                imgAcademia.setImageBitmap(decodedImage);
+
+                latitudAcademia = latitudAcademiaRec;
+                longitudAcademia = longitudAcademiaRec;
+
+                txtNombreAcademia.getEditText().setText(nombreAcademia);
+                txtTelefonoAcademia.getEditText().setText(telefonoAcademia);
+                txtCorreoAcademia.getEditText().setText(correoAcademia);
+                txtDireccionAcademia.getEditText().setText(direccionAcademia);
+                txtEncargadoAcademia.getEditText().setText(encargadoAcademia);
+                txtDescripcionAcademia.getEditText().setText(descripcionAcademia);
+
+                imagenBase64 = imagenAcademia64;
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private void inicializaComponentes(){
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_conf_CuentaAcademia_coordinator);
+        btnObtenerDireccion = (ImageButton) findViewById(R.id.conf_btn_rastrear_direccion);
+        txtNombreAcademia = (TextInputLayout) findViewById(R.id.conf_academia_et_1);
+        txtTelefonoAcademia = (TextInputLayout) findViewById(R.id.conf_academia_et_2);
+        txtCorreoAcademia = (TextInputLayout) findViewById(R.id.conf_academia_et_3);
+
+        txtDireccionAcademia = (TextInputLayout) findViewById(R.id.conf_academia_et_4);
+        txtDireccionAcademia.getEditText().setOnKeyListener(null); //El Edit text no se podra editar pero si copiar y pegar su contenido
+        txtDireccionAcademia.getEditText().setKeyListener(null);
+
+
+        txtEncargadoAcademia = (TextInputLayout) findViewById(R.id.conf_academia_et_5);
+        txtDescripcionAcademia = (TextInputLayout) findViewById(R.id.conf_academia_et_6);
+        imgAcademia = (ImageView) findViewById(R.id.conf_academia_imagen_perfil);
+        fab = (FloatingActionButton) findViewById(R.id.conf_academia_fab);
+        firebaseControl = new FirebaseControl();
+    }
 
     private void comenzarLocalizacion() throws IOException {
         //Obtenemos una referencia al LocationManager
@@ -238,8 +285,6 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -260,47 +305,14 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }//End on options
 
-    private void inicializaComponentes(){
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_CuentaAcademia_coordinator);
-        btnObtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
-        txtNombreAcademia = (TextInputLayout) findViewById(R.id.academia_et_1);
-        txtTelefonoAcademia = (TextInputLayout) findViewById(R.id.academia_et_2);
-        txtCorreoAcademia = (TextInputLayout) findViewById(R.id.academia_et_3);
-
-        txtDireccionAcademia = (TextInputLayout) findViewById(R.id.academia_et_4);
-        MapsActivity map = new MapsActivity();
-        if (map.getDireccion() != null || map.getDireccion() != "") {
-            txtDireccionAcademia.getEditText().setText(map.getDireccion());
-        }
-        txtDireccionAcademia.getEditText().setOnKeyListener(null); //El Edit text no se podra editar pero si copiar y pegar su contenido
-        txtDireccionAcademia.getEditText().setKeyListener(null);
-
-
-        txtEncargadoAcademia = (TextInputLayout) findViewById(R.id.academia_et_5);
-        txtDescripcionAcademia = (TextInputLayout) findViewById(R.id.academia_et_6);
-        txtPaswwordAcademia = (TextInputLayout) findViewById(R.id.academia_et_7);
-        txtPasswordConfAcademia = (TextInputLayout) findViewById(R.id.academia_et_8);
-        imgAcademia = (ImageView) findViewById(R.id.academia_imagen_perfil);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        firebaseControl = new FirebaseControl();
-    }//End inicializaComponentes
-
     private void mandarAcademia(){
-        //Instancia para acceder a los atroibutos de la academia
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
-        Academia acad = new Academia(true,
-                txtNombreAcademia.getEditText().getText().toString().trim(),
-                txtCorreoAcademia.getEditText().getText().toString().trim(),
-                txtTelefonoAcademia.getEditText().getText().toString().trim(),
-                txtDireccionAcademia.getEditText().getText().toString().trim(),
-                latitudAcademia,
-                longitudAcademia,
-                txtEncargadoAcademia.getEditText().getText().toString().trim(),
-                txtDescripcionAcademia.getEditText().getText().toString().trim(),
-                txtPaswwordAcademia.getEditText().getText().toString().trim(),
-                imagenBase64);
 
-        final String confPassword = txtPasswordConfAcademia.getEditText().getText().toString();
+        final String nombreAcademia = txtNombreAcademia.getEditText().getText().toString().trim();
+        final String telefonoAcademia = txtTelefonoAcademia.getEditText().getText().toString().trim();
+        final String correoAcademia = txtCorreoAcademia.getEditText().getText().toString().trim();
+        final String direccionAcademia = txtDireccionAcademia.getEditText().getText().toString().trim();
+        final String encargadoAcademia = txtEncargadoAcademia.getEditText().getText().toString().trim();
+        final String descripcionAcademia = txtDescripcionAcademia.getEditText().getText().toString().trim();
 
         //Instancia para acceder a las validaciones propias de los campos
         ValidacionesNuevaAcademia validacionesAcademia = new ValidacionesNuevaAcademia();
@@ -311,50 +323,47 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         //Instancia para acceder a las validaciones propias de los campos de nombre
         ValidacionesNuevoUsuario validacionesUsuario = new ValidacionesNuevoUsuario();
 
-        if ( acad.getNombreAcademia().equals("")){
-            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
-            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
-                    Snackbar.LENGTH_SHORT).show();
-        }
-        if ( acad.getCorreoAcademia().equals("")){
-            txtCorreoAcademia.setError(getResources().getString(R.string.java_error_falta));
-            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
-                    Snackbar.LENGTH_SHORT).show();
-        }
-        if ( acad.getTelefonoAcademia().equals("")){
-            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
-            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
-                    Snackbar.LENGTH_SHORT).show();
-        }
-        if ( acad.getNombreAcademia().equals("")){
-            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
-            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
-                    Snackbar.LENGTH_SHORT).show();
-        }
+
+        if (validacionesUsuario.validacionNombreUsuario(nombreAcademia) &&
+                valLogin.validacionEmail(correoAcademia) &&
+                validacionesAcademia.validacionTelefono(telefonoAcademia) &&
+                validacionesAcademia.validacionDireccion(direccionAcademia) &&
+                validacionesUsuario.validacionNombreCompleto(encargadoAcademia) &&
+                validacionesAcademia.validacionDescripcion(descripcionAcademia)){
 
 
-        if (validacionesUsuario.validacionNombreUsuario(acad.getNombreAcademia()) &&
-                valLogin.validacionEmail(acad.getCorreoAcademia()) &&
-                validacionesAcademia.validacionTelefono(acad.getTelefonoAcademia()) &&
-                validacionesAcademia.validacionDireccion(acad.getDireccionAcademia()) &&
-                validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) &&
-                validacionesAcademia.validacionDescripcion(acad.getDescripcionAdademia()) &&
-                valLogin.validacionContrasena(acad.getPasswordAcademia()) &&
-                acad.getPasswordAcademia().equals(confPassword)){
+            Firebase refUsuario = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
+            Map<String, Object> academia = new HashMap<String, Object>();
+            academia.put("nombreAcademia", nombreAcademia);
+            academia.put("telefonoAcademia", telefonoAcademia);
+            academia.put("correoAcademia", correoAcademia);
+            academia.put("direccionAcademia", direccionAcademia);
+            academia.put("encargadoAcademia", encargadoAcademia);
+            academia.put("descripcionAdademia", descripcionAcademia);
+            academia.put("latitudAcademia", latitudAcademia);
+            academia.put("longitudAcademia", longitudAcademia);
+            academia.put("imagenAcademia64", imagenBase64);
+            refUsuario.updateChildren(academia);
 
+            Firebase refAcademia = new Firebase("https://keep-moving-data.firebaseio.com/academias/" + uId);
+            Map<String, Object> academiaAct = new HashMap<String, Object>();
+            academiaAct.put("nombreAcademia", nombreAcademia);
+            academiaAct.put("telefonoAcademia", telefonoAcademia);
+            academiaAct.put("correoAcademia", correoAcademia);
+            academiaAct.put("direccionAcademia", direccionAcademia);
+            academiaAct.put("encargadoAcademia", encargadoAcademia);
+            academiaAct.put("descripcionAdademia", descripcionAcademia);
+            academiaAct.put("latitudAcademia", latitudAcademia);
+            academiaAct.put("longitudAcademia", longitudAcademia);
+            academiaAct.put("imagenAcademia64", imagenBase64);
+            refAcademia.updateChildren(academia);
 
-            ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_titleCrear),
-                    getResources().getString(R.string.java_progress_message),
-                    ref,
-                    acad,
-                    acad.getCorreoAcademia(),
-                    acad.getPasswordAcademia());
-            asyncTask.execute();
+            dialogoActualizacion();
 
         }//End if principal
         else{
 
-            if (validacionesUsuario.validacionNombreUsuario(acad.getNombreAcademia()) == false){
+            if (validacionesUsuario.validacionNombreUsuario(nombreAcademia) == false){
 
                 limpiarNombreAcademia();
                 txtNombreAcademia.setError(getResources().getString(R.string.java_error_nombreacademia));
@@ -363,7 +372,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
             }//End if nombre mal
 
-            if (valLogin.validacionEmail(acad.getCorreoAcademia()) == false){
+            if (valLogin.validacionEmail(correoAcademia) == false){
 
                 limpiarCorreoAcademia();
                 txtCorreoAcademia.setError(getResources().getString(R.string.java_error_email));
@@ -372,7 +381,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
             }//End if correo mal
 
-            if (validacionesAcademia.validacionTelefono(acad.getTelefonoAcademia()) == false){
+            if (validacionesAcademia.validacionTelefono(telefonoAcademia) == false){
 
                 limpiarTelefonoAcademia();
                 txtTelefonoAcademia.setError(getResources().getString(R.string.java_error_telefonoacademia));
@@ -381,7 +390,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
             }//End if telefono mal
 
-            if (validacionesAcademia.validacionDireccion(acad.getDireccionAcademia()) == false){
+            if (validacionesAcademia.validacionDireccion(direccionAcademia) == false){
 
                 limpiarDireccionAcademia();
                 txtDireccionAcademia.setError(getResources().getString(R.string.java_error_direccionacademia));
@@ -390,7 +399,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
             }//End if direccion mal
 
-            if (validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) == false){
+            if (validacionesUsuario.validacionNombreCompleto(encargadoAcademia) == false){
 
                 limpiarDireccionAcademia();
                 txtEncargadoAcademia.setError(getResources().getString(R.string.java_error_encargadoacademia));
@@ -399,16 +408,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
             }//Nombre de encargado mal
 
-            if (validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) == false){
 
-                limpiarEncargadoAcademia();
-                txtEncargadoAcademia.setError(getResources().getString(R.string.java_error_encargadoacademia));
-                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_nombre_rechazado_snack),
-                        Snackbar.LENGTH_SHORT).show();
-
-            }//End if Nombre de encargado mal
-
-            if (validacionesAcademia.validacionDescripcion(acad.getDescripcionAdademia()) == false){
+            if (validacionesAcademia.validacionDescripcion(descripcionAcademia) == false){
 
                 limpiarDescripcionAcademia();
                 txtDescripcionAcademia.setError(getResources().getString(R.string.java_error_descripcionacademia));
@@ -416,22 +417,6 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if  descripcion mal
-
-            if (valLogin.validacionContrasena(acad.getPasswordAcademia()) == false){
-
-                limpiarPasswordAcademia();
-                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_contra_rechazada_snack),
-                        Snackbar.LENGTH_SHORT).show();
-
-            }//End if contraseña mal
-
-            if (acad.getPasswordAcademia().equals(confPassword) == false){
-
-                limpiarPasswordAcademia();
-                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_contra_diferente_snack),
-                        Snackbar.LENGTH_SHORT).show();
-
-            }//Contraseñas no coinciden
 
         }//End else principal
 
@@ -461,16 +446,11 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         txtDescripcionAcademia.getEditText().setText("");
     }
 
-    private void limpiarPasswordAcademia(){
-        txtPaswwordAcademia.getEditText().setText("");
-        txtPasswordConfAcademia.getEditText().setText("");
-    }
-
     private void seleccionarFoto(){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
-    }
+    }//End seleccionar foto
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -523,133 +503,45 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_no_eligio_imagen),
                     Snackbar.LENGTH_SHORT).show();
         }
+    }//End if onActivityResult
 
+    private void dialogoActualizacion(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(getResources().getString(R.string.java_datos_bien_snack));
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                recreate();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
-    public void validarInternet(){
+    private void dialogoRegresar(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        builder.setMessage(getResources().getString(R.string.java_datos_confirma_salir_act));
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(), PantallaConfiguracionAcademia.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-
-            startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
-            finish();
-
-        }//End if esta conectado
-        else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-                builder.setMessage(getResources().getString(R.string.splash_noInternet));
-                builder.setTitle(getResources().getString(R.string.java_mal_snack));
-                builder.setPositiveButton(getResources().getString(R.string.splash_retry), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        validarInternet();
-                    }
-                });
-                builder.setNegativeButton(getResources().getString(R.string.splash_salir), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-
-
-        }//End else no esta conectado
-    }//end validar internet
-
-    class ClaseAsyncTask extends AsyncTask {
-        ProgressDialog pDialog;
-        private String progressTitle;
-        private String progressMessage;
-        private Firebase ref;
-        private Academia academia;
-        private String correo_electronico;
-        private String password;
-
-        public ClaseAsyncTask(String progressTitle, String progressMessage, Firebase ref,
-                              Academia academia, String correo_electronico, String password) {
-            this.progressTitle = progressTitle;
-            this.progressMessage = progressMessage;
-            this.ref = ref;
-            this.academia = academia;
-            this.correo_electronico = correo_electronico;
-            this.password = password;
-        }
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            ref.createUser(correo_electronico, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-                        @Override
-                        public void onSuccess(Map<String, Object> result) {
-
-                            Firebase academiaBranch = ref.child("academias").child(result.get("uid") + "");
-                            academiaBranch.setValue(academia);
-                            Firebase usuario = ref.child("usuarios").child(result.get("uid") + "");
-                            usuario.setValue(academia);
-                            /*Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
-                                    Snackbar.LENGTH_SHORT).show();*/
-
-                            startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
-                            pDialog.dismiss();
-                            finish();
-                        }
-
-                        @Override
-                        public void onError(FirebaseError firebaseError) {
-                            switch(firebaseError.getCode()){
-                                case FirebaseError.UNKNOWN_ERROR:
-                                    Snackbar.make(coordinatorLayout, R.string.error_unknown,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    pDialog.dismiss();
-                                    break;
-                                case FirebaseError.NETWORK_ERROR:
-                                    Snackbar.make(coordinatorLayout, R.string.error_network,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    pDialog.dismiss();
-                                    break;
-                                case FirebaseError.USER_CODE_EXCEPTION:
-                                    Snackbar.make(coordinatorLayout, R.string.error_user,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    pDialog.dismiss();
-                                    break;
-                                case FirebaseError.DISCONNECTED:
-                                    Snackbar.make(coordinatorLayout, R.string.error_disconnected,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    pDialog.dismiss();
-                                    break;
-                                default:
-                                    pDialog.dismiss();
-                                    Snackbar.make(coordinatorLayout, "Error en el servidor",
-                                            Snackbar.LENGTH_SHORT).show();
-                                    break;
-                            }
-
-                        }
-                    });
-
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(PantallaCrearCuentaAcademia.this);
-            pDialog.setTitle(progressTitle);
-            pDialog.setMessage(progressMessage);
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
+        AlertDialog alert = builder.create();
+        alert.show();
     }
-
-
-
 }
