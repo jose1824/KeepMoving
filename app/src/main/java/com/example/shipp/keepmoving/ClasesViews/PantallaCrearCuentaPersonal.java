@@ -3,10 +3,13 @@ package com.example.shipp.keepmoving.ClasesViews;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -14,6 +17,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -75,6 +79,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 finish();
             }
         });//End toolbar listener
+        validarInternet();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,17 +87,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 seleccionarFoto();
             }
         });
-        //Poner fecha de hoy
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        dateFechaNac.init(year, month, day, null);
-        //La fecha esta comprendida entre 5 años menos de la actual a 100 años mas
-        Calendar cA = Calendar.getInstance();
-        cA.add(Calendar.DATE, -1825);
-        dateFechaNac.setMinDate(cA.getTimeInMillis());
-        dateFechaNac.setMaxDate(System.currentTimeMillis() - 1000 );
+
     }//Ennd on create
 
     @Override
@@ -164,44 +159,6 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                     user.getPasswordUsuario());
             asyncTask.execute();
 
-            /*
-            ref.createUser(user.getEmailUsuario(),
-                    user.getPasswordUsuario(), new Firebase.ValueResultHandler<Map<String, Object>>() {
-                        @Override
-                        public void onSuccess(Map<String, Object> result) {
-
-                            Firebase usuario = ref.child("usuarios").child(result.get("uid") + "");
-                            usuario.setValue(user);
-                            Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
-                                    Snackbar.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-                        }
-
-                        @Override
-                        public void onError(FirebaseError firebaseError) {
-                            switch(firebaseError.getCode()){
-                                case FirebaseError.UNKNOWN_ERROR:
-                                    Snackbar.make(coordinatorLayout, R.string.error_unknown,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    break;
-                                case FirebaseError.NETWORK_ERROR:
-                                    Snackbar.make(coordinatorLayout, R.string.error_network,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    break;
-                                case FirebaseError.USER_CODE_EXCEPTION:
-                                    Snackbar.make(coordinatorLayout, R.string.error_user,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    break;
-                                case FirebaseError.DISCONNECTED:
-                                    Snackbar.make(coordinatorLayout, R.string.error_disconnected,
-                                            Snackbar.LENGTH_SHORT).show();
-                                    break;
-                            }
-
-                        }
-                    });
-                */
         }//End if Principal
         else{
 
@@ -330,7 +287,45 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_no_eligio_imagen),
                     Snackbar.LENGTH_SHORT).show();
         }
+
     }
+
+    public void validarInternet(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+            startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+            finish();
+
+        }//End if esta conectado
+        else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setMessage(getResources().getString(R.string.splash_noInternet));
+                builder.setTitle(getResources().getString(R.string.java_mal_snack));
+                builder.setPositiveButton(getResources().getString(R.string.splash_retry), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        validarInternet();
+                    }
+                });
+                builder.setNegativeButton(getResources().getString(R.string.splash_salir), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
+        }//End else no esta conectado
+    }//end validar internet
 
     class ClaseAsyncTask extends AsyncTask {
         ProgressDialog pDialog;

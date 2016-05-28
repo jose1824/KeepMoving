@@ -90,6 +90,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_crear_cuenta_academia);
 
+
         if (savedInstanceState != null){
             onRestoreInstanceState(savedInstanceState);
         }
@@ -112,6 +113,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             }
         });//End toolbar listener
         inicializaComponentes();
+        validarInternet();
         Firebase.setAndroidContext(this);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -367,7 +369,6 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         try {
             // When an Image is picked
             if (requestCode == SELECT_PHOTO && resultCode == RESULT_OK
@@ -387,20 +388,27 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                 String imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
                 // Set the Image in ImageView after decoding the String
-                imgAcademia.setImageBitmap(BitmapFactory
-                        .decodeFile(imgDecodableString));
+                Bitmap bitmapBandera = BitmapFactory.decodeFile(imgDecodableString);
+                int largoImagen = bitmapBandera.getHeight(), anchoImagen = bitmapBandera.getWidth();
 
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
-                imgAcademia.setImageBitmap(bitmap);
+                if (largoImagen > 1280 && anchoImagen > 960){
+                    Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
+                            Snackbar.LENGTH_SHORT).show();
+                }else {
+                    imgAcademia.setImageBitmap(BitmapFactory
+                            .decodeFile(imgDecodableString));
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+                    imgAcademia.setImageBitmap(bitmap);
 
-                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
 
+                    imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                }
             } else {
                 Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
                         Snackbar.LENGTH_SHORT).show();
@@ -410,6 +418,43 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                     Snackbar.LENGTH_SHORT).show();
         }
     }
+
+    public void validarInternet(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+            startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+            finish();
+
+        }//End if esta conectado
+        else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setMessage(getResources().getString(R.string.splash_noInternet));
+                builder.setTitle(getResources().getString(R.string.java_mal_snack));
+                builder.setPositiveButton(getResources().getString(R.string.splash_retry), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        validarInternet();
+                    }
+                });
+                builder.setNegativeButton(getResources().getString(R.string.splash_salir), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
+        }//End else no esta conectado
+    }//end validar internet
 
     class ClaseAsyncTask extends AsyncTask {
         ProgressDialog pDialog;
@@ -486,5 +531,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         }
 
     }
+
+
 
 }

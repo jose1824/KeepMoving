@@ -148,8 +148,14 @@
     <string name="agregar_evento_fecha">Fecha del evento</string>
     <string name="agregar_evento_hora_inicio">Hora de inicio</string>
     <string name="agregar_evento_hora_fin">Hora de fin</string>
-    <string name="java_error_editText">Por favor, obtenga la dirección por medio del boton
-        a la derecha.</string>
+    <string name="java_error_editText_direccion">Por favor, obtenga la dirección por medio del boton
+        a la izquierda.</string>
+    <string name="java_error_editText_fecha">Por favor, obtenga la fecha del evento por medio del boton
+        a la izquierda.</string>
+    <string name="java_error_editText_hInicio">Por favor, obtenga la hora de inicio por medio del boton
+        a la izquierda.</string>
+    <string name="java_error_editText_hFin">Por favor, obtenga la hora de fin por medio del boton
+        a la izquierda.</string>
 
     <!--Pantalla Tabs Main Usuario-->
     <string name="tabUser_cerrar_title">Cerrar sesión.</string>

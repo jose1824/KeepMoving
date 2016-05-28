@@ -1,6 +1,8 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -36,6 +38,7 @@ import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
@@ -43,9 +46,12 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     private TextInputLayout txtTitulo;
     private TextInputLayout txtDireccion;
     private TextInputLayout txtDescripcion;
-    private DatePicker dateEvento;
-    private TimePicker timeInicio;
-    private TimePicker timeFin;
+    private TextInputLayout txtFechaEvento;
+    private TextInputLayout txtTimeInicio;
+    private TextInputLayout txtTimeFin;
+    private ImageButton dateEvento;
+    private ImageButton timeInicio;
+    private ImageButton timeFin;
     private ImageButton obtenerDireccion;
     private ImageView imgEvento;
 
@@ -117,11 +123,44 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         });//End toolbar listener
         inicializaComponentes();
         Firebase.setAndroidContext(this);
+        txtDireccion.getEditText().setText("Dirección pendiente");
 
         txtDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                txtDireccion.setError(getResources().getString(R.string.java_error_editText));
+                if (txtDireccion.getEditText().getText().equals("")){
+                    txtDireccion.setError(getResources().getString(R.string.java_error_editText_direccion));
+                }
+
+            }
+        });
+
+        txtFechaEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtFechaEvento.getEditText().getText().equals("")){
+                    txtFechaEvento.setError(getResources().getString(R.string.java_error_editText_fecha));
+                }
+
+            }
+        });
+
+        txtTimeInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtTimeInicio.getEditText().getText().equals("")) {
+                    txtTimeInicio.setError(getResources().getString(R.string.java_error_editText_hInicio));
+                }
+
+            }
+        });
+
+        txtTimeFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txtTimeFin.getEditText().getText().equals("")) {
+                    txtTimeFin.setError(getResources().getString(R.string.java_error_editText_hFin));
+                }
             }
         });
 
@@ -138,6 +177,27 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 seleccionarFoto();
+            }
+        });
+
+        dateEvento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateDialog();
+            }
+        });
+
+        txtTimeInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerInicio();
+            }
+        });
+
+        txtTimeFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerFin();
             }
         });
     }
@@ -176,16 +236,92 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
         txtDescripcion = (TextInputLayout) findViewById(R.id.evento_et_3);
 
+        txtFechaEvento = (TextInputLayout) findViewById(R.id.evento_et_4);
+        txtFechaEvento.getEditText().setOnKeyListener(null);
+        txtFechaEvento.getEditText().setKeyListener(null);
+
+        txtTimeInicio = (TextInputLayout) findViewById(R.id.evento_et_5);
+        txtTimeInicio.getEditText().setOnKeyListener(null);
+        txtTimeInicio.getEditText().setKeyListener(null);
+
+        txtTimeFin = (TextInputLayout) findViewById(R.id.evento_et_6);
+        txtTimeFin.getEditText().setOnKeyListener(null);
+        txtTimeFin.getEditText().setKeyListener(null);
+
         imgEvento = (ImageView) findViewById(R.id.agregar_foto_evento);
         obtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
+        timeFin = (ImageButton) findViewById(R.id.btn_tineEventoFin);
+        timeInicio = (ImageButton) findViewById(R.id.btn_tineEventoIni);
+        dateEvento = (ImageButton) findViewById(R.id.btn_dateEvento);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         firebaseControl = new FirebaseControl();
+
+    }
+
+    public void dateDialog() {
+        Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dpd = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        anioEvento = year;
+                        mesEvento = monthOfYear;
+                        diaEvento = dayOfMonth;
+                        txtFechaEvento.getEditText().setText(diaEvento + "/" + mesEvento + "/" + anioEvento);
+                    }
+                }, mYear, mMonth, mDay);
+        dpd.show();
+    }
+
+    public void timePickerInicio(){
+        Calendar c = Calendar.getInstance();
+        int mHour = c.get(Calendar.HOUR_OF_DAY);
+        int mMinute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog tpd = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        horaInicioHr = hourOfDay;
+                        horaInicioMin = minute;
+                        txtTimeInicio.getEditText().setText(horaInicioHr + ":" + horaInicioMin);
+                    }
+                }, mHour, mMinute, false);
+        tpd.show();
+    }
+
+    public void timePickerFin(){
+        Calendar c = Calendar.getInstance();
+        int mHour = c.get(Calendar.HOUR_OF_DAY);
+        int mMinute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog tpd = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        horaFinHr = hourOfDay;
+                        horaFinMin = minute;
+                        txtTimeFin.getEditText().setText(horaFinHr + ":" + horaFinMin);
+                    }
+                }, mHour, mMinute, false);
+        tpd.show();
     }
 
     private void mandarEvento(){
-        if (getDireccion() != null || getDireccion() != "") {
+        /*if (getDireccion() != null || getDireccion() != "") {
             txtDireccion.getEditText().setText(getDireccion());
-        }
+        }*/
+        txtDireccion.getEditText().setText("wsedaiofhcouysdf");
 
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(), //Instancia
@@ -340,6 +476,11 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             pDialog.show();
         }
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        recreate();
     }
 
 }
