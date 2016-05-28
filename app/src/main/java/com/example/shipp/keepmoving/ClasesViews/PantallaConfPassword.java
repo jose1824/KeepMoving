@@ -99,7 +99,6 @@ public class PantallaConfPassword extends AppCompatActivity {
 
         //Al apretar el icono de hecho en toolbar
         if (id == R.id.action_aceptar) {
-            System.out.println("" + email + "" + uId);
             cambiarPassword(uId, email);
             return true;
         }//end if
