@@ -28,12 +28,12 @@ public class Tip {
 
     //El diseño no lo marca dinamico así que aqui se agregarán las imagenes con sus titulos
     public static Tip[]  CONTENIDOS= {
-            /*new Tip("Nuestro Tip # 1", R.drawable.t1),
+            new Tip("Nuestro Tip # 1", R.drawable.t1),
             new Tip("Nuestro Tip # 2", R.drawable.t2),
             new Tip("Nuestro Tip # 3", R.drawable.t3),
             new Tip("Nuestro Tip # 4", R.drawable.t4),
             new Tip("Nuestro Tip # 5", R.drawable.t5),
-            new Tip("Nuestro Tip # 6", R.drawable.t6),*/
+            new Tip("Nuestro Tip # 6", R.drawable.t6),
     };
 
     //El item es la imagen con su titulo

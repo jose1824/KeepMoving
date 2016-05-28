@@ -192,4 +192,5 @@
     <!--Fragment PerfilAcademia-->
     <string name="perfil_academia">Perfil de academia</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_activity_x">Map</string>
 </resources>

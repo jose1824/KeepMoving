@@ -186,7 +186,7 @@ public class PantallaPrincipal extends AppCompatActivity {
     }
 
     private void inicializaComponentes(){
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.principal_coordinator);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.Pantallaprincipalcoordinator);
         txtMail = (TextInputLayout) findViewById(R.id.principal_et_1);
         txtPassword = (TextInputLayout) findViewById(R.id.principal_et_2);
         btnLogin = (Button) findViewById(R.id.principal_btn_1);

@@ -79,7 +79,7 @@
                     android:textColor="@color/colorPrincipalText"
                     android:textSize="@dimen/small_text"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:id="@+id/pantalla_eleccion_btn1" />
+                    android:id="@+id/xmlpantalla_eleccion_btn1" />
 
             </LinearLayout>
 

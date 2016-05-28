@@ -1,6 +1,5 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +10,8 @@ import android.widget.Button;
 import com.example.shipp.keepmoving.R;
 
 public class PantallaEleccionUsuario extends AppCompatActivity {
-    private Button pantalla_eleccion_btn1;
-    private Button pantalla_eleccion_btn2;
+    private Button java_pantalla_eleccion_btn1;
+    private Button java_pantalla_eleccion_btn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +36,20 @@ public class PantallaEleccionUsuario extends AppCompatActivity {
 
         incializaComponentes();
 
-        pantalla_eleccion_btn1.setOnClickListener(new View.OnClickListener() {
+        java_pantalla_eleccion_btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PantallaCrearCuentaPersonal.class));
-            }
-        });
-
-        pantalla_eleccion_btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PantallaCrearCuentaAcademia.class));
+                Intent i = new Intent(getApplicationContext(), PantallaCrearCuentaPersonal.class);
+                startActivity(i);
+                finish();
             }
         });
 
     }
 
     private void incializaComponentes(){
-        pantalla_eleccion_btn1 = (Button) findViewById(R.id.pantalla_eleccion_btn1);
-        pantalla_eleccion_btn2 = (Button) findViewById(R.id.pantalla_eleccion_btn2);
+        java_pantalla_eleccion_btn1 = (Button) findViewById(R.id.xmlpantalla_eleccion_btn1);
+        java_pantalla_eleccion_btn2 = (Button) findViewById(R.id.pantalla_eleccion_btn2);
     }
 
 }

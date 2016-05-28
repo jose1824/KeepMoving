@@ -79,7 +79,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 finish();
             }
         });//End toolbar listener
-        validarInternet();
+        //validarInternet();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +119,6 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         txtConfPassword = (TextInputLayout) findViewById(R.id.personal_et_5);
         imgUsuario = (ImageView) findViewById(R.id.personal_imagen_perfil);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        dateFechaNac = (DatePicker) findViewById(R.id.personal_date);
         firebaseControl = new FirebaseControl();
     }//End inicializa componentes
 
@@ -413,8 +412,5 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             pDialog.setCancelable(false);
             pDialog.show();
         }
-
     }
-
-
 }
