@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.shipp.keepmoving.R;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String direccion;
     private String activityAnterior;
 
+    String nombre;
+
     public String getDireccion() {
         return direccion;
     }
@@ -44,11 +47,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getIntent().getExtras();
+        lattitud = bundle.getDouble("latitud");
+        longitud = bundle.getDouble("longitud");
+        nombre = bundle.getString("nombre");
+
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -63,11 +74,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
-        aceptarDireccion = (Button) findViewById(R.id.btn_aceptar_direccion);
+        //aceptarDireccion = (Button) findViewById(R.id.btn_aceptar_direccion);
 
         //Obtener el dato que se paso del intent
-        Bundle bundle = getIntent().getExtras();
-        activityAnterior = bundle.getString("activityAnterior");
+        //activityAnterior = bundle.getString("activityAnterior");
+
 
         /*aceptarDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,29 +105,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });*/
 
     }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        lattitud = location.getLatitude();
-        longitud = location.getLongitude();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -131,9 +119,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         LatLng posicionActual = new LatLng(lattitud, longitud);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(posicionActual));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(posicionActual, 15);
+
+        mMap.moveCamera(cameraUpdate);
+        mMap.animateCamera(CameraUpdateFactory.zoomIn());
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.addMarker(new MarkerOptions().position(posicionActual).title(getResources().getString(R.string.map_ubicacion_actual)));
+        mMap.addMarker(new MarkerOptions().position(posicionActual).title(nombre));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -157,7 +149,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        /*mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 mMap.clear();
@@ -172,11 +164,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 lattitud = marcador.getPosition().latitude;
                 longitud = marcador.getPosition().longitude;
             }
-        });
+        });*/
 
     }
 
-    private String obtenerDireccion(LatLng latLng){
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    /*private String obtenerDireccion(LatLng latLng){
         Geocoder geocoder = new Geocoder(this);
 
         String address = "";
@@ -188,5 +200,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         return address;
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+        finish();
     }
 }

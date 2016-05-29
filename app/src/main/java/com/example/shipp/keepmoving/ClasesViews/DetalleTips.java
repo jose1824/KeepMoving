@@ -38,8 +38,6 @@ public class DetalleTips extends AppCompatActivity {
         TextView titleTextView = (TextView) findViewById(R.id.title);
         titleTextView.setText(title);
 
-        Toast.makeText(getApplicationContext(), "" + id, Toast.LENGTH_LONG).show();
-
         ImageView imageView = (ImageView) findViewById(R.id.image);
         imageView.setImageResource(id);
     }

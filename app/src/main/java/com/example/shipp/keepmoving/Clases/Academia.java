@@ -52,9 +52,11 @@ public class Academia {
         this.imagen64 = imagen64;
     }
 
-    public Academia(String nombreAcademia, Bitmap imagenBitmap) {
+    public Academia(String nombreAcademia, Bitmap imagenBitmap, Double longitud, Double latitud) {
         this.nombreAcademia = nombreAcademia;
         this.imagenBitmap = imagenBitmap;
+        this.longitudAcademia = longitud;
+        this.latitudAcademia = latitud;
     }
 
     public String getAcademiaUID() {

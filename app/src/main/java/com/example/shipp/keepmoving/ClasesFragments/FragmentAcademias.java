@@ -1,6 +1,7 @@
 package com.example.shipp.keepmoving.ClasesFragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,16 +12,21 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.shipp.keepmoving.Clases.Academia;
 import com.example.shipp.keepmoving.Clases.DataSourceUidAcademia;
 import com.example.shipp.keepmoving.Clases.Evento;
+import com.example.shipp.keepmoving.Clases.Tip;
 import com.example.shipp.keepmoving.ClasesAdapters.AcademiaAdapter;
 import com.example.shipp.keepmoving.Clases.DataSource;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
+import com.example.shipp.keepmoving.ClasesViews.DetalleTips;
+import com.example.shipp.keepmoving.ClasesViews.MapsActivity;
 import com.example.shipp.keepmoving.R;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -47,6 +53,8 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
     CoordinatorLayout cLayout;
 
+    Academia a;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         cLayout = (CoordinatorLayout)
@@ -64,11 +72,33 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
         lista.setAdapter(adaptador);
 
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (int i=0; i<DataSource.ACADEMIAS.size();i++){
+                    if (position == i){
+                        a = (Academia) DataSource.ACADEMIAS.get(i);
+                    }
+                }
+                //Toast.makeText(getActivity().getApplicationContext(), "" + a.getLatitudAcademia(), Toast.LENGTH_LONG).show();
+                Double longitud = a.getLongitudAcademia();
+                Double latitud = a.getLatitudAcademia();
+                String nombreAcademia = a.getNombreAcademia();
+
+                Intent i = new Intent(getActivity().getApplicationContext(), MapsActivity.class);
+                i.putExtra("nombre", nombreAcademia);
+                i.putExtra("latitud", latitud);
+                i.putExtra("longitud", longitud);
+                startActivity(i);
+            }
+        });
+
         DataSource.ACADEMIAS.clear();
         DataSourceUidAcademia.UIDACADEMIAS.clear();
-
         return cLayout;
     }
+
+
 
     private void inicializaComponentes(){
         lista = (ListView)cLayout.findViewById(R.id.lista);
@@ -82,7 +112,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data: dataSnapshot.getChildren()){
+                for (final DataSnapshot data: dataSnapshot.getChildren()){
                     String uIdAcademia = data.getKey();
                     DataSourceUidAcademia.UIDACADEMIAS.add(uIdAcademia);
 
@@ -95,12 +125,14 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
                                     String imagenAcademia64 = (String) dataSnapshot.child("imagenAcademia64").getValue();
+                                    Double longitud = (Double) dataSnapshot.child("longitudAcademia").getValue();
+                                    Double latitud = (Double) dataSnapshot.child("latitudAcademia").getValue();
 
                                     byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
                                     Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
                                     System.out.println("nombreAcademia: " + nombreAcademia);
-                                    DataSource.ACADEMIAS.add(new Academia(nombreAcademia, decodedImage));
+                                    DataSource.ACADEMIAS.add(new Academia(nombreAcademia, decodedImage, longitud, latitud));
                                 }
 
                                 @Override
@@ -121,4 +153,6 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
             }
         });
     }
+
+
 }
