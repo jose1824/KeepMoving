@@ -49,6 +49,11 @@ public class Evento {
         this.imagenEvento64 = imagenEvento64;
     }
 
+    public Evento(String titulo, String fechaHora){
+        this.titulo = titulo;
+        this.fechaHora = fechaHora;
+    }
+
     public String getTitulo() {
         return titulo;
     }

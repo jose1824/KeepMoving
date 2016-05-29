@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.pdf.PdfDocument;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +29,7 @@ public class PantallaTabsUsuario extends AppCompatActivity {
     private Toolbar toolbar;
     FirebaseControl firebaseControl;
     CoordinatorLayout coordinatorLayout;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,9 @@ public class PantallaTabsUsuario extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_date_range_black_24dp));//Eventos 3
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pagerPantallaTabUsuarios);
+        viewPager.setOffscreenPageLimit(0);
 
-        TabAdapterMainUsuario tabAdapterMainUsuario = new TabAdapterMainUsuario(getSupportFragmentManager(),
+        final TabAdapterMainUsuario tabAdapterMainUsuario = new TabAdapterMainUsuario(getSupportFragmentManager(),
                 tabLayout.getTabCount());
         viewPager.setAdapter(tabAdapterMainUsuario);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -85,12 +89,15 @@ public class PantallaTabsUsuario extends AppCompatActivity {
                 }
                 if (tab.getPosition() == 1){
                     tab.setIcon(R.mipmap.ic_home_black_24dp);
+
                 }
                 if (tab.getPosition() == 2){
                     tab.setIcon(R.mipmap.ic_add_black_24dp);
+
                 }
                 if (tab.getPosition() == 3){
                     tab.setIcon(R.mipmap.ic_date_range_black_24dp);
+
                 }
             }
 
