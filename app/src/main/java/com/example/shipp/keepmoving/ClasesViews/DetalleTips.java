@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.example.shipp.keepmoving.R;
 
 public class DetalleTips extends AppCompatActivity {
-
+//nada
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
