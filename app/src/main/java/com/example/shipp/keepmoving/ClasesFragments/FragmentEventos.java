@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,11 @@ import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.ClasesAdapters.EventoAdapter;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
 import com.example.shipp.keepmoving.ClasesViews.PantallaAgregarEvento;
+import com.example.shipp.keepmoving.ClasesViews.PantallaConfiguracionAcademia;
+import com.example.shipp.keepmoving.ClasesViews.PantallaTabsAcademia;
+import com.example.shipp.keepmoving.ClasesViews.PantallaTabsUsuario;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -35,6 +40,9 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
     RecyclerView recList;
     CoordinatorLayout cLayout;
 
+    private String uId;
+    boolean confAcademia;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,16 +54,28 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
+        validarFloating();
 
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        EventoAdapter ea = new EventoAdapter(createList(30));
+        EventoAdapter ea;
+        /*if (confAcademia) {
+            ea = new EventoAdapter(createListAcademia(30));
+            Snackbar.make(cLayout, "academia", Snackbar.LENGTH_SHORT).show();
+            System.out.println("academia");
+        }
+        else {
+            ea = new EventoAdapter(createList(30));
+            Snackbar.make(cLayout, "no academia", Snackbar.LENGTH_SHORT).show();
+            System.out.println("no academia");
+        }*/
+        System.out.println("\t\t\t\t" + uId + confAcademia);
+        ea = new EventoAdapter(createListAcademia(30));
         recList.setAdapter(ea);
 
-        validarFloating();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,15 +95,126 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
     private void validarFloating(){
         Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        ref.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    uId = authData.getUid();
+                    comprobacionTipoUsuario(uId);
+
+                } else {
+                    Snackbar.make(cLayout, R.string.conf_in_usuario,
+                            Snackbar.LENGTH_LONG).show();
+                    Intent i = new Intent(getActivity().getApplicationContext(), PantallaConfiguracionAcademia.class);
+                    startActivity(i);
+                    getActivity().finish();
+                }
+            }
+        });
+    }
+
+    private void comprobacionTipoUsuario(String uId){
+        Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase() + "usuarios/" + uId);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
+                if (confAcademia){
+                    fab.hide();
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
+    private List<Evento> createListAcademia(int size) {
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos/" + uId);
+        final List<Evento> result = new ArrayList<Evento>();
+        Snackbar.make(cLayout, "Estas en academias", Snackbar.LENGTH_SHORT).show();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    String titulo = (String) dataSnapshot.child("titulo").getValue();
+                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
+                    String diaEvento = (String) dataSnapshot.child("diaEvento").getValue();
+                    String mesEvento = (String) dataSnapshot.child("mesEvento").getValue();
+                    String anioEvento = (String) dataSnapshot.child("anioEvento").getValue();
+                    String horaInicioHr = (String) dataSnapshot.child("horaInicioHr").getValue();
+                    String horaInicioMin = (String) dataSnapshot.child("horaInicioMin").getValue();
+                    String horaFinHr = (String) dataSnapshot.child("horaFinHr").getValue();
+                    String horaFinMin = (String) dataSnapshot.child("horaFinMin").getValue();
+                    Snackbar.make(cLayout, titulo, Snackbar.LENGTH_SHORT).show();
+                    System.out.println("\t\t\t\t\t" + titulo);
+
+                    Evento ev = new Evento();
+                    ev.titulo = Evento.TITULO_PREFIX + titulo;
+                    ev.fechaHora = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
+                            horaFinHr + ":" + horaFinMin;
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + descripcion;
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        return result;
     }
 
     private List<Evento> createList(int size) {
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos/");
         final List<Evento> result = new ArrayList<Evento>();
-        ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
+        Snackbar.make(cLayout, "Estas en no academias", Snackbar.LENGTH_SHORT).show();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    String titulo = (String) dataSnapshot.child("titulo").getValue();
+                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
+                    String diaEvento = (String) dataSnapshot.child("diaEvento").getValue();
+                    String mesEvento = (String) dataSnapshot.child("mesEvento").getValue();
+                    String anioEvento = (String) dataSnapshot.child("anioEvento").getValue();
+                    String horaInicioHr = (String) dataSnapshot.child("horaInicioHr").getValue();
+                    String horaInicioMin = (String) dataSnapshot.child("horaInicioMin").getValue();
+                    String horaFinHr = (String) dataSnapshot.child("horaFinHr").getValue();
+                    String horaFinMin = (String) dataSnapshot.child("horaFinMin").getValue();
+                    Snackbar.make(cLayout, titulo, Snackbar.LENGTH_SHORT).show();
+
+                    Evento ev = new Evento();
+                    ev.titulo = Evento.TITULO_PREFIX + titulo;
+                    ev.fechaHora = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
+                            horaFinHr + ":" + horaFinMin;
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + descripcion;
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        return result;
+    }//end lisst
+
+}
 /*
+    final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+    final List<Evento> result = new ArrayList<Evento>();
+ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
+@Override
+public void onDataChange(DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
                     Evento ev = new Evento();
                     Evento evento = dataSnapshot.getValue(Evento.class);
@@ -109,15 +240,15 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
                     ev.descripcion = Evento.DESCRIPCION_PREFIX + child.child("evento").child("descripcion").getValue();
 
                 }
-*/
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
+        }
 
-            }
+@Override
+public void onCancelled(FirebaseError firebaseError) {
+
+        }
         });
-/*
+
         List<Evento> result = new ArrayList<Evento>();
         for (int i=1; i <= size; i++) {
             Evento ev = new Evento();
@@ -128,8 +259,5 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
             result.add(ev);
 
         }
-*/
-        return result;
-    }//end lisst
 
-}
+*/

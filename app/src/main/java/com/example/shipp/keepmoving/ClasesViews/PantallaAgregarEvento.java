@@ -350,6 +350,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                         txtFechaEvento.getEditText().setText(diaEvento + "/" + mesEvento + "/" + anioEvento);
                     }
                 }, mYear, mMonth, mDay);
+        dpd.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
         dpd.show();
     }
 

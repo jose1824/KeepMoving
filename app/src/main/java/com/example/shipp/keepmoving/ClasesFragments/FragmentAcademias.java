@@ -53,7 +53,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
-        llenarList();
+        //llenarList();
 
         for (Object a: DataSource.ACADEMIAS){
             System.out.println(a);
@@ -72,12 +72,11 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
     private void llenarList(){
         final ArrayList<Academia> academiaList = new ArrayList<Academia>();
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/academias");
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/usuarios");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("There are " + dataSnapshot.getChildrenCount() + " blog posts");
                 for (DataSnapshot data: dataSnapshot.getChildren()){
                     String uIdBranch = (String) String.valueOf(data.getKey());
                     System.out.println(uIdBranch);
@@ -87,9 +86,12 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
-                            String imagen64Academia = (String) dataSnapshot.child("imagenAcademia64").getValue();
+                            String imagenAcademia64 = (String) dataSnapshot.child("imagenAcademia64").getValue();
 
-                            DataSource.ACADEMIAS.add(new Academia(nombreAcademia, imagen64Academia));
+                            byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
+                            Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                            DataSource.ACADEMIAS.add(new Academia(nombreAcademia, decodedImage));
                         }
 
                         @Override
