@@ -56,6 +56,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
         //llenarList();
+        llenarList();
 
         for (Object a: DataSource.ACADEMIAS){
             System.out.println(a);
@@ -64,17 +65,13 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
         DataSource.ACADEMIAS.add(new Academia("Academia 2", 1));
         DataSource.ACADEMIAS.add(new Academia("Academia 3", 1));
         DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
 
         adaptador = new AcademiaAdapter(getActivity().getApplicationContext(), DataSource.ACADEMIAS);
 
 
         lista.setAdapter(adaptador);
+
+
 
         return cLayout;
     }
@@ -92,28 +89,28 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data: dataSnapshot.getChildren()){
-                    String uIdBranch = (String) String.valueOf(data.getKey());
-                    System.out.println(uIdBranch);
+                    String uIdAcademia = data.getKey();
+                    System.out.println("Academia" + uIdAcademia);
 
-                    /*Firebase firebaseList = new Firebase("https://keep-moving-data.firebaseio.com/academias" + uIdBranch);
-                    firebaseList.addListenerForSingleValueEvent(new ValueEventListener() {
+                    Firebase refAcademia = new Firebase("https://keep-moving-data.firebaseio.com/academias/" + uIdAcademia);
+                    refAcademia.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
                             String imagenAcademia64 = (String) dataSnapshot.child("imagenAcademia64").getValue();
 
-                            byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
-                            Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                            //byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
+                            //Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                            DataSource.ACADEMIAS.add(new Academia(nombreAcademia, decodedImage));
+                            System.out.println("nombreAcademia: " + nombreAcademia);
+                            DataSource.ACADEMIAS.add(new Academia(nombreAcademia, R.drawable.hhuhu));
                         }
 
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
-                            Snackbar.make(cLayout, "No se pudo cargar el contenido", Snackbar.LENGTH_SHORT).show();
-                        }
-                    });*/
 
+                        }
+                    });
                 }
             }
 

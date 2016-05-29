@@ -10,6 +10,7 @@
         android:layout_width="@dimen/image_academia"
         android:layout_height="@dimen/image_academia"
         android:layout_marginRight="@dimen/padding_bordes_grid"
+        android:background="@drawable/img"
         android:id="@+id/imagen_academia" />
 
     <TextView
