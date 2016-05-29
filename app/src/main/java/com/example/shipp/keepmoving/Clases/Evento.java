@@ -1,5 +1,7 @@
 package com.example.shipp.keepmoving.Clases;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by shipp on 3/21/2016.
  */
@@ -23,6 +25,7 @@ public class Evento {
     private int anioEvento;
     //Imagen base 64
     public String imagenEvento64;
+    public Bitmap imgEvento;
 
     public String fechaHora;
 
@@ -52,6 +55,13 @@ public class Evento {
     public Evento(String titulo, String fechaHora){
         this.titulo = titulo;
         this.fechaHora = fechaHora;
+    }
+
+    public Evento(String titulo, String fechaHora, String descripcion, String imagenEvento64){
+        this.titulo = titulo;
+        this.fechaHora = fechaHora;
+        this.descripcion = descripcion;
+        this.imagenEvento64 = imagenEvento64;
     }
 
     public String getTitulo() {
@@ -110,8 +120,11 @@ public class Evento {
         return latitudEvento;
     }
 
+    public Bitmap getImgenEvento() {
+        return imgEvento;
+    }
+
     public static final String TITULO_PREFIX = "Titulo_";
     public static final String FECHA_PREFIX = "Fecha y Hora_";
     public static final String DESCRIPCION_PREFIX = "Descripción_";
-
 }

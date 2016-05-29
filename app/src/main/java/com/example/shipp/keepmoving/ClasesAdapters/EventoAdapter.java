@@ -41,7 +41,6 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
         Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         eventoViewHolder.vImagen.setImageBitmap(decodedImage);
-
     }
 
     @Override
