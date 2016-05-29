@@ -57,11 +57,11 @@ public class Evento {
         this.fechaHora = fechaHora;
     }
 
-    public Evento(String titulo, String fechaHora, String descripcion, Bitmap imagenEvento64){
+    public Evento(String titulo, String fechaHora, String descripcion, String imagenEvento64){
         this.titulo = titulo;
         this.fechaHora = fechaHora;
         this.descripcion = descripcion;
-        this.imgEvento = imagenEvento64;
+        this.imagenEvento64 = imagenEvento64;
     }
 
     public String getTitulo() {
