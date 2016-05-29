@@ -62,7 +62,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         recList.setLayoutManager(llm);
 
         EventoAdapter ea;
-        /*if (confAcademia) {
+        if (confAcademia) {
             ea = new EventoAdapter(createListAcademia(30));
             Snackbar.make(cLayout, "academia", Snackbar.LENGTH_SHORT).show();
             System.out.println("academia");
@@ -71,7 +71,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
             ea = new EventoAdapter(createList(30));
             Snackbar.make(cLayout, "no academia", Snackbar.LENGTH_SHORT).show();
             System.out.println("no academia");
-        }*/
+        }
         System.out.println("\t\t\t\t" + uId + confAcademia);
         ea = new EventoAdapter(createListAcademia(30));
         recList.setAdapter(ea);
