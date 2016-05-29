@@ -45,6 +45,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
     RecyclerView recList;
     CoordinatorLayout cLayout;
+    List<Evento> result = new ArrayList<Evento>();
 
 
     @Override
@@ -80,18 +81,6 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
         EventoAdapter ea = new EventoAdapter(createList());
         recList.setAdapter(ea);
-        //obtenerIds();
-
-        /*for (String s: EventosDataSource.ACADEMIASID){
-            System.out.println(s);
-        }*/
-        System.out.println("aqui");
-        System.out.println("aqui");
-        System.out.println("aqui");
-
-        /*for (String s: EventosDataSource.EVENTOSID){
-            System.out.println(s);
-        }*/
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,60 +135,38 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         });
     }*/
 
-    private void obtenerIds(){
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos");
-        List<Evento> result = new ArrayList<Evento>();
-        //for (int i=1; i <= size; i++) {
-            /*Evento ev = new Evento();
-            ev.titulo = Evento.TITULO_PREFIX + i;
-            ev.fechaHora = Evento.FECHA_PREFIX + i;
-            ev.descripcion = Evento.DESCRIPCION_PREFIX + i;
-
-            result.add(ev);*/
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot d: dataSnapshot.getChildren()){
-                    for (String id: EventosDataSource.ACADEMIASID){
-                        if (d.getKey() != id){
-                            EventosDataSource.ACADEMIASID.add(id);
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
-    }
 
     private List<Evento> createList() {
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventostotales");
-        final List<Evento> result = new ArrayList<Evento>();
+        System.out.println("aqui va");
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot d: dataSnapshot.getChildren()){
                             String uIdEventosTotales = d.getKey();
                             System.out.println("Eventos totales:\t" + uIdEventosTotales);
-                            final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventostotales/" + uIdEventosTotales);
+                            final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventototales/" + uIdEventosTotales);
                             refEventosTotales.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String titulo = (String) dataSnapshot.child("titulo").getValue();
                                     String descripcion = (String) dataSnapshot.child("descripcion").getValue();
-                                    String diaEvento = (String) dataSnapshot.child("diaEvento").getValue();
-                                    String mesEvento = (String) dataSnapshot.child("mesEvento").getValue();
-                                    String anioEvento = (String) dataSnapshot.child("anioEvento").getValue();
-                                    String horaInicioHr = (String) dataSnapshot.child("horaInicioHr").getValue();
-                                    String horaInicioMin = (String) dataSnapshot.child("horaInicioMin").getValue();
-                                    String horaFinHr = (String) dataSnapshot.child("horaFinHr").getValue();
-                                    String horaFinMin = (String) dataSnapshot.child("horaFinMin").getValue();
+                                    String diaEvento = String.valueOf(dataSnapshot.child("diaEvento").getValue());
+                                    String mesEvento = String.valueOf(dataSnapshot.child("mesEvento").getValue());
+                                    String anioEvento = String.valueOf(dataSnapshot.child("anioEvento").getValue());
+                                    String horaInicioHr = String.valueOf(dataSnapshot.child("horaInicioHr").getValue());
+                                    String horaInicioMin = String.valueOf(dataSnapshot.child("horaInicioMin").getValue());
+                                    String horaFinHr = String.valueOf(dataSnapshot.child("horaFinHr").getValue());
+                                    String horaFinMin = String.valueOf(dataSnapshot.child("horaFinMin").getValue());
                                     String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
 
                                     System.out.println(titulo);
+                                    System.out.println(descripcion);
+                                    System.out.println(diaEvento);
+                                    System.out.println(mesEvento);
+                                    System.out.println(anioEvento);
+                                    System.out.println(horaInicioHr);
+                                    System.out.println(horaFinMin);
 
                                     Evento ev = new Evento();
                                     ev.titulo = Evento.TITULO_PREFIX + titulo;
@@ -227,6 +194,9 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
                 }
             });
+        for (Evento e: result){
+            System.out.println("e");
+        }
 
         return result;
     }//end lisst
