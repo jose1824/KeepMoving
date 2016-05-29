@@ -14,6 +14,7 @@ import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.ClasesAdapters.AgendaAdapter;
 import com.example.shipp.keepmoving.ClasesAdapters.EventoAdapter;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
 
     //TYiene los mismos atributos de evento
     private List<Evento> createList(int size) {
-
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         List<Evento> result = new ArrayList<Evento>();
         for (int i=1; i <= size; i++) {
             Evento ev = new Evento();
@@ -71,6 +72,54 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
 
         return result;
     }//end lisst
+
+    public String convertirMes(int mes){
+        String nombreMes = "";
+
+        switch(mes) {
+            case 1:
+                nombreMes = getResources().getString(R.string.agenda_mes1);
+                break;
+            case 2:
+                nombreMes = getResources().getString(R.string.agenda_mes2);
+                break;
+            case 3:
+                nombreMes = getResources().getString(R.string.agenda_mes3);
+                break;
+            case 4:
+                nombreMes = getResources().getString(R.string.agenda_mes4);
+                break;
+            case 5:
+                nombreMes = getResources().getString(R.string.agenda_mes5);
+                break;
+            case 6:
+                nombreMes = getResources().getString(R.string.agenda_mes6);
+                break;
+            case 7:
+                nombreMes = getResources().getString(R.string.agenda_mes7);
+                break;
+            case 8:
+                nombreMes = getResources().getString(R.string.agenda_mes8);
+                break;
+            case 9:
+                nombreMes = getResources().getString(R.string.agenda_mes9);
+                break;
+            case 10:
+                nombreMes = getResources().getString(R.string.agenda_mes10);
+                break;
+            case 11:
+                nombreMes = getResources().getString(R.string.agenda_mes11);
+                break;
+            case 12:
+                nombreMes = getResources().getString(R.string.agenda_mes12);
+                break;
+            default:
+                nombreMes = getResources().getString(R.string.agenda_mes_novalido);
+                break;
+        }
+
+        return nombreMes;
+    }
 
 
 }

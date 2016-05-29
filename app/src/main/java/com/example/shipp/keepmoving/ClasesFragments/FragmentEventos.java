@@ -55,6 +55,8 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         EventoAdapter ea = new EventoAdapter(createList(30));
         recList.setAdapter(ea);
 
+        validarFloating();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,10 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         firebaseControl = new FirebaseControl();
     }//End inicializaComponentes
 
+    private void validarFloating(){
+        Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+    }
+
     private List<Evento> createList(int size) {
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         final List<Evento> result = new ArrayList<Evento>();
@@ -85,7 +91,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
                     ev.titulo = Evento.TITULO_PREFIX  + evento.getTitulo();
                     ev.fechaHora = Evento.FECHA_PREFIX + evento.getDiaEvento() + "/" +
-                            evento.getMesEvento() + "/" + evento.getDiaEvento() + "\t" +
+                            evento.getMesEvento() + "/" + evento.getAnioEvento() + "\t" +
                             evento.getHoraInicioHr() + ":" + evento.getHoraInicioMin() + " - " +
                             evento.getHoraFinHr() + ":" + evento.getHoraFinMin();
                     ev.descripcion = Evento.DESCRIPCION_PREFIX + evento.getDescripcion();

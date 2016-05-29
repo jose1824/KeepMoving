@@ -174,7 +174,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/hint_direccion_academia"
+                            android:hint="@string/agregar_evento_fecha"
                             android:textColor="@color/colorPrimaryText"
                             android:theme="@style/EditTheme"
                             android:textColorHint="@color/colorPrimaryText" />
@@ -194,7 +194,7 @@
                         android:layout_height="@dimen/size_direction_button"
                         android:id="@+id/btn_tineEventoIni"
                         android:background="@color/colorPrimary"
-                        android:src="@mipmap/ic_date_range_white_24dp"
+                        android:src="@mipmap/ic_access_time_white_24dp"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_gravity="center_vertical|left"/>
 
@@ -228,7 +228,7 @@
                         android:layout_height="@dimen/size_direction_button"
                         android:id="@+id/btn_tineEventoFin"
                         android:background="@color/colorPrimary"
-                        android:src="@mipmap/ic_date_range_white_24dp"
+                        android:src="@mipmap/ic_timelapse_white_24dp"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_gravity="center_vertical|left"/>
 

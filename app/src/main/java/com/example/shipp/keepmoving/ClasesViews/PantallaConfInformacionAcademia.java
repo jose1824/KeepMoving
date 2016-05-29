@@ -327,7 +327,6 @@ public class PantallaConfInformacionAcademia extends AppCompatActivity {
         if (validacionesUsuario.validacionNombreUsuario(nombreAcademia) &&
                 valLogin.validacionEmail(correoAcademia) &&
                 validacionesAcademia.validacionTelefono(telefonoAcademia) &&
-                validacionesAcademia.validacionDireccion(direccionAcademia) &&
                 validacionesUsuario.validacionNombreCompleto(encargadoAcademia) &&
                 validacionesAcademia.validacionDescripcion(descripcionAcademia)){
 
@@ -389,15 +388,6 @@ public class PantallaConfInformacionAcademia extends AppCompatActivity {
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if telefono mal
-
-            if (validacionesAcademia.validacionDireccion(direccionAcademia) == false){
-
-                limpiarDireccionAcademia();
-                txtDireccionAcademia.setError(getResources().getString(R.string.java_error_direccionacademia));
-                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_direccion_snack),
-                        Snackbar.LENGTH_SHORT).show();
-
-            }//End if direccion mal
 
             if (validacionesUsuario.validacionNombreCompleto(encargadoAcademia) == false){
 

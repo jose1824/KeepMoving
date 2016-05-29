@@ -21,25 +21,20 @@ import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 
 import com.example.shipp.keepmoving.Clases.Evento;
-import com.example.shipp.keepmoving.Clases.Usuario;
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
-import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesEvento;
 import com.example.shipp.keepmoving.ClasesValidaciones.ValidacionesNuevaAcademia;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.Random;
 
 public class PantallaAgregarEvento extends AppCompatActivity {
@@ -71,6 +66,9 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     private double latitud;
     private double longitud;
     private String direccion;
+
+    private String uId;
+    private String email;
 
 
     @Override
@@ -163,14 +161,14 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             }
         });
 
-        txtTimeInicio.setOnClickListener(new View.OnClickListener() {
+        timeInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timePickerInicio();
             }
         });
 
-        txtTimeFin.setOnClickListener(new View.OnClickListener() {
+        timeFin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timePickerFin();
@@ -310,12 +308,10 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                 anioEvento,
                 imagenBase64);
 
-        ValidacionesEvento valEvento = new ValidacionesEvento();
         //Instancia para acceder a la validacion de descripcion y direccion
         ValidacionesNuevaAcademia valAcademia = new ValidacionesNuevaAcademia();
 
-        if (valEvento.validarTitulo(ev.getTitulo()) &&
-                valAcademia.validacionDireccion(ev.getDireccionEvento()) &&
+        if (valAcademia.validacionDescripcion(ev.getTitulo()) &&
                 valAcademia.validacionDescripcion(ev.getDescripcion()) &&
                 longitud != 0.0 &&
                 latitud != 0.0 ) {
@@ -341,7 +337,15 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             */
         }
         else {
+            //titulo mal
+            if (valAcademia.validacionDescripcion(ev.getTitulo()) == false) {
 
+            }
+
+            //descripcion mal
+            if (valAcademia.validacionDescripcion(ev.getDescripcion()) == false) {
+
+            }
         }
 
     }
@@ -420,9 +424,24 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-
-            Firebase evento = ref.child("evento").child("EventoN"  + mesEvento + diaEvento +
-                    anioEvento + horaFinHr + horaFinMin + horaInicioHr + horaInicioMin  +
+            ref.addAuthStateListener(new Firebase.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(AuthData authData) {
+                    if (authData != null) {
+                        uId = authData.getUid();
+                        guardarEvento(uId);
+                    } else {
+                        Snackbar.make(coordinatorLayout, R.string.conf_in_usuario,
+                                Snackbar.LENGTH_LONG).show();
+                        Intent i = new Intent(getApplicationContext(), PantallaTabsAcademia.class);
+                        startActivity(i);
+                        finish();
+                    }
+                }
+            });
+/*
+            Firebase evento = ref.child("evento").child("EventoN-"  + mesEvento + diaEvento +
+                    anioEvento + "-" + horaFinHr + horaFinMin + "-" +  horaInicioHr + horaInicioMin  + "-" +
                     numAleatorio() + numAleatorio() + numAleatorio() +
                     numAleatorio() + numAleatorio());//Pooner un ID con hora fin e inicio y cinco minutos aleatorios
 
@@ -432,8 +451,18 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
             startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
             finish();
-
+*/
             return null;
+        }
+
+        private void guardarEvento(String uId){
+            Firebase refEventos = new Firebase("https://keep-moving-data.firebaseio.com/eventos/" + uId
+                    + "/" + "EventoN-"  + mesEvento + diaEvento +
+                    anioEvento + "-" + horaFinHr + horaFinMin + "-" +  horaInicioHr + horaInicioMin  + "-" +
+                    numAleatorio() + numAleatorio() + numAleatorio() +
+                    numAleatorio() + numAleatorio());
+            refEventos.setValue(evento);
+
         }
 
         @Override

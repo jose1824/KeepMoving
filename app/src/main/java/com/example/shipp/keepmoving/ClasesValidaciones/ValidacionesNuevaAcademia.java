@@ -25,17 +25,7 @@ public class ValidacionesNuevaAcademia {
         return respuesta;
     }
 
-    public boolean validacionDireccion(String direccion){
-        boolean respuesta;
 
-        if(direccion.matches(expresionesRegulares.getExpresionDireccion())){
-            respuesta = true;
-        }
-        else {
-            respuesta = false;
-        }
-        return respuesta;
-    }
 
     public boolean validacionDescripcion(String descripcion){
         boolean respuesta;

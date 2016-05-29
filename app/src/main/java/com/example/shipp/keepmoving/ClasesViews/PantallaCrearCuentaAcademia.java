@@ -336,7 +336,6 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         if (validacionesUsuario.validacionNombreUsuario(acad.getNombreAcademia()) &&
                 valLogin.validacionEmail(acad.getCorreoAcademia()) &&
                 validacionesAcademia.validacionTelefono(acad.getTelefonoAcademia()) &&
-                validacionesAcademia.validacionDireccion(acad.getDireccionAcademia()) &&
                 validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) &&
                 validacionesAcademia.validacionDescripcion(acad.getDescripcionAdademia()) &&
                 valLogin.validacionContrasena(acad.getPasswordAcademia()) &&
@@ -380,15 +379,6 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                         Snackbar.LENGTH_SHORT).show();
 
             }//End if telefono mal
-
-            if (validacionesAcademia.validacionDireccion(acad.getDireccionAcademia()) == false){
-
-                limpiarDireccionAcademia();
-                txtDireccionAcademia.setError(getResources().getString(R.string.java_error_direccionacademia));
-                Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_direccion_snack),
-                        Snackbar.LENGTH_SHORT).show();
-
-            }//End if direccion mal
 
             if (validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) == false){
 
@@ -592,8 +582,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                             academiaBranch.setValue(academia);
                             Firebase usuario = ref.child("usuarios").child(result.get("uid") + "");
                             usuario.setValue(academia);
-                            /*Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
-                                    Snackbar.LENGTH_SHORT).show();*/
+                            //Firebase evento = ref.child("eventos").child(result.get("uid") + "");
+                            //evento.child("claveEvento").setValue("Evento123");
 
                             startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
                             pDialog.dismiss();

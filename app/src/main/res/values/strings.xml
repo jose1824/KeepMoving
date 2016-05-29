@@ -181,6 +181,19 @@
 
     <!--Fragment Agenda-->
     <string name="agenda">Agenda</string>
+    <string name="agenda_mes1">Enero</string>
+    <string name="agenda_mes2">Febrero</string>
+    <string name="agenda_mes3">Marzo</string>
+    <string name="agenda_mes4">Abril</string>
+    <string name="agenda_mes5">Mayo</string>
+    <string name="agenda_mes6">Junio</string>
+    <string name="agenda_mes7">Julio</string>
+    <string name="agenda_mes8">Agosto</string>
+    <string name="agenda_mes9">Septiembre</string>
+    <string name="agenda_mes10">Octubre</string>
+    <string name="agenda_mes11">Noviembre</string>
+    <string name="agenda_mes12">Diciembre</string>
+    <string name="agenda_mes_novalido">Valor de mes no valido</string>
 
     <!--Fragment Tips-->
     <string name="tips">Tips</string>
