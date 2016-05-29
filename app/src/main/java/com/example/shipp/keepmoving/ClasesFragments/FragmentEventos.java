@@ -54,7 +54,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
-        validarFloating();
+        //validarFloating();
 
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -93,7 +93,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
         firebaseControl = new FirebaseControl();
     }//End inicializaComponentes
 
-    private void validarFloating(){
+    /*private void validarFloating(){
         Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         ref.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
@@ -111,9 +111,9 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
                 }
             }
         });
-    }
+    }*/
 
-    private void comprobacionTipoUsuario(String uId){
+    /*private void comprobacionTipoUsuario(String uId){
         Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase() + "usuarios/" + uId);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -128,7 +128,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment{
 
             }
         });
-    }
+    }*/
 
     private List<Evento> createListAcademia(int size) {
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos/" + uId);
