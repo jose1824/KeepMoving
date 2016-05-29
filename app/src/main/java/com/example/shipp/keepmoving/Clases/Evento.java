@@ -22,7 +22,7 @@ public class Evento {
     private int mesEvento;
     private int anioEvento;
     //Imagen base 64
-    private String imagenEvento64;
+    public String imagenEvento64;
 
     public String fechaHora;
 

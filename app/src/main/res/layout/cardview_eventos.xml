@@ -25,8 +25,7 @@
                 android:layout_width="400dp"
                 android:layout_height="225dp"
                 android:background="@color/colorPrimary"
-                android:id="@+id/imageView"
-                android:src="@mipmap/ic_launcher" />
+                android:id="@+id/imageViewCard"/>
 
         </LinearLayout>
 

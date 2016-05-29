@@ -1,6 +1,8 @@
 package com.example.shipp.keepmoving.ClasesFragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,6 +11,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +46,6 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
     RecyclerView recList;
     CoordinatorLayout cLayout;
 
-    private String uId;
-    boolean confAcademia;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        EventoAdapter ea;
+        //EventoAdapter ea;
         /*if (confAcademia) {
             ea = new EventoAdapter(createListAcademia(30));
             Snackbar.make(cLayout, "academia", Snackbar.LENGTH_SHORT).show();
@@ -76,12 +76,15 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
             System.out.println("no academia");
         }*/
         //System.out.println("\t\t\t\t" + uId + confAcademia);
-        //ea = new EventoAdapter(createList(30));
-        //recList.setAdapter(ea);
-        obtenerIds();
-        for (String s: EventosDataSource.ACADEMIASID){
+
+
+        EventoAdapter ea = new EventoAdapter(createList());
+        recList.setAdapter(ea);
+        //obtenerIds();
+
+        /*for (String s: EventosDataSource.ACADEMIASID){
             System.out.println(s);
-        }
+        }*/
         System.out.println("aqui");
         System.out.println("aqui");
         System.out.println("aqui");
@@ -172,26 +175,50 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         });
     }
 
-    private List<Evento> createList(int size) {
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos");
-        List<Evento> result = new ArrayList<Evento>();
-        //for (int i=1; i <= size; i++) {
-            /*Evento ev = new Evento();
-            ev.titulo = Evento.TITULO_PREFIX + i;
-            ev.fechaHora = Evento.FECHA_PREFIX + i;
-            ev.descripcion = Evento.DESCRIPCION_PREFIX + i;
-
-            result.add(ev);*/
+    private List<Evento> createList() {
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventostotales");
+        final List<Evento> result = new ArrayList<Evento>();
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot d: dataSnapshot.getChildren()){
-                            for (String id: EventosDataSource.ACADEMIASID){
-                                if (d.getKey().equals(id)){
-                                }else {
-                                    EventosDataSource.ACADEMIASID.add(d.getKey());
+                            String uIdEventosTotales = d.getKey();
+                            System.out.println("Eventos totales:\t" + uIdEventosTotales);
+                            final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventostotales/" + uIdEventosTotales);
+                            refEventosTotales.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String titulo = (String) dataSnapshot.child("titulo").getValue();
+                                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
+                                    String diaEvento = (String) dataSnapshot.child("diaEvento").getValue();
+                                    String mesEvento = (String) dataSnapshot.child("mesEvento").getValue();
+                                    String anioEvento = (String) dataSnapshot.child("anioEvento").getValue();
+                                    String horaInicioHr = (String) dataSnapshot.child("horaInicioHr").getValue();
+                                    String horaInicioMin = (String) dataSnapshot.child("horaInicioMin").getValue();
+                                    String horaFinHr = (String) dataSnapshot.child("horaFinHr").getValue();
+                                    String horaFinMin = (String) dataSnapshot.child("horaFinMin").getValue();
+                                    String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
+
+                                    System.out.println(titulo);
+
+                                    Evento ev = new Evento();
+                                    ev.titulo = Evento.TITULO_PREFIX + titulo;
+                                    ev.fechaHora = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
+                                            horaFinHr + ":" + horaFinMin;
+                                    ev.descripcion = Evento.DESCRIPCION_PREFIX + descripcion;
+                                    ev.imagenEvento64 = imagenEvento64;
+
+                                    result.add(ev);
+
                                 }
-                            }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
+
                         }
                 }
 
@@ -200,8 +227,6 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
                 }
             });
-
-        //}
 
         return result;
     }//end lisst

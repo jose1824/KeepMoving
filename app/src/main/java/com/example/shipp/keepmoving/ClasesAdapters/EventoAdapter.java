@@ -1,9 +1,13 @@
 package com.example.shipp.keepmoving.ClasesAdapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shipp.keepmoving.Clases.Evento;
@@ -33,6 +37,11 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         eventoViewHolder.vTitulo.setText(ci.titulo);
         eventoViewHolder.vFecha.setText(ci.fechaHora);
         eventoViewHolder.vDescripcion.setText(ci.descripcion);
+
+        byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        eventoViewHolder.vImagen.setImageBitmap(decodedImage);
+
     }
 
     @Override
@@ -50,12 +59,14 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         protected TextView vTitulo;
         protected TextView vFecha;
         protected TextView vDescripcion;
+        protected ImageView vImagen;
 
         public EventoViewHolder(View v) {
             super(v);
             vTitulo =  (TextView) v.findViewById(R.id.tv_titulo);
             vFecha = (TextView)  v.findViewById(R.id.tv_fechahora);
             vDescripcion = (TextView)  v.findViewById(R.id.tv_descripcion);
+            vImagen = (ImageView) v.findViewById(R.id.imageViewCard);
         }
     }
 
