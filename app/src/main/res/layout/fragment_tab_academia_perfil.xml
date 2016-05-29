@@ -17,20 +17,145 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context=".ClasesFragments.FragmentPerfilAcademia"
-                android:orientation="vertical"
-                android:id="@+id/layout_academia_perfil">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+
+                <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_imagenes"
+                    android:paddingTop="@dimen/activity_vertical_margin">
+
+                    <ImageView
+                        android:id="@+id/imagenAcademia_perfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/personal_usuario"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:transitionName="@string/nombre_transicion_imagen" />
+
+                    <TextView
+                        android:id="@+id/nombreAcademia_perfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@color/background_footer"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    tools:context=".ClasesFragments.FragmentPerfilAcademia"
+                    android:orientation="vertical"
+                    android:id="@+id/layout_academia_perfil_foto">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="Correo"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableLeft="@mipmap/ic_email_black_24dp"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/txt_perfil_1"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c0c0c0"
+                        android:id="@+id/linea1"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="Encargado"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableLeft="@mipmap/ic_account_circle_black_24dp"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/txt_perfil_2"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c0c0c0"
+                        android:id="@+id/linea2"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="Telefono"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableLeft="@mipmap/ic_phone_black_24dp"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/txt_perfil_3"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c0c0c0"
+                        android:id="@+id/linea3"
+                        android:layout_marginTop="16dp"/>
+
+                    <Button
+                        android:id="@+id/btn_direccionAcademia_perfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Direccion"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/small_text"
+                        android:drawableLeft="@mipmap/ic_location_on_black_24dp"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c0c0c0"
+                        android:id="@+id/linea4"
+                        android:layout_marginTop="16dp"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/padding_elements"
+                        android:paddingBottom="@dimen/padding_elements"
+                        android:paddingLeft="@dimen/padding_elements"
+                        android:text="Descripcion"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableLeft="@mipmap/ic_add_black_24dp"
+                        android:textSize="@dimen/normal_text"
+                        android:id="@+id/txt_perfil_4"/>
+
+
+                </LinearLayout>
 
             </LinearLayout>
+
+
 
         </ScrollView>
 

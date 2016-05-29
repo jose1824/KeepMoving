@@ -36,8 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     private String direccion;
-    private String activityAnterior;
 
+    String activityAnterior;
     String nombre;
 
     public String getDireccion() {
@@ -52,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lattitud = bundle.getDouble("latitud");
         longitud = bundle.getDouble("longitud");
         nombre = bundle.getString("nombre");
+        activityAnterior = bundle.getString("activityAnterior");
 
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -204,7 +205,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-        finish();
+        if(activityAnterior.equals("activityPerfilAcademia")) {
+            finish();
+        }
+        else {
+            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+            finish();
+        }
+
     }
 }
