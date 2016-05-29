@@ -42,6 +42,8 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
     String prevOldestPostID;
     String oldestPostId;
 
+    ArrayList<Academia> acas = new ArrayList<Academia>();
+
     CoordinatorLayout cLayout;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,8 +60,20 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
         for (Object a: DataSource.ACADEMIAS){
             System.out.println(a);
         }
+        DataSource.ACADEMIAS.add(new Academia("Academia 1", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 2", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 3", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
+        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
 
         adaptador = new AcademiaAdapter(getActivity().getApplicationContext(), DataSource.ACADEMIAS);
+
+
         lista.setAdapter(adaptador);
 
         return cLayout;
@@ -72,7 +86,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
     private void llenarList(){
         final ArrayList<Academia> academiaList = new ArrayList<Academia>();
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/usuarios");
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/academias");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,7 +95,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
                     String uIdBranch = (String) String.valueOf(data.getKey());
                     System.out.println(uIdBranch);
 
-                    Firebase firebaseList = new Firebase("https://keep-moving-data.firebaseio.com/academias" + uIdBranch);
+                    /*Firebase firebaseList = new Firebase("https://keep-moving-data.firebaseio.com/academias" + uIdBranch);
                     firebaseList.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,7 +112,7 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
                         public void onCancelled(FirebaseError firebaseError) {
                             Snackbar.make(cLayout, "No se pudo cargar el contenido", Snackbar.LENGTH_SHORT).show();
                         }
-                    });
+                    });*/
 
                 }
             }

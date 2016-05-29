@@ -18,7 +18,8 @@ public class Academia {
     private String descripcionAdademia;
     private String passwordAcademia;
     private String imagenAcademia64;
-    private String imagen;
+    private String imagen64;
+    private int imagen;
     private Bitmap imagenBitmap;
 
     public Academia() {
@@ -41,9 +42,14 @@ public class Academia {
         this.imagenAcademia64 = imagenAcademia64;
     }
 
-    public Academia(String nombreAcademia, String imagen) {
+    public Academia(String nombreAcademia, int imagen){
         this.nombreAcademia = nombreAcademia;
         this.imagen = imagen;
+    }
+
+    public Academia(String nombreAcademia, String imagen64) {
+        this.nombreAcademia = nombreAcademia;
+        this.imagen64 = imagen64;
     }
 
     public Academia(String nombreAcademia, Bitmap imagenBitmap) {
@@ -147,12 +153,20 @@ public class Academia {
         this.imagenAcademia64 = imagenAcademia64;
     }
 
-    public String getImagen() {
+    public int getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public String getImagen64() {
+        return imagen64;
+    }
+
+    public void setImagen(int imagen) {
         this.imagen = imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen64 = imagen;
     }
 
     public Bitmap getImagenBitmap() {
