@@ -58,8 +58,12 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
 
     //TYiene los mismos atributos de evento
     private List<Evento> createList(int size) {
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos");
         List<Evento> result = new ArrayList<Evento>();
+
+
+
+
         for (int i=1; i <= size; i++) {
             Evento ev = new Evento();
             ev.titulo = Evento.TITULO_PREFIX + i;

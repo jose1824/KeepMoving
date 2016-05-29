@@ -33,16 +33,6 @@
                     android:id="@+id/logoPrincipal"
                     android:src="@drawable/keep_logo"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:max="500"
-                android:progress="0"
-                android:progressDrawable="@drawable/circular" />
 
         </LinearLayout>
 

@@ -16,6 +16,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.example.shipp.keepmoving.Clases.Academia;
+import com.example.shipp.keepmoving.Clases.DataSourceUidAcademia;
 import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.ClasesAdapters.AcademiaAdapter;
 import com.example.shipp.keepmoving.Clases.DataSource;
@@ -58,20 +59,13 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
         //llenarList();
         llenarList();
 
-        for (Object a: DataSource.ACADEMIAS){
-            System.out.println(a);
-        }
-        DataSource.ACADEMIAS.add(new Academia("Academia 1", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 2", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 3", 1));
-        DataSource.ACADEMIAS.add(new Academia("Academia 4", 1));
-
         adaptador = new AcademiaAdapter(getActivity().getApplicationContext(), DataSource.ACADEMIAS);
 
 
         lista.setAdapter(adaptador);
 
-
+        DataSource.ACADEMIAS.clear();
+        DataSourceUidAcademia.UIDACADEMIAS.clear();
 
         return cLayout;
     }
@@ -90,27 +84,34 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data: dataSnapshot.getChildren()){
                     String uIdAcademia = data.getKey();
-                    System.out.println("Academia" + uIdAcademia);
+                    DataSourceUidAcademia.UIDACADEMIAS.add(uIdAcademia);
 
-                    Firebase refAcademia = new Firebase("https://keep-moving-data.firebaseio.com/academias/" + uIdAcademia);
-                    refAcademia.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
-                            String imagenAcademia64 = (String) dataSnapshot.child("imagenAcademia64").getValue();
+                    //Validacion para que no se imroima doble
+                    for (int i = 0; i < DataSourceUidAcademia.UIDACADEMIAS.size(); i++) {
+                        if (uIdAcademia.equals(DataSourceUidAcademia.UIDACADEMIAS.get(i))) {
+                            Firebase refAcademia = new Firebase("https://keep-moving-data.firebaseio.com/academias/" + uIdAcademia);
+                            refAcademia.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String nombreAcademia = (String) dataSnapshot.child("nombreAcademia").getValue();
+                                    String imagenAcademia64 = (String) dataSnapshot.child("imagenAcademia64").getValue();
 
-                            //byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
-                            //Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                                    byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
+                                    Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                            System.out.println("nombreAcademia: " + nombreAcademia);
-                            DataSource.ACADEMIAS.add(new Academia(nombreAcademia, R.drawable.hhuhu));
+                                    System.out.println("nombreAcademia: " + nombreAcademia);
+                                    DataSource.ACADEMIAS.add(new Academia(nombreAcademia, decodedImage));
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
 
-                        }
-                    });
                 }
             }
 
@@ -119,22 +120,5 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
 
             }
         });
-        /*ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    String academiaNombre = (String) child.child("academia").child("nombreAcademia").getValue();
-
-                    String academiaImagen = (String) child.child("academia").child("imagenAcademia64").getValue();
-                    byte[] decodedString = Base64.decode(academiaImagen, Base64.URL_SAFE);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-                    DataSource.ACADEMIAS.add(new Academia(academiaNombre, decodedByte));
-                }
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });*/
     }
 }

@@ -1,6 +1,7 @@
 package com.example.shipp.keepmoving.ClasesAdapters;
 
 import android.content.Context;
+import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
