@@ -74,9 +74,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
-                startActivity(i);
-                finish();
+                dialogoRegresar();
             }
         });//End toolbar listener
         //validarInternet();
@@ -122,6 +120,14 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         firebaseControl = new FirebaseControl();
     }//End inicializa componentes
 
+    private void limpiarErrors(){
+        txtNombreCompleto.setError("");
+        txtNombreUsuario.setError("");
+        txtEmail.setError("");
+        txtPassword.setError("");
+        txtConfPassword.setError("");
+    }
+
     public void mandarUsuario(){
         //Instancia para acceder a los atroibutos del usuario
          final Usuario user = new Usuario(false,
@@ -160,12 +166,13 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
 
         }//End if Principal
         else{
+            limpiarErrors();
 
             if (validacionesUsuario.validacionNombreCompleto(user.getNombreUsuario()) == false){
 
                 limpiaNombreCompleto();
 
-                txtNombreCompleto.setError("" + R.string.java_error_nombre);
+                txtNombreCompleto.setError("Ingrese un nombre válido");
                 Snackbar.make(coordinatorLayout, R.string.java_nombre_rechazado_snack,
                         Snackbar.LENGTH_SHORT).show();
             }//End if nombre completo mal
@@ -174,7 +181,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
 
                 limpiaNombreUsuario();
 
-                txtNombreUsuario.setError("" + R.string.java_error_nombre);
+                txtNombreUsuario.setError("Ingrese un nombre de usuario válido");
                 Snackbar.make(coordinatorLayout, R.string.java_nombre_usuario_rechazado_snack,
                         Snackbar.LENGTH_SHORT).show();
             }//End if nombre usuario mal
@@ -183,7 +190,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
 
                 limpiaEmail();
 
-                txtEmail.setError("" + R.string.java_error_email);
+                txtEmail.setError("Ingrese un email válido.");
                 Snackbar.make(coordinatorLayout, R.string.java_email_rechazado_snack,
                         Snackbar.LENGTH_SHORT).show();
             }//end if correo mal
@@ -192,7 +199,8 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                     valLogin.validacionContrasena(confPassword) == false){
 
                 limpiaPassword();
-
+                txtPassword.setError("Contraseña no válida.");
+                txtConfPassword.setError("Contraseña no válida.");
                 Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
                         Snackbar.LENGTH_SHORT).show();
             }//End if contraseña mal
@@ -200,10 +208,12 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             if(user.getPasswordUsuario().equals(confPassword) == false){
 
                 limpiaPassword();
-
+                txtPassword.setError("Las contraseñas no coinciden.");
+                txtConfPassword.setError("Las contraseñas no coinciden.");
                 Snackbar.make(coordinatorLayout, R.string.java_contra_diferente_snack,
                         Snackbar.LENGTH_SHORT).show();
             }//End if contraseñas no coinciden
+
             if (user.getImagenUsuario64() == null){
                 Snackbar.make(coordinatorLayout, R.string.java_img_no_existe,
                         Snackbar.LENGTH_SHORT).show();
@@ -356,6 +366,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                             usuario.setValue(user);
                             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                                     Snackbar.LENGTH_SHORT).show();
+                            //dialogoActualizacion();
                             pDialog.dismiss();
                             ref.unauth();
                             startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
@@ -412,5 +423,49 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
             pDialog.setCancelable(false);
             pDialog.show();
         }
+
+
+    }
+
+    private void dialogoActualizacion(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Se registro el usuario.");
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                finish();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+    private void dialogoRegresar(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(getResources().getString(R.string.java_datos_confirma_salir_act));
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

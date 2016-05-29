@@ -293,7 +293,7 @@ public class PantallaPrincipal extends AppCompatActivity {
             pDialog.setTitle(progressTitle);
             pDialog.setMessage(progressMessage);
             pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
+            pDialog.setCancelable(false);
             pDialog.show();
         }
 

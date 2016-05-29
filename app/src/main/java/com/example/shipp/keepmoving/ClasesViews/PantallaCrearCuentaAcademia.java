@@ -123,9 +123,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
-                startActivity(i);
-                finish();
+                dialogoRegresar();
             }
         });//End toolbar listener
         inicializaComponentes();
@@ -260,6 +258,17 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }//End on options
 
+    private void limpiarErrors(){
+        txtNombreAcademia.setError("");
+        txtTelefonoAcademia.setError("");
+        txtCorreoAcademia.setError("");
+        txtDireccionAcademia.setError("");
+        txtEncargadoAcademia.setError("");
+        txtDescripcionAcademia.setError("");
+        txtPaswwordAcademia.setError("");
+        txtPasswordConfAcademia.setError("");
+    }
+
     private void inicializaComponentes(){
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.pantalla_CuentaAcademia_coordinator);
         btnObtenerDireccion = (ImageButton) findViewById(R.id.btn_rastrear_direccion);
@@ -339,7 +348,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                 validacionesUsuario.validacionNombreCompleto(acad.getEncargadoAcademia()) &&
                 validacionesAcademia.validacionDescripcion(acad.getDescripcionAdademia()) &&
                 valLogin.validacionContrasena(acad.getPasswordAcademia()) &&
-                acad.getPasswordAcademia().equals(confPassword)){
+                acad.getPasswordAcademia().equals(confPassword) && imagenBase64 != ""){
 
 
             ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_titleCrear),
@@ -352,7 +361,7 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
         }//End if principal
         else{
-
+            limpiarErrors();
             if (validacionesUsuario.validacionNombreUsuario(acad.getNombreAcademia()) == false){
 
                 limpiarNombreAcademia();
@@ -410,6 +419,8 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (valLogin.validacionContrasena(acad.getPasswordAcademia()) == false){
 
                 limpiarPasswordAcademia();
+                txtPaswwordAcademia.setError("Password inválida");
+                txtPasswordConfAcademia.setError("Password inválida");
                 Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_contra_rechazada_snack),
                         Snackbar.LENGTH_SHORT).show();
 
@@ -418,7 +429,16 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             if (acad.getPasswordAcademia().equals(confPassword) == false){
 
                 limpiarPasswordAcademia();
+                txtPaswwordAcademia.setError("Las contraseñas no coinciden");
+                txtPasswordConfAcademia.setError("Las contraseñas no coinciden");
                 Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_contra_diferente_snack),
+                        Snackbar.LENGTH_SHORT).show();
+
+            }//Contraseñas no coinciden
+
+            if (imagenBase64 == ""){
+
+                Snackbar.make(coordinatorLayout, "Seleccione un imagen de perfil.",
                         Snackbar.LENGTH_SHORT).show();
 
             }//Contraseñas no coinciden
@@ -584,9 +604,10 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                             usuario.setValue(academia);
                             //Firebase evento = ref.child("eventos").child(result.get("uid") + "");
                             //evento.child("claveEvento").setValue("Evento123");
-
-                            startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
                             pDialog.dismiss();
+                            //dialogoActualizacion();
+                            ref.unauth();
+                            startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
                             finish();
                         }
 
@@ -640,6 +661,46 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
 
     }
 
+    private void dialogoActualizacion(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setMessage("Se registro la academia.");
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                finish();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+
+    private void dialogoRegresar(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(getResources().getString(R.string.java_datos_confirma_salir_act));
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(), PantallaEleccionUsuario.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
 }

@@ -1,12 +1,21 @@
 package com.example.shipp.keepmoving.ClasesViews;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -14,6 +23,8 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -34,7 +45,10 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class PantallaAgregarEvento extends AppCompatActivity {
@@ -70,6 +84,9 @@ public class PantallaAgregarEvento extends AppCompatActivity {
     private String uId;
     private String email;
 
+    private LocationManager locManager;
+    private LocationListener locListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +107,13 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaTabsAcademia.class);
-                startActivity(i);
-                finish();
+                dialogoRegresar();
             }
         });//End toolbar listener
         inicializaComponentes();
         Firebase.setAndroidContext(this);
-        txtDireccion.getEditText().setText("Dirección pendiente");
+        //txtDireccion.getEditText().setText("Dirección pendiente");
+        imagenBase64 = "";
 
         txtDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,9 +157,14 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         obtenerDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                /*Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                 i.putExtra("activityAnterior", "activityEvento");
-                startActivity(i);
+                startActivity(i);*/
+                try {
+                    comenzarLocalizacion();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -174,6 +195,89 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                 timePickerFin();
             }
         });
+    }
+
+    private void comenzarLocalizacion() throws IOException {
+        //Obtenemos una referencia al LocationManager
+        locManager =
+                (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        //Obtenemos la última posición conocida
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location loc =
+                locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        //Mostramos la última posición conocida
+        mostrarPosicion(loc);
+
+        //Nos registramos para recibir actualizaciones de la posición
+        locListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                try {
+                    mostrarPosicion(location);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            public void onProviderDisabled(String provider){
+                Snackbar.make(coordinatorLayout, "GSP desactivado.", Snackbar.LENGTH_SHORT).show();
+            }
+            public void onProviderEnabled(String provider){
+                Snackbar.make(coordinatorLayout, "Se ha activado el GPS", Snackbar.LENGTH_SHORT).show();
+            }
+            public void onStatusChanged(String provider, int status, Bundle extras){
+
+            }
+        };
+
+        locManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 30000, 0, locListener);
+    }
+
+    private void mostrarPosicion(Location loc) throws IOException {
+        if(loc != null)
+        {
+            System.out.println("Latitud: " + String.valueOf(loc.getLatitude()));
+            System.out.println("Longitud: " + String.valueOf(loc.getLongitude()));
+            System.out.println("Precision: " + String.valueOf(loc.getAccuracy()));
+
+            Geocoder geocoder;
+            List<Address> addresses;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            addresses = geocoder.getFromLocation(Double.parseDouble(String.valueOf(loc.getLatitude())),
+                    Double.parseDouble(String.valueOf(loc.getLongitude())), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName(); // Only i
+
+            direccion = address + ", " + state + ", " + country;
+
+            txtDireccion.getEditText().setText(direccion);
+            latitud = Double.parseDouble(String.valueOf(loc.getLatitude()));
+            longitud = Double.parseDouble(String.valueOf(loc.getLongitude()));
+        }
+        else
+        {
+            System.out.println("Latitud: (sin_datos)");
+            System.out.println("Longitud: (sin_datos)");
+            System.out.println("Precision: (sin_datos)");
+        }
     }
 
     @Override
@@ -291,7 +395,6 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         /*if (getDireccion() != null || getDireccion() != "") {
             txtDireccion.getEditText().setText(getDireccion());
         }*/
-        txtDireccion.getEditText().setText("wsedaiofhcouysdf");
 
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         Evento ev = new Evento(txtTitulo.getEditText().getText().toString().trim(), //Instancia
@@ -313,8 +416,11 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
         if (valAcademia.validacionDescripcion(ev.getTitulo()) &&
                 valAcademia.validacionDescripcion(ev.getDescripcion()) &&
-                longitud != 0.0 &&
-                latitud != 0.0 ) {
+                longitud != 0.0 && latitud != 0.0 && txtDescripcion.getEditText().getText().toString() != " " &&
+                horaInicioHr != 0.0 && horaInicioMin != 0.0 && horaFinHr != 0.0 && horaFinMin != 0.0 &&
+                diaEvento != 0 && mesEvento != 0 && anioEvento != 0 && imagenBase64 != null && imagenBase64 != "" &&
+                txtFechaEvento.getEditText().getText().toString() != " " && txtTimeInicio.getEditText().getText().toString() != "" &&
+                txtTimeFin.getEditText().getText().toString() != "") {
 
             ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_titleCrear),
                     getResources().getString(R.string.java_progress_message),
@@ -339,12 +445,32 @@ public class PantallaAgregarEvento extends AppCompatActivity {
         else {
             //titulo mal
             if (valAcademia.validacionDescripcion(ev.getTitulo()) == false) {
-
+                    txtTitulo.setError("Ingrese un titulo.");
             }
 
             //descripcion mal
             if (valAcademia.validacionDescripcion(ev.getDescripcion()) == false) {
+                    txtDescripcion.setError("Ingrese una descripción del evento.");
+            }
 
+            if (txtDireccion.getEditText().getText().toString().equals(null)) {
+                    txtDescripcion.setError("Ingrese una direccion del evento.");
+            }
+
+            if (txtFechaEvento.getEditText().getText().toString().equals(null)) {
+                    txtDescripcion.setError("Ingrese la fecha de inicio del evento.");
+            }
+
+            if (txtTimeInicio.getEditText().getText().toString().equals(null)) {
+                    txtDescripcion.setError("Ingrese la hora de inicio del evento.");
+            }
+
+            if (txtTimeFin.getEditText().getText().toString() .equals(null)) {
+                    txtDescripcion.setError("Ingrese la hora de fin del evento.");
+            }
+
+            if (imagenBase64 == "") {
+                    Snackbar.make(coordinatorLayout, "Ingrese un foto del evento.", Snackbar.LENGTH_SHORT).show();
             }
         }
 
@@ -384,20 +510,27 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                 String imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
                 // Set the Image in ImageView after decoding the String
-                imgEvento.setImageBitmap(BitmapFactory
-                        .decodeFile(imgDecodableString));
+                Bitmap bitmapBandera = BitmapFactory.decodeFile(imgDecodableString);
+                int largoImagen = bitmapBandera.getHeight(), anchoImagen = bitmapBandera.getWidth();
 
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
-                imgEvento.setImageBitmap(bitmap);
+                if (largoImagen > 1280 && anchoImagen > 960){
+                    Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
+                            Snackbar.LENGTH_SHORT).show();
+                }else {
+                    imgEvento.setImageBitmap(BitmapFactory
+                            .decodeFile(imgDecodableString));
 
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+                    imgEvento.setImageBitmap(bitmap);
 
-                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream.toByteArray();
 
+                    imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                }
             } else {
                 Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
                         Snackbar.LENGTH_SHORT).show();
@@ -462,7 +595,8 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                     numAleatorio() + numAleatorio() + numAleatorio() +
                     numAleatorio() + numAleatorio());
             refEventos.setValue(evento);
-
+            dialogoActualizacion();
+            pDialog.dismiss();
         }
 
         @Override
@@ -481,7 +615,49 @@ public class PantallaAgregarEvento extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        recreate();
+        startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+        finish();
+    }
+
+    private void dialogoActualizacion(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Se registro el evento");
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+                finish();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void dialogoRegresar(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage(getResources().getString(R.string.java_datos_confirma_salir_act));
+        builder.setTitle(getResources().getString(R.string.java_aviso));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getApplicationContext(), PantallaTabsAcademia.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }
