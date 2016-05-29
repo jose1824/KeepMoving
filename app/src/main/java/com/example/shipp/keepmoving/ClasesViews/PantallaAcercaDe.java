@@ -45,24 +45,12 @@ public class PantallaAcercaDe extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_VIEW);
-                emailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
 
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, "soportel2d@outlook.com");
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Comentario");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Introduzca el texto del email");
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                    finish();
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(PantallaAcercaDe.this,
-                            "There is no email client installed.", Toast.LENGTH_SHORT).show();
-                }
-
-                startActivity(emailIntent);
+                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto","keep.moving.oficial@gmail.com", null));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Sugerencia");
+                intent.putExtra(Intent.EXTRA_TEXT, "");
+                startActivity(Intent.createChooser(intent, "Choose an Email client :"));
             }
         });
 
