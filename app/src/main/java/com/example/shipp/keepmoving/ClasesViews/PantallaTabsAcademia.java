@@ -38,7 +38,9 @@ public class PantallaTabsAcademia extends AppCompatActivity {
 
         //Agregar nuevas tabs
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_book_white_24dp));//Eventos 0
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_home_black_24dp));//Academias 1
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_account_circle_black_24dp));//Perfil 1
+
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pagerPantallaTabAcademias);
 
@@ -57,6 +59,11 @@ public class PantallaTabsAcademia extends AppCompatActivity {
                         tab.setIcon(R.mipmap.ic_book_white_24dp);
                         break;
                     case 1: //Tips
+                        toolbar.setTitle(getResources().getString(R.string.academias));
+                        tab.setIcon(R.mipmap.ic_home_white_24dp);
+
+                        break;
+                    case 2: //Tips
                         toolbar.setTitle(getResources().getString(R.string.perfil_academia));
                         tab.setIcon(R.mipmap.ic_account_circle_white_24dp);
                         break;
@@ -69,6 +76,9 @@ public class PantallaTabsAcademia extends AppCompatActivity {
                     tab.setIcon(R.mipmap.ic_book_black_24dp);
                 }
                 if (tab.getPosition() == 1){
+                    tab.setIcon(R.mipmap.ic_home_black_24dp);
+                }
+                if (tab.getPosition() == 2){
                     tab.setIcon(R.mipmap.ic_account_circle_black_24dp);
                 }
             }
@@ -98,13 +108,13 @@ public class PantallaTabsAcademia extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), PantallaConfiguracionAcademia.class));
                 break;
             case R.id.action_cerrar:
-                cerrarSesion();
+                cierreSesion();
                 break;
         }
         return true;
     }
 
-    private void cerrarSesion(){
+    public void cierreSesion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage(getResources().getString(R.string.tabUser_cerrar_message));
@@ -114,8 +124,8 @@ public class PantallaTabsAcademia extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
                 ref.unauth();
-                finish();
                 startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                finish();
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

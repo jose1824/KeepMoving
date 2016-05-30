@@ -27,10 +27,11 @@ public class TabAdapterMainAcademia extends FragmentStatePagerAdapter {
                 FragmentEventos tabEventos = new FragmentEventos();
                 return tabEventos;
             case 1:
+                FragmentAcademias fragmentAcademias = new FragmentAcademias();
+                return fragmentAcademias;
+            case 2:
                 FragmentPerfilAcademia tabPerfilAcademia = new FragmentPerfilAcademia();
                 return tabPerfilAcademia;
-            case 2:
-                return null;
             default:
                 return null;
         }

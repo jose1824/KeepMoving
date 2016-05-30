@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -14,6 +15,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,6 +43,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String direccion;
 
+    private boolean confAcademia;
+
     String activityAnterior;
     String nombre;
 
@@ -52,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         lattitud = bundle.getDouble("latitud");
         longitud = bundle.getDouble("longitud");
         nombre = bundle.getString("nombre");
-        activityAnterior = bundle.getString("activityAnterior");
+
 
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -205,13 +213,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        if(activityAnterior.equals("activityPerfilAcademia")) {
+       /* if(activityAnterior.equals("activityPerfilAcademia")) {
             finish();
-        }
-        else {
-            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-            finish();
-        }
+        }*/
+        Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+        ref.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    String uId = authData.getUid();
+                    comprobacionTipoUsuario(uId);
+                }
+            }
+        });
 
+
+        /*else {*/
+
+
+        //}
+
+    }
+    private void comprobacionTipoUsuario(String uId){
+        Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
+                String mail = (String) dataSnapshot.child("correoAcademia").getValue();
+                System.out.println(mail);
+                System.out.println(confAcademia);
+                if (confAcademia){
+                    startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+                    finish();
+                }
+                else{
+                    startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                    finish();
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }

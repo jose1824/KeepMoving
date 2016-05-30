@@ -42,13 +42,12 @@ public class PantallaTabsUsuario extends AppCompatActivity {
 
         inicializaComponentes();
 
-        Firebase.setAndroidContext(this);
-
         //Agregar nuevas tabs
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_book_white_24dp));//Agenda 0
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_home_black_24dp));//Academias 1
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_add_black_24dp));//Tips 2 //CAMBIAR
         tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_date_range_black_24dp));//Eventos 3
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_video_label_black_24dp));//Eventos 3
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pagerPantallaTabUsuarios);
         viewPager.setOffscreenPageLimit(0);
@@ -79,6 +78,10 @@ public class PantallaTabsUsuario extends AppCompatActivity {
                         toolbar.setTitle(getResources().getString(R.string.eventos));
                         tab.setIcon(R.mipmap.ic_date_range_white_24dp);
                         break;
+                    case 4://Videos
+                        toolbar.setTitle("Tutoriales");
+                        tab.setIcon(R.drawable.ic_video_label_white_24dp);
+                        break;
                 }
             }
 
@@ -97,6 +100,10 @@ public class PantallaTabsUsuario extends AppCompatActivity {
                 }
                 if (tab.getPosition() == 3){
                     tab.setIcon(R.mipmap.ic_date_range_black_24dp);
+
+                }
+                if (tab.getPosition() == 3){
+                    tab.setIcon(R.drawable.ic_video_label_black_24dp);
 
                 }
             }

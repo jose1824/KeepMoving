@@ -597,7 +597,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                     numAleatorio() + numAleatorio());
             refEventos.setValue(evento);
 
-            Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventostotales/" + uId
+            Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventototales/"
                     + "/" + "EventoN-"  + mesEvento + diaEvento +
                     anioEvento + "-" + horaFinHr + horaFinMin + "-" +  horaInicioHr + horaInicioMin  + "-" +
                     numAleatorio() + numAleatorio() + numAleatorio() +

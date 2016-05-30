@@ -70,9 +70,7 @@ public class FragmentPerfilAcademia extends android.support.v4.app.Fragment {
                 } else {
                     Snackbar.make(cLayout, R.string.conf_in_usuario,
                             Snackbar.LENGTH_LONG).show();
-                    Intent i = new Intent(getActivity().getApplicationContext(), PantallaConfiguracionAcademia.class);
-                    startActivity(i);
-                    getActivity().finish();
+
                 }
             }
         });

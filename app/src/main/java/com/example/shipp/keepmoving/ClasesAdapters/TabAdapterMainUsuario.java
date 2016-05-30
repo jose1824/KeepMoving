@@ -8,6 +8,7 @@ import com.example.shipp.keepmoving.ClasesFragments.FragmentAcademias;
 import com.example.shipp.keepmoving.ClasesFragments.FragmentAgenda;
 import com.example.shipp.keepmoving.ClasesFragments.FragmentEventos;
 import com.example.shipp.keepmoving.ClasesFragments.FragmentTips;
+import com.example.shipp.keepmoving.ClasesFragments.FragmentVideos;
 
 /**
  * Created by xubudesktop1 on 17/05/16.
@@ -37,7 +38,8 @@ public class TabAdapterMainUsuario extends FragmentStatePagerAdapter {
                 FragmentEventos tabEventos = new FragmentEventos();
                 return tabEventos;
             case 4:
-                return null;
+                FragmentVideos fragmentVideos = new FragmentVideos();
+                return fragmentVideos;
             default:
                 return null;
         }

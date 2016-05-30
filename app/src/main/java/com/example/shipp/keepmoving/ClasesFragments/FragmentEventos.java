@@ -45,7 +45,8 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
     RecyclerView recList;
     CoordinatorLayout cLayout;
-    List<Evento> result = new ArrayList<Evento>();
+    boolean confAcademia;
+    //List<Evento> result = new ArrayList<Evento>();
 
 
     @Override
@@ -58,13 +59,13 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
         inicializaComponentes();
         Firebase.setAndroidContext(getActivity().getApplicationContext());
-        //validarFloating();
+
 
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity().getApplicationContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-
+        validarFloating();
         //EventoAdapter ea;
         /*if (confAcademia) {
             ea = new EventoAdapter(createListAcademia(30));
@@ -77,17 +78,27 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
             System.out.println("no academia");
         }*/
         //System.out.println("\t\t\t\t" + uId + confAcademia);
+        createList();
+        System.out.println("eventos moshos");
+
+        EventoAdapter ea = new EventoAdapter(EventosDataSource.EVENTOS);
+        //recList.setAdapter(ea);
 
 
-        EventoAdapter ea = new EventoAdapter(createList());
-        recList.setAdapter(ea);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (confAcademia == true)
                 startActivity(new Intent(getActivity().getApplicationContext(), PantallaAgregarEvento.class));
+                else
+                Snackbar.make(cLayout, "No puedes crear eventos.", Snackbar.LENGTH_SHORT).show();
             }
         });
+
+        for (Object e: EventosDataSource.EVENTOS){
+            System.out.println(e);
+        }
 
         return cLayout;
     }
@@ -98,33 +109,28 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         firebaseControl = new FirebaseControl();
     }//End inicializaComponentes
 
-    /*private void validarFloating(){
+    private void validarFloating(){
         Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         ref.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
-                    uId = authData.getUid();
+                    String uId = authData.getUid();
                     comprobacionTipoUsuario(uId);
 
-                } else {
-                    Snackbar.make(cLayout, R.string.conf_in_usuario,
-                            Snackbar.LENGTH_LONG).show();
-                    Intent i = new Intent(getActivity().getApplicationContext(), PantallaConfiguracionAcademia.class);
-                    startActivity(i);
-                    getActivity().finish();
                 }
             }
         });
-    }*/
+    }
 
-    /*private void comprobacionTipoUsuario(String uId){
-        Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase() + "usuarios/" + uId);
+    private void comprobacionTipoUsuario(String uId){
+        Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
-                if (confAcademia){
+                System.out.println(confAcademia);
+                if (!confAcademia){
                     fab.hide();
                 }
             }
@@ -133,15 +139,16 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
             }
         });
-    }*/
+    }
 
 
-    private List<Evento> createList() {
+    private void createList() {
         System.out.println("aqui va");
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    final List<Evento> list = new ArrayList<Evento>();
                         for (DataSnapshot d: dataSnapshot.getChildren()){
                             String uIdEventosTotales = d.getKey();
                             System.out.println("Eventos totales:\t" + uIdEventosTotales);
@@ -168,15 +175,23 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
                                     System.out.println(horaInicioHr);
                                     System.out.println(horaFinMin);
 
-                                    Evento ev = new Evento();
-                                    ev.titulo = Evento.TITULO_PREFIX + titulo;
-                                    ev.fechaHora = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                                    //Evento ev = new Evento();
+                                    String tituloE = Evento.TITULO_PREFIX + titulo;
+                                    String fechaHoraE = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
                                             anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
                                             horaFinHr + ":" + horaFinMin;
-                                    ev.descripcion = Evento.DESCRIPCION_PREFIX + descripcion;
-                                    ev.imagenEvento64 = imagenEvento64;
+                                    String descripcionE = Evento.DESCRIPCION_PREFIX + descripcion;
+                                    String imagenEvento64E = imagenEvento64;
 
-                                    result.add(ev);
+                                    try {
+                                        EventosDataSource.EVENTOS.add(new Evento(titulo, fechaHoraE, descripcion, imagenEvento64));
+                                        list.add(new Evento(titulo, fechaHoraE, descripcion, imagenEvento64));
+                                        System.out.println("Se añadio");
+                                    }catch (Exception e){
+                                        System.out.println("Excepcion");
+                                        System.out.println(e);
+                                    }
+
 
                                 }
 
@@ -188,17 +203,11 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
                         }
                 }
-
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
 
                 }
             });
-        for (Evento e: result){
-            System.out.println("e");
-        }
-
-        return result;
     }//end lisst
 
     /*private List<Evento> createListAcademia(int size) {
