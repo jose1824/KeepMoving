@@ -124,8 +124,8 @@ public class PantallaTabsAcademia extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
                 ref.unauth();
-                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
                 finish();
+                startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

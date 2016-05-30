@@ -102,7 +102,7 @@ public class PantallaTabsUsuario extends AppCompatActivity {
                     tab.setIcon(R.mipmap.ic_date_range_black_24dp);
 
                 }
-                if (tab.getPosition() == 3){
+                if (tab.getPosition() == 4){
                     tab.setIcon(R.drawable.ic_video_label_black_24dp);
 
                 }

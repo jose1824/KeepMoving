@@ -60,4 +60,8 @@ public class PantallaEleccionUsuario extends AppCompatActivity {
         java_pantalla_eleccion_btn2 = (Button) findViewById(R.id.pantalla_eleccion_btn2);
     }
 
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+        finish();
+    }
 }

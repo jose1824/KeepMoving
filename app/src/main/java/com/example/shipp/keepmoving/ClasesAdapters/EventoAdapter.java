@@ -37,10 +37,12 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         eventoViewHolder.vTitulo.setText(ci.titulo);
         eventoViewHolder.vFecha.setText(ci.fechaHora);
         eventoViewHolder.vDescripcion.setText(ci.descripcion);
+        //eventoViewHolder.vImagen.setImageResource(ci.getImgDraw());
 
-        byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
-        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        eventoViewHolder.vImagen.setImageBitmap(decodedImage);
+        /*byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);*/
+        //eventoViewHolder.vImagen.setImageBitmap(ci.imgEvento);
+        eventoViewHolder.vImagen.setImageResource(ci.img);
     }
 
     @Override

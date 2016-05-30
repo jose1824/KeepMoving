@@ -148,21 +148,21 @@ public class PantallaConfPassword extends AppCompatActivity {
 
             if (validacionesLogin.validacionContrasena(passActual) == false){
                 limpiarCampos();
-                txtPasswordActual.setError("" + R.string.java_error_contra);
+                txtPasswordActual.setError("La contrseña no es válida.");
                 Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
                         Snackbar.LENGTH_LONG).show();
             }
             if (validacionesLogin.validacionContrasena(passNueva) == false){
 
                 limpiarCampos();
-                txtPasswordNueva.setError("" + R.string.java_error_contra);
+                txtPasswordNueva.setError("La contrseña no es válida.");
                 Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
                         Snackbar.LENGTH_LONG).show();
             }
             if (passNueva.equals(passConf) == false){
 
                 limpiarCampos();
-                Snackbar.make(coordinatorLayout, R.string.java_contra_diferente_snack,
+                Snackbar.make(coordinatorLayout, "Las contrseñas no coinciden.",
                         Snackbar.LENGTH_LONG).show();
             }
         }

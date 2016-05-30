@@ -1,12 +1,12 @@
 package com.example.shipp.keepmoving.Clases;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by shipp on 3/21/2016.
  */
 public class Evento {
-
 
     public String titulo;
     //Direccion del evento
@@ -26,6 +26,7 @@ public class Evento {
     //Imagen base 64
     public String imagenEvento64;
     public Bitmap imgEvento;
+    public int img;
 
     public String fechaHora;
 
@@ -135,7 +136,7 @@ public class Evento {
         return imgEvento;
     }
 
-    public static final String TITULO_PREFIX = "Titulo_";
-    public static final String FECHA_PREFIX = "Fecha y Hora_";
-    public static final String DESCRIPCION_PREFIX = "Descripción_";
+    public static final String TITULO_PREFIX = "Titulo:";
+    public static final String FECHA_PREFIX = "Fecha y Hora:";
+    public static final String DESCRIPCION_PREFIX = "Descripción:";
 }

@@ -66,37 +66,24 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         validarFloating();
-        //EventoAdapter ea;
-        /*if (confAcademia) {
-            ea = new EventoAdapter(createListAcademia(30));
-            Snackbar.make(cLayout, "academia", Snackbar.LENGTH_SHORT).show();
-            System.out.println("academia");
-        }
-        else {
-            ea = new EventoAdapter(createList(30));
-            Snackbar.make(cLayout, "no academia", Snackbar.LENGTH_SHORT).show();
-            System.out.println("no academia");
-        }*/
-        //System.out.println("\t\t\t\t" + uId + confAcademia);
-        createList();
+
         System.out.println("eventos moshos");
 
-        EventoAdapter ea = new EventoAdapter(EventosDataSource.EVENTOS);
-        //recList.setAdapter(ea);
-
+        EventoAdapter ea = new EventoAdapter(createList());
+        recList.setAdapter(ea);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (confAcademia == true)
-                startActivity(new Intent(getActivity().getApplicationContext(), PantallaAgregarEvento.class));
+                    startActivity(new Intent(getActivity().getApplicationContext(), PantallaAgregarEvento.class));
                 else
-                Snackbar.make(cLayout, "No puedes crear eventos.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(cLayout, "No puedes crear eventos.", Snackbar.LENGTH_SHORT).show();
             }
         });
 
-        for (Object e: EventosDataSource.EVENTOS){
+        for (Object e : EventosDataSource.EVENTOS) {
             System.out.println(e);
         }
 
@@ -109,7 +96,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         firebaseControl = new FirebaseControl();
     }//End inicializaComponentes
 
-    private void validarFloating(){
+    private void validarFloating() {
         Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
         ref.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
@@ -123,17 +110,18 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         });
     }
 
-    private void comprobacionTipoUsuario(String uId){
+    private void comprobacionTipoUsuario(String uId) {
         Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/usuarios/" + uId);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
                 System.out.println(confAcademia);
-                if (!confAcademia){
+                if (!confAcademia) {
                     fab.hide();
                 }
             }
+
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
@@ -142,8 +130,44 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
     }
 
 
-    private void createList() {
-        System.out.println("aqui va");
+    private List<Evento> createList() {
+
+        List<Evento> result = new ArrayList<Evento>();
+        //for (int i = 1; i <= tamano; i++) {
+            Evento ev = new Evento();
+            ev.titulo = Evento.TITULO_PREFIX + "Retro party";
+            ev.fechaHora = Evento.FECHA_PREFIX + "12 de Junio a las 16:00";
+            ev.descripcion = Evento.DESCRIPCION_PREFIX + "Un evento chidogro.";
+            String mDrawableName = "myappicon";
+            //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.evento1);
+            //ev.imgEvento = largeIcon;
+            ev.img = R.drawable.agenda1;
+
+            result.add(ev);
+
+            Evento ev1 = new Evento();
+            ev1.titulo = Evento.TITULO_PREFIX + "Sunday Hot";
+            ev1.fechaHora = Evento.FECHA_PREFIX + "29 de Junio a las 14:00";
+            ev1.descripcion = Evento.DESCRIPCION_PREFIX + "Festejando el día internacional de la bachata.";
+            //Bitmap largeIcon2 = BitmapFactory.decodeResource(getResources(), R.drawable.evento2);
+            ev1.img = R.drawable.agenda2;
+
+            result.add(ev1);
+
+            Evento ev2 = new Evento();
+            ev2.titulo = Evento.TITULO_PREFIX + "DNL";
+            ev2.fechaHora = Evento.FECHA_PREFIX + "16 de Junio a las 18:00";
+            ev2.descripcion = Evento.DESCRIPCION_PREFIX + "Competencia bachatera.";
+            //Bitmap largeIcon3 = BitmapFactory.decodeResource(getResources(), R.drawable.evento3);
+            //ev2.imgEvento = largeIcon3;
+            ev2.img = R.drawable.agenda4;
+
+            result.add(ev2);
+        //}
+        return result;
+    }
+}
+        /*System.out.println("aqui va");
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -207,8 +231,8 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
                 public void onCancelled(FirebaseError firebaseError) {
 
                 }
-            });
-    }//end lisst
+            });*/
+    //end lisst
 
     /*private List<Evento> createListAcademia(int size) {
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos/" + uId);
@@ -341,4 +365,3 @@ public void onCancelled(FirebaseError firebaseError) {
         }
 
 */
-}
