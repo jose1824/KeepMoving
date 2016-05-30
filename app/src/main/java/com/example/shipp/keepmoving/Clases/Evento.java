@@ -29,6 +29,8 @@ public class Evento {
 
     public String fechaHora;
 
+    public int imagen;
+
     public Evento() {
     }
 

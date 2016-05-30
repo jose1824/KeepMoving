@@ -29,7 +29,6 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
     CoordinatorLayout cLayout;
     FloatingActionButton fab;
     RecyclerView recList;
-    List<Evento> result = new ArrayList<Evento>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +62,45 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
     //TYiene los mismos atributos de evento
     private List<Evento> createList() {
         System.out.println("aqui va");
+        List<Evento> result = new ArrayList<Evento>();
+
+        Evento ev = new Evento();
+
+        //Agenda1
+        ev.titulo = "007 Salsa Party !!!";
+        ev.horaInicioHr = 21;
+        ev.horaInicioMin = 0;
+        ev.diaEvento = 17;
+        ev.mesEvento = 6;
+        ev.imagen = R.drawable.agenda1;
+        result.add(ev);
+
+        //Agenda2
+        ev.titulo = "Bachata Pro-AM";
+        ev.horaInicioHr = 18;
+        ev.horaInicioMin = 0;
+        ev.diaEvento = 1;
+        ev.mesEvento = 7;
+        ev.imagen = R.drawable.agenda2;
+        result.add(ev);
+
+        //Agenda3
+        ev.titulo = "Retro Party";
+        ev.horaInicioHr = 16;
+        ev.horaInicioMin = 0;
+        ev.diaEvento = 12;
+        ev.mesEvento = 6;
+        ev.imagen = R.drawable.agenda3;
+        result.add(ev);
+
+        //Agenda4
+        ev.titulo = "Sunday Hot";
+        ev.horaInicioHr = 16;
+        ev.horaInicioMin = 0;
+        ev.diaEvento = 29;
+        ev.mesEvento = 5;
+        ev.imagen = R.drawable.agenda4;
+        result.add(ev);
 
         /*
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
@@ -124,54 +162,5 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
 */
         return result;
     }//end lisst
-/*
-    public String convertirMes(int mes){
-        String nombreMes = "";
-
-        switch(mes) {
-            case 1:
-                nombreMes = getResources().getString(R.string.agenda_mes1);
-                break;
-            case 2:
-                nombreMes = getResources().getString(R.string.agenda_mes2);
-                break;
-            case 3:
-                nombreMes = getResources().getString(R.string.agenda_mes3);
-                break;
-            case 4:
-                nombreMes = getResources().getString(R.string.agenda_mes4);
-                break;
-            case 5:
-                nombreMes = getResources().getString(R.string.agenda_mes5);
-                break;
-            case 6:
-                nombreMes = getResources().getString(R.string.agenda_mes6);
-                break;
-            case 7:
-                nombreMes = getResources().getString(R.string.agenda_mes7);
-                break;
-            case 8:
-                nombreMes = getResources().getString(R.string.agenda_mes8);
-                break;
-            case 9:
-                nombreMes = getResources().getString(R.string.agenda_mes9);
-                break;
-            case 10:
-                nombreMes = getResources().getString(R.string.agenda_mes10);
-                break;
-            case 11:
-                nombreMes = getResources().getString(R.string.agenda_mes11);
-                break;
-            case 12:
-                nombreMes = getResources().getString(R.string.agenda_mes12);
-                break;
-            default:
-                nombreMes = getResources().getString(R.string.agenda_mes_novalido);
-                break;
-        }
-
-        return nombreMes;
-    }
-*/
 
 }

@@ -38,14 +38,14 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     @Override
     public void onBindViewHolder(AgendaAdapter.AgendaViewHolder agendaViewHolder, int position) {
         Evento ci = eventoList.get(position);
-        agendaViewHolder.vTitulo.setText(ci.getTitulo());
-        agendaViewHolder.vHora.setText(ci.getHoraInicioHr() + ":" + ci.getHoraFinHr());
-        agendaViewHolder.vDia.setText(ci.diaEvento + "");
-        agendaViewHolder.vMes.setText(convertirMes(ci.getMesEvento()));
+        agendaViewHolder.vTitulo.setText(ci.titulo);
+        agendaViewHolder.vHora.setText(añadirCero(ci.horaInicioHr) + ":" + añadirCero(ci.horaInicioMin));
+        agendaViewHolder.vDia.setText(añadirCero(ci.diaEvento) + "");
+        agendaViewHolder.vMes.setText(convertirMes(ci.mesEvento));
 
-        byte[] decodedString  = Base64.decode(ci.getImagenEvento64(), Base64.DEFAULT);
-        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        agendaViewHolder.vImagen.setImageBitmap(decodedImage);
+        //byte[] decodedString  = Base64.decode(ci.ima, Base64.DEFAULT);
+        //Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        agendaViewHolder.vImagen.setImageResource(ci.imagen);
     }
 
     @Override
@@ -70,6 +70,17 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             vImagen = (ImageView) v.findViewById(R.id.tv_imageViewAgenda);
 
         }
+    }
+
+    public String añadirCero(int num){
+        String numero = "";
+        if (num >= 0 && num < 10) {
+            numero ="0" + num;
+        }
+        else {
+            numero = num + "";
+        }
+        return numero;
     }
 
     public String convertirMes(int mes){
