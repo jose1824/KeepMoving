@@ -1,9 +1,13 @@
 package com.example.shipp.keepmoving.ClasesAdapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shipp.keepmoving.Clases.Evento;
@@ -34,8 +38,14 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     @Override
     public void onBindViewHolder(AgendaAdapter.AgendaViewHolder agendaViewHolder, int position) {
         Evento ci = eventoList.get(position);
-        agendaViewHolder.vTitulo.setText(ci.titulo);
-        agendaViewHolder.vFecha.setText(ci.fechaHora);
+        agendaViewHolder.vTitulo.setText(ci.getTitulo());
+        agendaViewHolder.vHora.setText(ci.getHoraInicioHr() + ":" + ci.getHoraFinHr());
+        agendaViewHolder.vDia.setText(ci.diaEvento + "");
+        agendaViewHolder.vMes.setText(convertirMes(ci.getMesEvento()));
+
+        byte[] decodedString  = Base64.decode(ci.getImagenEvento64(), Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        agendaViewHolder.vImagen.setImageBitmap(decodedImage);
     }
 
     @Override
@@ -45,14 +55,69 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
 
     public static class AgendaViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView vTitulo;
-        protected TextView vFecha;
+        public TextView vTitulo;
+        public TextView vHora;
+        public TextView vDia;
+        public TextView vMes;
+        public ImageView vImagen;
 
         public AgendaViewHolder(View v) {
             super(v);
             vTitulo =  (TextView) v.findViewById(R.id.tv_titulo);
-            vFecha = (TextView)  v.findViewById(R.id.tv_hora);
+            vHora = (TextView)  v.findViewById(R.id.tv_hora);
+            vDia = (TextView) v.findViewById(R.id.tv_dia);
+            vMes = (TextView) v.findViewById(R.id.tv_mes);
+            vImagen = (ImageView) v.findViewById(R.id.tv_imageViewAgenda);
+
         }
+    }
+
+    public String convertirMes(int mes){
+        String nombreMes = "";
+
+        switch(mes) {
+            case 1:
+                nombreMes = "Ene";
+                break;
+            case 2:
+                nombreMes = "Feb";
+                break;
+            case 3:
+                nombreMes = "Mar";
+                break;
+            case 4:
+                nombreMes = "Abr";
+                break;
+            case 5:
+                nombreMes = "May";
+                break;
+            case 6:
+                nombreMes = "Jun";
+                break;
+            case 7:
+                nombreMes = "Jul";
+                break;
+            case 8:
+                nombreMes = "Ago";
+                break;
+            case 9:
+                nombreMes = "Sep";
+                break;
+            case 10:
+                nombreMes = "Oct";
+                break;
+            case 11:
+                nombreMes = "Nov";
+                break;
+            case 12:
+                nombreMes = "Dic";
+                break;
+            default:
+                nombreMes = "Mes no valido";
+                break;
+        }
+
+        return nombreMes;
     }
 
 }

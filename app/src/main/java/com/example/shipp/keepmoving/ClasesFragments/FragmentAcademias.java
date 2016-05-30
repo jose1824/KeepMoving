@@ -131,7 +131,6 @@ public class FragmentAcademias extends android.support.v4.app.Fragment {
                                     byte[] decodedString  = Base64.decode(imagenAcademia64, Base64.DEFAULT);
                                     Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                                    System.out.println("nombreAcademia: " + nombreAcademia);
                                     DataSource.ACADEMIAS.add(new Academia(nombreAcademia, decodedImage, longitud, latitud));
                                 }
 

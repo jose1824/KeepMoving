@@ -14,7 +14,10 @@ import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.ClasesAdapters.AgendaAdapter;
 import com.example.shipp.keepmoving.ClasesAdapters.EventoAdapter;
 import com.example.shipp.keepmoving.R;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
     CoordinatorLayout cLayout;
     FloatingActionButton fab;
     RecyclerView recList;
+    List<Evento> result = new ArrayList<Evento>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        AgendaAdapter ea = new AgendaAdapter(createList(30));
+        AgendaAdapter ea = new AgendaAdapter(createList());
         recList.setAdapter(ea);
 
         return cLayout;
@@ -57,26 +61,70 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
     }//End inicializaComponentes
 
     //TYiene los mismos atributos de evento
-    private List<Evento> createList(int size) {
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos");
-        List<Evento> result = new ArrayList<Evento>();
+    private List<Evento> createList() {
+        System.out.println("aqui va");
 
+        /*
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()){
+                    String uIdEventosTotales = d.getKey();
+                    System.out.println("Eventos totales:\t" + uIdEventosTotales);
+                    final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventototales/" + uIdEventosTotales);
+                    try {
+                        refEventosTotales.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String titulo = (String) dataSnapshot.child("titulo").getValue();
+                                int diaEvento = (int) dataSnapshot.child("diaEvento").getValue();
+                                int mesEvento = (int) dataSnapshot.child("mesEvento").getValue();
+                                int horaInicioHr = (int) dataSnapshot.child("horaInicioHr").getValue();
+                                int horaInicioMin = (int) dataSnapshot.child("horaInicioMin").getValue();
+                                String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
 
+                                System.out.println(titulo);
+                                System.out.println(diaEvento);
+                                System.out.println(horaInicioHr);
 
+                                Evento ev = new Evento();
+                                ev.titulo = titulo;
+                                ev.diaEvento = diaEvento;
+                                //ev.mesEvento = mesEvento;
+                                ev.horaInicioHr = horaInicioHr;
+                                ev.horaInicioMin = horaInicioMin;
 
-        for (int i=1; i <= size; i++) {
-            Evento ev = new Evento();
-            ev.titulo = Evento.TITULO_PREFIX + i;
-            ev.fechaHora = Evento.FECHA_PREFIX + i;
-            ev.descripcion = Evento.DESCRIPCION_PREFIX + i;
+                                ev.imagenEvento64 = imagenEvento64;
 
-            result.add(ev);
+                                result.add(ev);
 
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+                    } catch (Exception ex){
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        for (Evento e: result){
+            System.out.println("e");
         }
-
+*/
         return result;
     }//end lisst
-
+/*
     public String convertirMes(int mes){
         String nombreMes = "";
 
@@ -124,6 +172,6 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
 
         return nombreMes;
     }
-
+*/
 
 }

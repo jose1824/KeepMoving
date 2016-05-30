@@ -15,13 +15,13 @@ public class Evento {
     public double latitudEvento;
     public String descripcion;
     //Hora y fin del evento
-    private int horaInicioHr;
-    private int horaInicioMin;
+    public int horaInicioHr;
+    public int horaInicioMin;
     private int horaFinHr;
     private int horaFinMin;
     //Fecha del evento
-    private int diaEvento;
-    private int mesEvento;
+    public int diaEvento;
+    public int mesEvento;
     private int anioEvento;
     //Imagen base 64
     public String imagenEvento64;
@@ -61,6 +61,15 @@ public class Evento {
         this.titulo = titulo;
         this.fechaHora = fechaHora;
         this.descripcion = descripcion;
+        this.imagenEvento64 = imagenEvento64;
+    }
+    //Para agenda
+    public Evento(String titulo, int horaInicioHr, int horaInicioMin, int diaEvento, int mesEvento, String imagenEvento64) {
+        this.titulo = titulo;
+        this.horaInicioHr = horaInicioHr;
+        this.horaInicioMin = horaInicioMin;
+        this.diaEvento = diaEvento;
+        this.mesEvento = mesEvento;
         this.imagenEvento64 = imagenEvento64;
     }
 
