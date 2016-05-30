@@ -76,31 +76,34 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         result.add(ev);
 
         //Agenda2
-        ev.titulo = "Bachata Pro-AM";
-        ev.horaInicioHr = 18;
-        ev.horaInicioMin = 0;
-        ev.diaEvento = 1;
-        ev.mesEvento = 7;
-        ev.imagen = R.drawable.agenda2;
-        result.add(ev);
+        Evento ev1 = new Evento();
+        ev1.titulo = "Bachata Pro-AM";
+        ev1.horaInicioHr = 18;
+        ev1.horaInicioMin = 0;
+        ev1.diaEvento = 1;
+        ev1.mesEvento = 7;
+        ev1.imagen = R.drawable.agenda2;
+        result.add(ev1);
 
         //Agenda3
-        ev.titulo = "Retro Party";
-        ev.horaInicioHr = 16;
-        ev.horaInicioMin = 0;
-        ev.diaEvento = 12;
-        ev.mesEvento = 6;
-        ev.imagen = R.drawable.agenda3;
-        result.add(ev);
+        Evento ev2 = new Evento();
+        ev2.titulo = "Retro Party";
+        ev2.horaInicioHr = 16;
+        ev2.horaInicioMin = 0;
+        ev2.diaEvento = 12;
+        ev2.mesEvento = 6;
+        ev2.imagen = R.drawable.agenda3;
+        result.add(ev2);
 
         //Agenda4
-        ev.titulo = "Sunday Hot";
-        ev.horaInicioHr = 16;
-        ev.horaInicioMin = 0;
-        ev.diaEvento = 29;
-        ev.mesEvento = 5;
-        ev.imagen = R.drawable.agenda4;
-        result.add(ev);
+        Evento ev3 = new Evento();
+        ev3.titulo = "Sunday Hot";
+        ev3.horaInicioHr = 16;
+        ev3.horaInicioMin = 0;
+        ev3.diaEvento = 29;
+        ev3.mesEvento = 5;
+        ev3.imagen = R.drawable.agenda4;
+        result.add(ev3);
 
         /*
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");

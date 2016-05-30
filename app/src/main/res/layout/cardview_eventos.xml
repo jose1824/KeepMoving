@@ -24,7 +24,6 @@
             <ImageView
                 android:layout_width="400dp"
                 android:layout_height="225dp"
-                android:background="@color/colorPrimary"
                 android:id="@+id/imageViewCard"/>
 
         </LinearLayout>
