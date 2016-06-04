@@ -412,6 +412,60 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                 anioEvento,
                 imagenBase64);
 
+        if ( ev.getTitulo().equals("")){
+            txtTitulo.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            txtTitulo.setError(null);
+        }
+
+        if ( ev.getDireccionEvento().equals("")){
+            txtDireccion.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            txtDireccion.setError(null);
+        }
+
+        if ( ev.getDescripcion().equals("")){
+            txtDescripcion.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            txtDescripcion.setError(null);
+        }
+
+        if ( txtFechaEvento.getEditText().getText().toString().equals("")){
+            txtFechaEvento.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            txtFechaEvento.setError(null);
+        }
+
+        if ( txtTimeInicio.getEditText().getText().toString().equals("")){
+            txtTimeInicio.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            txtTimeInicio.setError(null);
+        }
+
+        if ( txtTimeFin.getEditText().getText().toString().equals("")){
+            txtTimeFin.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        } else {
+            txtTimeFin.setError(null);
+        }
+
         //Instancia para acceder a la validacion de descripcion y direccion
         ValidacionesNuevaAcademia valAcademia = new ValidacionesNuevaAcademia();
 

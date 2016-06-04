@@ -107,7 +107,7 @@
 
     <!--Pantalla Acerca de -->
     <string name="acerca">Acerca del producto</string>
-    <string name="version_acerca">Version: 0.6.5 (Version Alfa)</string>
+    <string name="version_acerca">Version: 1.0.1 (Version Estable)</string>
     <string name="anio">Año: 2016</string>
     <string name="info_acerca1">Keep Moving es una aplicación desarrollada por estudiantes del
         Instituto Politecnico Nacional en la UPIICSA.</string>

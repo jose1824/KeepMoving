@@ -324,21 +324,86 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
             txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
         }
+        else {
+            txtNombreAcademia.setError(null);
+        }
+
         if ( acad.getCorreoAcademia().equals("")){
             txtCorreoAcademia.setError(getResources().getString(R.string.java_error_falta));
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
         }
+        else {
+            txtCorreoAcademia.setError(null);
+        }
+
         if ( acad.getTelefonoAcademia().equals("")){
-            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
+            txtTelefonoAcademia.setError(getResources().getString(R.string.java_error_falta));
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
+        } else {
+            txtTelefonoAcademia.setError(null);
         }
-        if ( acad.getNombreAcademia().equals("")){
-            txtNombreAcademia.setError(getResources().getString(R.string.java_error_falta));
+
+        if ( acad.getEncargadoAcademia().equals("")){
+            txtEncargadoAcademia.setError(getResources().getString(R.string.java_error_falta));
             Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
                     Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            txtEncargadoAcademia.setError(null);
+        }
+
+        if ( acad.getPasswordAcademia().equals("")){
+            txtPaswwordAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
+        }
+        else {
+            txtPaswwordAcademia.setError(null);
+        }
+
+        if ( txtPasswordConfAcademia.getEditText().getText().toString().equals("")){
+            txtPasswordConfAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
+        }
+        else {
+            txtPasswordConfAcademia.setError(null);
+        }
+
+        if ( acad.getDireccionAcademia().equals("")){
+            txtDireccionAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
+        }
+        else {
+            txtDireccionAcademia.setError(null);
+        }
+
+        if ( acad.getDescripcionAdademia().equals("")){
+            txtDescripcionAcademia.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiarPasswordAcademia();
+            return;
+        }
+        else {
+            txtDescripcionAcademia.setError(null);
         }
 
 

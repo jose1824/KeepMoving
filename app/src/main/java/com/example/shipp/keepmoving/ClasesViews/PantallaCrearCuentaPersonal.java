@@ -146,6 +146,56 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
         //Esta instancia es usada porque las validaciones ya estan hechas en esta clase
         ValidacionesLogin valLogin = new ValidacionesLogin();
 
+        if ( user.getNombreUsuario().equals("")){
+            txtNombreCompleto.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiaPassword();
+            return;
+        } else {
+            txtNombreCompleto.setError(null);
+        }
+
+        if ( user.getPasswordUsuario().equals("")){
+            txtPassword.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiaPassword();
+            return;
+        } else {
+            txtPassword.setError(null);
+        }
+
+        if ( txtConfPassword.getEditText().getText().toString().equals("")){
+            txtConfPassword.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiaPassword();
+            return;
+        } else {
+            txtConfPassword.setError(null);
+        }
+
+        if ( user.getEmailUsuario().equals("")){
+            txtEmail.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiaPassword();
+            return;
+        } else {
+            txtEmail.setError(null);
+        }
+
+        if ( user.getNombreUsuario().equals("")){
+            txtNombreUsuario.setError(getResources().getString(R.string.java_error_falta));
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_faltantes_snack),
+                    Snackbar.LENGTH_SHORT).show();
+            limpiaPassword();
+            return;
+        } else {
+            txtNombreUsuario.setError(null);
+        }
+
         //El nombre completo solo acepta letras mayusculas y minusculas con acentos
         //En un rango de 4 a 100 caracteres
         if (validacionesUsuario.validacionNombreCompleto(user.getNombreUsuario()) &&
@@ -268,9 +318,12 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 cursor.close();
                 // Set the Image in ImageView after decoding the String
                 Bitmap bitmapBandera = BitmapFactory.decodeFile(imgDecodableString);
-                int largoImagen = bitmapBandera.getHeight(), anchoImagen = bitmapBandera.getWidth();
+                int largoImagen = bitmapBandera.getHeight();
+                int anchoImagen = bitmapBandera.getWidth();
 
                 if (largoImagen > 1280 && anchoImagen > 960){
+                    bitmapBandera.setHeight(bitmapBandera.getHeight()/2);
+                    bitmapBandera.setWidth(bitmapBandera.getWidth()/2);
                     Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
                             Snackbar.LENGTH_SHORT).show();
                 }else {
