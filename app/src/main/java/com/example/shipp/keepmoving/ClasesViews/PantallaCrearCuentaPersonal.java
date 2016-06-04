@@ -321,26 +321,38 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                 int largoImagen = bitmapBandera.getHeight();
                 int anchoImagen = bitmapBandera.getWidth();
 
-                if (largoImagen > 1280 && anchoImagen > 960){
-                    bitmapBandera.setHeight(bitmapBandera.getHeight()/2);
-                    bitmapBandera.setWidth(bitmapBandera.getWidth()/2);
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+
+
+                if (largoImagen > 2400 && anchoImagen > 1800){
+                    bitmap.setHeight(bitmapBandera.getHeight()/3);
+                    bitmap.setWidth(bitmapBandera.getWidth()/3);
                     Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
                             Snackbar.LENGTH_SHORT).show();
-                }else {
-                    imgUsuario.setImageBitmap(BitmapFactory
-                            .decodeFile(imgDecodableString));
-
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
-                    imgUsuario.setImageBitmap(bitmap);
-
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-                    imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
+                else if (largoImagen > 1280 && anchoImagen > 960){
+                    bitmap.setHeight(bitmapBandera.getHeight()/2);
+                    bitmap.setWidth(bitmapBandera.getWidth()/2);
+                    Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+
+
+                //imgUsuario.setImageBitmap(BitmapFactory
+                //        .decodeFile(imgDecodableString));
+
+                imgUsuario.setImageBitmap(bitmap);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
             } else {
                 Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
                         Snackbar.LENGTH_SHORT).show();
@@ -419,7 +431,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                             usuario.setValue(user);
                             Snackbar.make(coordinatorLayout, R.string.java_bien_snack,
                                     Snackbar.LENGTH_SHORT).show();
-                            //dialogoActualizacion();
+                            dialogoActualizacion();
                             pDialog.dismiss();
                             ref.unauth();
                             startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
@@ -483,7 +495,7 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
     private void dialogoActualizacion(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setMessage("Se registro el usuario.");
+        builder.setMessage("Se ha registrado con exito");
         builder.setTitle(getResources().getString(R.string.java_aviso));
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override

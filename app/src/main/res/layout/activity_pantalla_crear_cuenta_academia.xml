@@ -255,7 +255,8 @@
                             android:inputType="textPassword"
                             android:drawableLeft="@mipmap/ic_https_black_24dp"
                             android:textColorHint="@color/colorPrimaryText"
-                            android:id="@+id/cuenta_personal_password" />
+                            android:id="@+id/cuenta_personal_password"
+                            android:maxLength="20" />
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
@@ -282,7 +283,8 @@
                             android:textColorHint="@color/colorPrimaryText"
                             android:drawableLeft="@mipmap/ic_https_black_24dp"
                             android:id="@+id/cuenta_personal_conf_password"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            android:maxLength="20" />
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 

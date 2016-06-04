@@ -149,15 +149,15 @@ public class PantallaTabsUsuario extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
                 ref.unauth();
-                finish();
                 startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
+                finish();
+
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                //obtenerFirebaseDatos();//PRUEBA
             }
         });
 
@@ -165,9 +165,5 @@ public class PantallaTabsUsuario extends AppCompatActivity {
         alert.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        recreate();
-    }
 }
 

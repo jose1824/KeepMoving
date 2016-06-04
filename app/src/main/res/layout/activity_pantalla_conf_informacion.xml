@@ -49,15 +49,6 @@
                     android:id="@+id/confUsuarioImageView"
                     android:src="@drawable/personal_usuario"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/padding_elements"
-                    android:paddingLeft="@dimen/padding_elements"
-                    android:text="Nombre del usuario"
-                    android:textColor="@color/colorPrincipalText"
-                    android:textSize="@dimen/big_text"
-                    android:id="@+id/confUsuarioNombreCompleto" />
             </LinearLayout>
 
             <LinearLayout
