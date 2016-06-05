@@ -289,4 +289,10 @@ public class PantallaConfInformacion extends AppCompatActivity {
         alert.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, PantallaConfiguracion.class));
+        finish();
+    }
+
 }

@@ -26,13 +26,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ClasesViews.PantallaPrincipal">
-
         </activity>
         <activity android:name=".ClasesViews.PantallaEleccionUsuario" />
         <activity android:name=".ClasesViews.PantallaCrearCuentaPersonal" />
         <activity android:name=".ClasesViews.PantallaCrearCuentaAcademia" />
         <activity android:name=".ClasesViews.PantallaAcercaDe" />
-        <activity android:name=".ClasesViews.PantallaConfiguracion" />
+        <activity android:name=".ClasesViews.PantallaConfiguracion"/>
         <activity android:name=".ClasesViews.PantallaConfPassword" />
         <activity android:name=".ClasesViews.PantallaConfInformacion" />
         <activity android:name=".ClasesViews.PantallaAgregarEvento" />
@@ -58,10 +57,13 @@
         <activity
             android:name=".ClasesViews.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".ClasesViews.PantallaTabsUsuario" />
-        <activity android:name=".ClasesViews.PantallaTabsAcademia" />
+        <activity android:name=".ClasesViews.PantallaTabsUsuario"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ClasesViews.PantallaTabsAcademia"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ClasesViews.DetalleTips" />
-        <activity android:name=".ClasesViews.PantallaConfiguracionAcademia" />
+        <activity android:name=".ClasesViews.PantallaConfiguracionAcademia"
+            android:noHistory = "true"/>
         <activity android:name=".ClasesViews.PantallaConfInformacionAcademia" />
         <activity android:name=".ClasesViews.PantallaConfPasswordAcademia"></activity>
     </application>

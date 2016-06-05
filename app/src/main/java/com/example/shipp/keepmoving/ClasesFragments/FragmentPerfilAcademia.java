@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.shipp.keepmoving.ClasesFirebase.FirebaseControl;
-import com.example.shipp.keepmoving.ClasesViews.PantallaConfiguracionAcademia;
 import com.example.shipp.keepmoving.R;
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;

@@ -152,6 +152,8 @@ public class PantallaTabsUsuario extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), PantallaPrincipal.class));
                 finish();
 
+
+
             }
         });
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

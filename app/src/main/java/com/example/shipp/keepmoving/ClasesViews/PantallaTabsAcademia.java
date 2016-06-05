@@ -140,9 +140,4 @@ public class PantallaTabsAcademia extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    @Override
-    public void onBackPressed() {
-        recreate();
-    }
 }

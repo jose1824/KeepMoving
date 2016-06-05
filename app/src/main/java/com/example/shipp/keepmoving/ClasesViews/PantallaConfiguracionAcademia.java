@@ -76,5 +76,11 @@ public class PantallaConfiguracionAcademia extends AppCompatActivity {
         btn_seccionSeguridad = (Button) findViewById(R.id.conf_cambia_contrasenia_academia);
         btn_seccionExtras = (Button) findViewById(R.id.conf_acerca_nosotros_academia);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, PantallaTabsAcademia.class));
+        finish();
+    }
 }
 

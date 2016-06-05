@@ -228,6 +228,26 @@ public class PantallaPrincipal extends AppCompatActivity {
         builder.show();
     }
 
+    public void errorDialog(String mensaje){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(R.string.java_mal_snack);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.java_alert_positivebutton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        /*builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });*/
+        builder.show();
+    }
+
     class ClaseAsyncTask extends AsyncTask {
         ProgressDialog pDialog;
         private String progressTitle;
@@ -249,38 +269,43 @@ public class PantallaPrincipal extends AppCompatActivity {
 
         @Override
         protected Object doInBackground(Object[] params) {
-
-
-            ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
-                @Override
-                public void onAuthenticated(AuthData authData) {
-                    String uId = authData.getUid();
-                    comprobacionTipoUsuario(uId);
-                }
-
-                @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
-                    // there was an error
-                    switch (firebaseError.getCode()) {
-                        case FirebaseError.USER_DOES_NOT_EXIST:
-                            txtPassword.setError(null);
-                            txtMail.setError(getResources().getString(R.string.java_correo_inexistente_snack));
-                            limpiaCorreo();
-                            pDialog.dismiss();
-                            break;
-                        case FirebaseError.INVALID_PASSWORD:
-                            txtMail.setError(null);
-                            txtPassword.setError(getResources().getString(R.string.java_contraseña_incorrecta));
-                            pDialog.dismiss();
-                            break;
-                        default:
-                            limpiaCampos();
-                            pDialog.dismiss();
-                            break;
+            try{
+                ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
+                    @Override
+                    public void onAuthenticated(AuthData authData) {
+                        String uId = authData.getUid();
+                        comprobacionTipoUsuario(uId);
                     }
 
-                }
-            });
+                    @Override
+                    public void onAuthenticationError(FirebaseError firebaseError) {
+                        // there was an error
+                        switch (firebaseError.getCode()) {
+                            case FirebaseError.USER_DOES_NOT_EXIST:
+                                txtPassword.setError(null);
+                                txtMail.setError(getResources().getString(R.string.java_correo_inexistente_snack));
+                                limpiaCorreo();
+                                pDialog.dismiss();
+                                break;
+                            case FirebaseError.INVALID_PASSWORD:
+                                txtMail.setError(null);
+                                txtPassword.setError(getResources().getString(R.string.java_contraseña_incorrecta));
+                                pDialog.dismiss();
+                                break;
+                            default:
+                                limpiaCampos();
+                                pDialog.dismiss();
+                                break;
+                        }
+
+                    }
+                });
+            }catch (Exception ex){
+                pDialog.dismiss();
+                errorDialog(ex.getMessage());
+
+            }
+
 
             return null;
         }
@@ -305,14 +330,13 @@ public class PantallaPrincipal extends AppCompatActivity {
                     boolean confAcademia = (boolean) dataSnapshot.child("confAcademia").getValue();
                     if (confAcademia){
                         pDialog.dismiss();
-                        finish();
                         startActivity (new Intent(getApplicationContext(), PantallaTabsAcademia.class));
-
+                        finish();
                     }
                     else{
                         pDialog.dismiss();
-                        finish();
                         startActivity (new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                        finish();
                     }
                 }
                 @Override
@@ -324,8 +348,4 @@ public class PantallaPrincipal extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed(){
-        recreate();
-    }
 }

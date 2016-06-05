@@ -242,4 +242,10 @@ public class PantallaConfPasswordAcademia extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, PantallaConfiguracionAcademia.class));
+        finish();
+    }
 }

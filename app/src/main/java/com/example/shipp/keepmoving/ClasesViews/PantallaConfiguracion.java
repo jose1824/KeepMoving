@@ -35,6 +35,7 @@ public class PantallaConfiguracion extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), PantallaTabsUsuario.class);
                 startActivity(i);
                 finish();
+
             }
         });//End toolbar listener
 
@@ -66,4 +67,11 @@ public class PantallaConfiguracion extends AppCompatActivity {
         btn_seccionSeguridad = (Button) findViewById(R.id.conf_cambia_contrasenia);
         btn_seccionExtras = (Button) findViewById(R.id.conf_acerca_nosotros);
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, PantallaTabsUsuario.class));
+        finish();
+    }
+
 }

@@ -35,9 +35,7 @@ public class PantallaAcercaDe extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PantallaConfiguracion.class);//Cambiar
-                startActivity(i);
-                finish();
+               recreate();
             }
         });//End toolbar listener
 
@@ -103,4 +101,12 @@ public class PantallaAcercaDe extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        recreate();
+        //startActivity(new Intent(this, PantallaConfiguracion.class));
+        //finish();
+    }
+
 }

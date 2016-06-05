@@ -50,6 +50,8 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         AgendaAdapter ea = new AgendaAdapter(createList());
         recList.setAdapter(ea);
 
+
+
         return cLayout;
 
     }
