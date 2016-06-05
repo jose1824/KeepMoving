@@ -62,13 +62,12 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
     }//End inicializaComponentes
 
     //TYiene los mismos atributos de evento
-    private List<Evento> createList() {
+    private ArrayList<Evento> createList() {
         System.out.println("aqui va");
-        List<Evento> result = new ArrayList<Evento>();
-
-        Evento ev = new Evento();
-
+         final ArrayList<Evento> result = new ArrayList<Evento>();
+/*
         //Agenda1
+        Evento ev = new Evento();
         ev.titulo = "007 Salsa Party !!!";
         ev.horaInicioHr = 21;
         ev.horaInicioMin = 0;
@@ -106,8 +105,8 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         ev3.mesEvento = 5;
         ev3.imagen = R.drawable.agenda4;
         result.add(ev3);
+*/
 
-        /*
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -164,7 +163,7 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         for (Evento e: result){
             System.out.println("e");
         }
-*/
+
         return result;
     }//end lisst
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +21,9 @@ import java.util.List;
  */
 public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaViewHolder> {
 
-    private List<Evento> eventoList;
+    private ArrayList<Evento> eventoList;
 
-    public AgendaAdapter(List<Evento> eventoList) {
+    public AgendaAdapter(ArrayList<Evento> eventoList) {
         this.eventoList = eventoList;
     }
 
