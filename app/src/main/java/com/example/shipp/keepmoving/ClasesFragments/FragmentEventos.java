@@ -130,7 +130,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
     private List<Evento> createList() {
 
         List<Evento> result = new ArrayList<Evento>();
-        /*
+        //for (int i = 1; i <= tamano; i++) {
             Evento ev = new Evento();
             ev.titulo = Evento.TITULO_PREFIX + "Retro party";
             ev.fechaHora = Evento.FECHA_PREFIX + "12 de Junio a las 16:00";
@@ -160,76 +160,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
             ev2.img = R.drawable.agenda4;
 
             result.add(ev2);
-        //}*/
-
-        System.out.println("aqui va");
-        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
-            ref.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot d: dataSnapshot.getChildren()){
-                            String uIdEventosTotales = d.getKey();
-                            System.out.println("Eventos totales:\t" + uIdEventosTotales);
-                            final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventototales/" + uIdEventosTotales);
-                            refEventosTotales.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String titulo = (String) dataSnapshot.child("titulo").getValue();
-                                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
-                                    String diaEvento = String.valueOf(dataSnapshot.child("diaEvento").getValue());
-                                    String mesEvento = String.valueOf(dataSnapshot.child("mesEvento").getValue());
-                                    String anioEvento = String.valueOf(dataSnapshot.child("anioEvento").getValue());
-                                    String horaInicioHr = String.valueOf(dataSnapshot.child("horaInicioHr").getValue());
-                                    String horaInicioMin = String.valueOf(dataSnapshot.child("horaInicioMin").getValue());
-                                    String horaFinHr = String.valueOf(dataSnapshot.child("horaFinHr").getValue());
-                                    String horaFinMin = String.valueOf(dataSnapshot.child("horaFinMin").getValue());
-                                    String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
-
-                                    System.out.println(titulo);
-                                    System.out.println(descripcion);
-                                    System.out.println(diaEvento);
-                                    System.out.println(mesEvento);
-                                    System.out.println(anioEvento);
-                                    System.out.println(horaInicioHr);
-                                    System.out.println(horaFinMin);
-
-                                    //Evento ev = new Evento();
-                                    String tituloE = Evento.TITULO_PREFIX + titulo;
-                                    String fechaHoraE = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
-                                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
-                                            horaFinHr + ":" + horaFinMin;
-                                    String descripcionE = Evento.DESCRIPCION_PREFIX + descripcion;
-                                    String imagenEvento64E = imagenEvento64;
-
-                                    try {
-                                        Evento ev = new Evento();
-                                        ev.titulo = tituloE;
-                                        ev.fechaHora = fechaHoraE;
-                                        ev.descripcion = descripcion;
-                                        ev.imagenEvento64 = imagenEvento64E;
-                                        System.out.println("Se añadio");
-                                    }catch (Exception e){
-                                        System.out.println("Excepcion");
-                                        System.out.println(e);
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void onCancelled(FirebaseError firebaseError) {
-
-                                }
-                            });
-
-                        }
-                }
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-                }
-            });
-
+        //}
         return result;
     }
 }
