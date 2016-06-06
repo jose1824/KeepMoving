@@ -570,26 +570,45 @@ public class PantallaCrearCuentaAcademia extends AppCompatActivity {
                 cursor.close();
                 // Set the Image in ImageView after decoding the String
                 Bitmap bitmapBandera = BitmapFactory.decodeFile(imgDecodableString);
-                int largoImagen = bitmapBandera.getHeight(), anchoImagen = bitmapBandera.getWidth();
+                int largoImagen = bitmapBandera.getHeight();
+                int anchoImagen = bitmapBandera.getWidth();
 
-                if (largoImagen > 1280 && anchoImagen > 960){
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+
+
+                if (largoImagen > 2400 && anchoImagen > 1800){
+                    bitmap.setHeight(bitmapBandera.getHeight()/3);
+                    bitmap.setWidth(bitmapBandera.getWidth()/3);
                     Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
                             Snackbar.LENGTH_SHORT).show();
-                }else {
-                    imgAcademia.setImageBitmap(BitmapFactory
-                            .decodeFile(imgDecodableString));
-
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
-                    imgAcademia.setImageBitmap(bitmap);
-
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-                    imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
+                else if (largoImagen > 5000 && anchoImagen > 2800){
+                    bitmap.setHeight(bitmapBandera.getHeight()/5);
+                    bitmap.setWidth(bitmapBandera.getWidth()/5);
+                }
+                else if (largoImagen > 1280 && anchoImagen > 960){
+                    bitmap.setHeight(bitmapBandera.getHeight()/2);
+                    bitmap.setWidth(bitmapBandera.getWidth()/2);
+                    Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+
+
+                //imgUsuario.setImageBitmap(BitmapFactory
+                //        .decodeFile(imgDecodableString));
+
+                imgAcademia.setImageBitmap(bitmap);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                imagenBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+
             } else {
                 Snackbar.make(coordinatorLayout,getResources().getString(R.string.java_error_imagen),
                         Snackbar.LENGTH_SHORT).show();

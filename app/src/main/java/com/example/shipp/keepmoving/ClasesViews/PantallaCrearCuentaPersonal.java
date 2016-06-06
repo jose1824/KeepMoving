@@ -333,6 +333,10 @@ public class PantallaCrearCuentaPersonal extends AppCompatActivity {
                     Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_tamanio_imagen),
                             Snackbar.LENGTH_SHORT).show();
                 }
+                else if (largoImagen > 5000 && anchoImagen > 2800){
+                    bitmap.setHeight(bitmapBandera.getHeight()/5);
+                    bitmap.setWidth(bitmapBandera.getWidth()/5);
+                }
                 else if (largoImagen > 1280 && anchoImagen > 960){
                     bitmap.setHeight(bitmapBandera.getHeight()/2);
                     bitmap.setWidth(bitmapBandera.getWidth()/2);
