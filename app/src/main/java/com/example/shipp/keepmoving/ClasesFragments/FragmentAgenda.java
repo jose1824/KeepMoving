@@ -3,6 +3,7 @@ package com.example.shipp.keepmoving.ClasesFragments;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,10 +48,8 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        AgendaAdapter ea = new AgendaAdapter(createList());
+        AgendaAdapter ea = new AgendaAdapter(crearLista());
         recList.setAdapter(ea);
-
-
 
         return cLayout;
 
@@ -61,14 +60,45 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         recList = (RecyclerView) cLayout.findViewById(R.id.recyclerViewAgenda);
     }//End inicializaComponentes
 
+    public ArrayList<Evento> crearLista() {
+        ArrayList<Evento> result = new ArrayList<Evento>();//AQUI A VER
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
+        ref.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d: dataSnapshot.getChildren()) {
+                    String uIdEventosTotales = d.getKey();
+                    System.out.println("Eventos totales:\t" + uIdEventosTotales);
+                    final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventototales/" + uIdEventosTotales);
+                    System.out.println(refEventosTotales);
+                    try {
+
+                    } catch (Exception ex) {
+
+                        System.out.println(ex.getMessage() + "\n" + ex.getCause() );
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+        return result;
+    }
+
     //TYiene los mismos atributos de evento
-    private List<Evento> createList() {
+/*    private List<Evento> createList() {
         System.out.println("aqui va");
+
+
         List<Evento> result = new ArrayList<Evento>();
-
-        Evento ev = new Evento();
-
         //Agenda1
+        Evento ev = new Evento();
         ev.titulo = "007 Salsa Party !!!";
         ev.horaInicioHr = 21;
         ev.horaInicioMin = 0;
@@ -106,7 +136,7 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         ev3.mesEvento = 5;
         ev3.imagen = R.drawable.agenda4;
         result.add(ev3);
-
+*/
         /*
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
         ref.addValueEventListener(new ValueEventListener() {
@@ -165,7 +195,7 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
             System.out.println("e");
         }
 */
-        return result;
-    }//end lisst
+//        return result;
+//    }//end lisst
 
 }
