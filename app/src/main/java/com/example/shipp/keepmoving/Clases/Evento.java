@@ -17,12 +17,12 @@ public class Evento {
     //Hora y fin del evento
     public int horaInicioHr;
     public int horaInicioMin;
-    private int horaFinHr;
-    private int horaFinMin;
+    public int horaFinHr;
+    public int horaFinMin;
     //Fecha del evento
     public int diaEvento;
     public int mesEvento;
-    private int anioEvento;
+    public int anioEvento;
     //Imagen base 64
     public String imagenEvento64;
     public Bitmap imgEvento;

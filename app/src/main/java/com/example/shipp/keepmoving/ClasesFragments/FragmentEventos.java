@@ -66,9 +66,9 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
         System.out.println("eventos moshos");
 
-        //EventoAdapter ea = new EventoAdapter(crearLista());
+        EventoAdapter ea = new EventoAdapter(crearLista());
         System.out.println("AQUIIIIIII ARRAY");
-        //recList.setAdapter(ea);
+        recList.setAdapter(ea);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -144,11 +144,16 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 String titulo = (String) dataSnapshot.child("titulo").getValue();
+                                String descripcion = (String) dataSnapshot.child("descripcion").getValue();
                                 Long diaEvento = (Long) dataSnapshot.child("diaEvento").getValue();
                                 Long mesEvento = (Long) dataSnapshot.child("mesEvento").getValue();
+                                Long anioEvento = (Long) dataSnapshot.child("anioEvento").getValue();
                                 Long horaInicioHr = (Long) dataSnapshot.child("horaInicioHr").getValue();
                                 Long horaInicioMin = (Long) dataSnapshot.child("horaInicioMin").getValue();
+                                Long horaFinHr = (Long) dataSnapshot.child("horaFinHr").getValue();
+                                Long horaFinMin = (Long) dataSnapshot.child("horaFinMin").getValue();
                                 String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
+
                                 System.out.println(titulo);
                                 System.out.println(diaEvento + "");
                                 System.out.println(mesEvento + "");
@@ -159,9 +164,12 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
                                 evento.titulo = titulo;
                                 evento.diaEvento = (int) (long) diaEvento;
                                 evento.mesEvento = (int) (long) mesEvento;
+                                evento.anioEvento = (int) (long) anioEvento;
                                 evento.horaInicioHr = (int) (long) horaInicioHr;
                                 evento.horaInicioMin = (int) (long) horaInicioMin;
-                                //evento.imagenEvento64 = imagenEvento64;
+                                evento.horaFinHr = (int) (long) horaFinHr;
+                                evento.horaFinMin = (int) (long) horaFinMin;
+                                evento.imagenEvento64 = imagenEvento64;
                                 System.out.println("\n\t" + evento.titulo + "\t" + evento.horaInicioMin);
 
                                 result.add(evento);
@@ -186,8 +194,205 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
             }
         });
 
-
         return result;
     }
 
 }
+        /*System.out.println("aqui va");
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    final List<Evento> list = new ArrayList<Evento>();
+                        for (DataSnapshot d: dataSnapshot.getChildren()){
+                            String uIdEventosTotales = d.getKey();
+                            System.out.println("Eventos totales:\t" + uIdEventosTotales);
+                            final Firebase refEventosTotales = new Firebase("https://keep-moving-data.firebaseio.com/eventototales/" + uIdEventosTotales);
+                            refEventosTotales.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String titulo = (String) dataSnapshot.child("titulo").getValue();
+                                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
+                                    String diaEvento = String.valueOf(dataSnapshot.child("diaEvento").getValue());
+                                    String mesEvento = String.valueOf(dataSnapshot.child("mesEvento").getValue());
+                                    String anioEvento = String.valueOf(dataSnapshot.child("anioEvento").getValue());
+                                    String horaInicioHr = String.valueOf(dataSnapshot.child("horaInicioHr").getValue());
+                                    String horaInicioMin = String.valueOf(dataSnapshot.child("horaInicioMin").getValue());
+                                    String horaFinHr = String.valueOf(dataSnapshot.child("horaFinHr").getValue());
+                                    String horaFinMin = String.valueOf(dataSnapshot.child("horaFinMin").getValue());
+                                    String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
+
+                                    System.out.println(titulo);
+                                    System.out.println(descripcion);
+                                    System.out.println(diaEvento);
+                                    System.out.println(mesEvento);
+                                    System.out.println(anioEvento);
+                                    System.out.println(horaInicioHr);
+                                    System.out.println(horaFinMin);
+
+                                    //Evento ev = new Evento();
+                                    String tituloE = Evento.TITULO_PREFIX + titulo;
+                                    String fechaHoraE = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
+                                            horaFinHr + ":" + horaFinMin;
+                                    String descripcionE = Evento.DESCRIPCION_PREFIX + descripcion;
+                                    String imagenEvento64E = imagenEvento64;
+
+                                    try {
+                                        EventosDataSource.EVENTOS.add(new Evento(titulo, fechaHoraE, descripcion, imagenEvento64));
+                                        list.add(new Evento(titulo, fechaHoraE, descripcion, imagenEvento64));
+                                        System.out.println("Se añadio");
+                                    }catch (Exception e){
+                                        System.out.println("Excepcion");
+                                        System.out.println(e);
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
+
+                        }
+                }
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });*/
+    //end lisst
+
+    /*private List<Evento> createListAcademia(int size) {
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos/" + uId);
+        final List<Evento> result = new ArrayList<Evento>();
+        //Snackbar.make(cLayout, "Estas en academias", Snackbar.LENGTH_SHORT).show();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    String titulo = (String) dataSnapshot.child("titulo").getValue();
+                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
+                    String diaEvento = (String) dataSnapshot.child("diaEvento").getValue();
+                    String mesEvento = (String) dataSnapshot.child("mesEvento").getValue();
+                    String anioEvento = (String) dataSnapshot.child("anioEvento").getValue();
+                    String horaInicioHr = (String) dataSnapshot.child("horaInicioHr").getValue();
+                    String horaInicioMin = (String) dataSnapshot.child("horaInicioMin").getValue();
+                    String horaFinHr = (String) dataSnapshot.child("horaFinHr").getValue();
+                    String horaFinMin = (String) dataSnapshot.child("horaFinMin").getValue();
+                    Snackbar.make(cLayout, titulo, Snackbar.LENGTH_SHORT).show();
+                    System.out.println("\t\t\t\t\t" + titulo);
+
+                    Evento ev = new Evento();
+                    ev.titulo = Evento.TITULO_PREFIX + titulo;
+                    ev.fechaHora = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
+                            horaFinHr + ":" + horaFinMin;
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + descripcion;
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        return result;
+    }*/
+
+    /*private List<Evento> createList(int size) {
+        final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventos/");
+        final List<Evento> result = new ArrayList<Evento>();
+        //Snackbar.make(cLayout, "Estas en no academias", Snackbar.LENGTH_SHORT).show();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    String titulo = (String) dataSnapshot.child("titulo").getValue();
+                    String descripcion = (String) dataSnapshot.child("descripcion").getValue();
+                    String diaEvento = (String) dataSnapshot.child("diaEvento").getValue();
+                    String mesEvento = (String) dataSnapshot.child("mesEvento").getValue();
+                    String anioEvento = (String) dataSnapshot.child("anioEvento").getValue();
+                    String horaInicioHr = (String) dataSnapshot.child("horaInicioHr").getValue();
+                    String horaInicioMin = (String) dataSnapshot.child("horaInicioMin").getValue();
+                    String horaFinHr = (String) dataSnapshot.child("horaFinHr").getValue();
+                    String horaFinMin = (String) dataSnapshot.child("horaFinMin").getValue();
+                    Snackbar.make(cLayout, titulo, Snackbar.LENGTH_SHORT).show();
+
+                    Evento ev = new Evento();
+                    ev.titulo = Evento.TITULO_PREFIX + titulo;
+                    ev.fechaHora = Evento.FECHA_PREFIX + diaEvento + "/" + mesEvento + "/" +
+                            anioEvento + "\t" + horaInicioHr + ":" + horaInicioMin + " - " +
+                            horaFinHr + ":" + horaFinMin;
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + descripcion;
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+        return result;
+    }//end lisst
+
+}*/
+/*
+    final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/");
+    final List<Evento> result = new ArrayList<Evento>();
+ref.limit(10).addListenerForSingleValueEvent(new ValueEventListener() {
+@Override
+public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    Evento ev = new Evento();
+                    Evento evento = dataSnapshot.getValue(Evento.class);
+                    System.out.println(child.child("evento").getChildrenCount());
+
+                    ev.titulo = Evento.TITULO_PREFIX  + evento.getTitulo();
+                    ev.fechaHora = Evento.FECHA_PREFIX + evento.getDiaEvento() + "/" +
+                            evento.getMesEvento() + "/" + evento.getAnioEvento() + "\t" +
+                            evento.getHoraInicioHr() + ":" + evento.getHoraInicioMin() + " - " +
+                            evento.getHoraFinHr() + ":" + evento.getHoraFinMin();
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + evento.getDescripcion();
+                    result.add(ev);
+
+                    ev.titulo = Evento.TITULO_PREFIX + child.child("evento").child("titulo").getValue();
+                    ev.fechaHora = Evento.FECHA_PREFIX +
+                            child.child("evento").child("diaEvento").getValue() + "/" +
+                            child.child("evento").child("mesEvento").getValue() + "/" +
+                            child.child("evento").child("anioEvento").getValue() + "\t" +
+                            child.child("evento").child("horaInicioHr").getValue() + ":" +
+                            child.child("evento").child("diaEvento").getValue() + " - " +
+                            child.child("evento").child("diaEvento").getValue() + ":" +
+                            child.child("evento").child("diaEvento").getValue();
+                    ev.descripcion = Evento.DESCRIPCION_PREFIX + child.child("evento").child("descripcion").getValue();
+
+                }
+
+        }
+
+@Override
+public void onCancelled(FirebaseError firebaseError) {
+
+        }
+        });
+
+        List<Evento> result = new ArrayList<Evento>();
+        for (int i=1; i <= size; i++) {
+            Evento ev = new Evento();
+            ev.titulo = Evento.TITULO_PREFIX + i;
+            ev.fechaHora = Evento.FECHA_PREFIX + i;
+            ev.descripcion = Evento.DESCRIPCION_PREFIX + i;
+
+            result.add(ev);
+
+        }
+
+*/
