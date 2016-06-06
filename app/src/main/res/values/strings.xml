@@ -158,6 +158,7 @@
         a la izquierda.</string>
     <string name="java_error_editText_hFin">Por favor, obtenga la hora de fin por medio del boton
         a la izquierda.</string>
+    <string name="java_error_horas">La hora de inicio no puede ser mayor a la hora de fin del evento.</string>
 
     <!--Pantalla Tabs Main Usuario-->
     <string name="tabUser_cerrar_title">Cerrar sesión.</string>

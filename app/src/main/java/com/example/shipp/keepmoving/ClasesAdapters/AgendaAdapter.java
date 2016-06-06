@@ -43,9 +43,9 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         agendaViewHolder.vDia.setText(añadirCero(ci.diaEvento) + "");
         agendaViewHolder.vMes.setText(convertirMes(ci.mesEvento));
 
-        //byte[] decodedString  = Base64.decode(ci.ima, Base64.DEFAULT);
-        //Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        agendaViewHolder.vImagen.setImageResource(ci.imagen);
+        byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        agendaViewHolder.vImagen.setImageBitmap(decodedImage);
     }
 
     @Override

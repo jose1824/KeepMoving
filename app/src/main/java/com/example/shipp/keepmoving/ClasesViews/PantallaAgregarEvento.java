@@ -367,7 +367,7 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                                           int minute) {
                         horaInicioHr = hourOfDay;
                         horaInicioMin = minute;
-                        txtTimeInicio.getEditText().setText(horaInicioHr + ":" + horaInicioMin);
+                        txtTimeInicio.getEditText().setText(añadirCero(horaInicioHr) + ":" + añadirCero(horaInicioMin));
                     }
                 }, mHour, mMinute, false);
         tpd.show();
@@ -386,10 +386,21 @@ public class PantallaAgregarEvento extends AppCompatActivity {
                                           int minute) {
                         horaFinHr = hourOfDay;
                         horaFinMin = minute;
-                        txtTimeFin.getEditText().setText(horaFinHr + ":" + horaFinMin);
+                        txtTimeFin.getEditText().setText(añadirCero(horaFinHr) + ":" + añadirCero(horaInicioMin));
                     }
                 }, mHour, mMinute, false);
         tpd.show();
+    }
+
+    public String añadirCero(int num){
+        String numero = "";
+        if (num >= 0 && num < 10) {
+            numero ="0" + num;
+        }
+        else {
+            numero = num + "";
+        }
+        return numero;
     }
 
     private void mandarEvento(){
@@ -464,6 +475,18 @@ public class PantallaAgregarEvento extends AppCompatActivity {
             return;
         } else {
             txtTimeFin.setError(null);
+        }
+
+        if (horaInicioHr > horaFinHr) {
+            horaFinHr = 0;
+            horaInicioHr = 0;
+            txtTimeInicio.getEditText().setText("");
+            txtTimeFin.getEditText().setText("");
+            txtTimeInicio.setError("hora incorrecta");
+            txtTimeFin.setError("Hora incorrecta");
+            Snackbar.make(coordinatorLayout, getResources().getString(R.string.java_error_horas),
+                    Snackbar.LENGTH_SHORT).show();
+            return;
         }
 
         //Instancia para acceder a la validacion de descripcion y direccion

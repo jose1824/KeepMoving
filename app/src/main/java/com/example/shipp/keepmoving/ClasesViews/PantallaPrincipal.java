@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -57,94 +58,18 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-                finish();*/
-
-                final String correo_electronico = txtMail.getEditText().getText().toString().trim();
-                final String password = txtPassword.getEditText().getText().toString();
-                final Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase());
-
-                //Instancia para acceder a las validaciones propias de los campos
-                ValidacionesLogin validacionesLogin = new ValidacionesLogin();
-
-                //startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
-
-                if (validacionesLogin.validacionEmail(correo_electronico) &&
-                        validacionesLogin.validacionContrasena(password)) {
-
-                    ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
-                            getResources().getString(R.string.java_progress_message),
-                            correo_electronico,
-                            password,
-                            ref);
-                    asyncTask.execute();
-                    /*
-                    ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
-                        @Override
-                        public void onAuthenticated(AuthData authData) {
-                            //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                            txtMail.setError(null);
-                            txtPassword.setError(null);
-                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
-                        }
-
-                        @Override
-                        public void onAuthenticationError(FirebaseError firebaseError) {
-                            // there was an error
-                            switch (firebaseError.getCode()) {
-                                case FirebaseError.USER_DOES_NOT_EXIST:
-                                    txtPassword.setError(null);
-                                    txtMail.setError("El correo ingresado no está registrado.");
-                                    limpiaCorreo();
-                                    break;
-                                case FirebaseError.INVALID_PASSWORD:
-                                    txtMail.setError(null);
-                                    txtPassword.setError("La contraseña es incorrecta");
-                                    break;
-                                default:
-                                    limpiaCampos();
-                                    break;
-                            }
-                        }
-                    });
-                    */
-                }else{
-                    if (validacionesLogin.validacionEmail(correo_electronico) == false
-                            && validacionesLogin.validacionContrasena(password) == false){
-
-                        limpiaCampos();
-
-                        txtMail.setError("El correo ingresado no es válido.");
-                        txtPassword.setError("La contraseña no es válida.");
-
-                        Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
-                                Snackbar.LENGTH_LONG).show();
-
-                    }
-
-                    if (validacionesLogin.validacionEmail(correo_electronico) == false
-                            && validacionesLogin.validacionContrasena(password)){
-                        limpiaCorreo();
-
-                        txtMail.setError("El correo ingresado no es válido.");
-
-                        txtPassword.setError(null);
-                    }
-
-                    if (validacionesLogin.validacionEmail(correo_electronico)
-                            && validacionesLogin.validacionContrasena(password) == false){
-                        limpiaPassword();
-
-                        txtMail.setError(null);
-
-                        txtPassword.setError("La contraseña no es válida.");
-
-                        Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                }
+                login();
             }
-            //}
+        });
+
+        txtPassword.getEditText().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    login();
+                }
+                return false;
+            }
         });
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -193,6 +118,92 @@ public class PantallaPrincipal extends AppCompatActivity {
         btnRegistro = (Button) findViewById(R.id.principal_btn_2);
         btnReset = (Button) findViewById(R.id.principal_btn_3);
         firebaseControl = new FirebaseControl();
+    }
+
+    private void login() {
+        final String correo_electronico = txtMail.getEditText().getText().toString().trim();
+        final String password = txtPassword.getEditText().getText().toString();
+        final Firebase ref = new Firebase(firebaseControl.obtieneUrlFirebase());
+
+        //Instancia para acceder a las validaciones propias de los campos
+        ValidacionesLogin validacionesLogin = new ValidacionesLogin();
+
+        //startActivity(new Intent(getApplicationContext(), PantallaTabsAcademia.class));
+
+        if (validacionesLogin.validacionEmail(correo_electronico) &&
+                validacionesLogin.validacionContrasena(password)) {
+
+            ClaseAsyncTask asyncTask = new ClaseAsyncTask(getResources().getString(R.string.java_progress_title),
+                    getResources().getString(R.string.java_progress_message),
+                    correo_electronico,
+                    password,
+                    ref);
+            asyncTask.execute();
+                    /*
+                    ref.authWithPassword(correo_electronico, password, new Firebase.AuthResultHandler() {
+                        @Override
+                        public void onAuthenticated(AuthData authData) {
+                            //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                            txtMail.setError(null);
+                            txtPassword.setError(null);
+                            startActivity(new Intent(getApplicationContext(), PantallaTabsUsuario.class));
+                        }
+
+                        @Override
+                        public void onAuthenticationError(FirebaseError firebaseError) {
+                            // there was an error
+                            switch (firebaseError.getCode()) {
+                                case FirebaseError.USER_DOES_NOT_EXIST:
+                                    txtPassword.setError(null);
+                                    txtMail.setError("El correo ingresado no está registrado.");
+                                    limpiaCorreo();
+                                    break;
+                                case FirebaseError.INVALID_PASSWORD:
+                                    txtMail.setError(null);
+                                    txtPassword.setError("La contraseña es incorrecta");
+                                    break;
+                                default:
+                                    limpiaCampos();
+                                    break;
+                            }
+                        }
+                    });
+                    */
+        }else{
+            if (validacionesLogin.validacionEmail(correo_electronico) == false
+                    && validacionesLogin.validacionContrasena(password) == false){
+
+                limpiaCampos();
+
+                txtMail.setError("El correo ingresado no es válido.");
+                txtPassword.setError("La contraseña no es válida.");
+
+                Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
+                        Snackbar.LENGTH_LONG).show();
+
+            }
+
+            if (validacionesLogin.validacionEmail(correo_electronico) == false
+                    && validacionesLogin.validacionContrasena(password)){
+                limpiaCorreo();
+
+                txtMail.setError("El correo ingresado no es válido.");
+
+                txtPassword.setError(null);
+            }
+
+            if (validacionesLogin.validacionEmail(correo_electronico)
+                    && validacionesLogin.validacionContrasena(password) == false){
+                limpiaPassword();
+
+                txtMail.setError(null);
+
+                txtPassword.setError("La contraseña no es válida.");
+
+                Snackbar.make(coordinatorLayout, R.string.java_contra_rechazada_snack,
+                        Snackbar.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void limpiaCampos(){
@@ -290,6 +301,7 @@ public class PantallaPrincipal extends AppCompatActivity {
                             case FirebaseError.INVALID_PASSWORD:
                                 txtMail.setError(null);
                                 txtPassword.setError(getResources().getString(R.string.java_contraseña_incorrecta));
+                                limpiaPassword();
                                 pDialog.dismiss();
                                 break;
                             default:
