@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,9 +44,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         agendaViewHolder.vDia.setText(añadirCero(ci.diaEvento) + "");
         agendaViewHolder.vMes.setText(convertirMes(ci.mesEvento));
 
-        byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
-        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        agendaViewHolder.vImagen.setImageBitmap(decodedImage);
+        //byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
+        //Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        //agendaViewHolder.vImagen.setImageBitmap(decodedImage);
+        agendaViewHolder.vImagen.setImageResource(ci.imagen);
     }
 
     @Override

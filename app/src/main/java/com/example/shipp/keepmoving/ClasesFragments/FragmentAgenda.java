@@ -48,8 +48,8 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        AgendaAdapter ea = new AgendaAdapter(crearLista());
-        System.out.println(crearLista());
+        AgendaAdapter ea = new AgendaAdapter(createList());
+       //AgendaAdapter ea = new AgendaAdapter(crearLista());
         recList.setAdapter(ea);
 
         return cLayout;
@@ -61,8 +61,8 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
         recList = (RecyclerView) cLayout.findViewById(R.id.recyclerViewAgenda);
     }//End inicializaComponentes
 
-    public ArrayList<Evento> crearLista() {
-        final ArrayList<Evento> result = new ArrayList<Evento>();//AQUI A VER
+    public List<Evento> crearLista() {
+        final List<Evento> result = new ArrayList<Evento>();//AQUI A VER
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
         ref.addValueEventListener(new ValueEventListener() {
 
@@ -82,12 +82,12 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
                                 Long mesEvento = (Long) dataSnapshot.child("mesEvento").getValue();
                                 Long horaInicioHr = (Long) dataSnapshot.child("horaInicioHr").getValue();
                                 Long horaInicioMin = (Long) dataSnapshot.child("horaInicioMin").getValue();
-                                String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
-                                System.out.println(titulo);
+                                //String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
+                                /*System.out.println(titulo);
                                 System.out.println(diaEvento + "");
                                 System.out.println(mesEvento + "");
                                 System.out.println(horaInicioHr + "");
-                                System.out.println(horaInicioMin + "");
+                                System.out.println(horaInicioMin + "");*/
 
                                 Evento evento = new Evento();
                                 evento.titulo = titulo;
@@ -95,8 +95,8 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
                                 evento.mesEvento = (int) (long) mesEvento;
                                 evento.horaInicioHr = (int) (long) horaInicioHr;
                                 evento.horaInicioMin = (int) (long) horaInicioMin;
-                                evento.imagenEvento64 = imagenEvento64;
-                                System.out.println("\n\t" + evento.titulo + "\t" + evento.horaInicioMin);
+                                //evento.imagenEvento64 = imagenEvento64;
+                                //System.out.println("\n\t" + evento.titulo + "\t" + evento.horaInicioMin);
 
                                 result.add(evento);
                                 System.out.println(result);
@@ -123,6 +123,54 @@ public class FragmentAgenda extends android.support.v4.app.Fragment {
 
         return result;
     }
+
+    private List<Evento> createList() {
+        System.out.println("aqui va");
+        List<Evento> result = new ArrayList<Evento>();
+
+        Evento ev = new Evento();
+
+        //Agenda1
+        ev.titulo = "007 Salsa Party !!!";
+        ev.horaInicioHr = 21;
+        ev.horaInicioMin = 0;
+        ev.diaEvento = 17;
+        ev.mesEvento = 6;
+        ev.imagen = R.drawable.agenda1;
+        result.add(ev);
+
+        //Agenda2
+        Evento ev1 = new Evento();
+        ev1.titulo = "Bachata Pro-AM";
+        ev1.horaInicioHr = 18;
+        ev1.horaInicioMin = 0;
+        ev1.diaEvento = 1;
+        ev1.mesEvento = 7;
+        ev1.imagen = R.drawable.agenda2;
+        result.add(ev1);
+
+        //Agenda3
+        Evento ev2 = new Evento();
+        ev2.titulo = "Retro Party";
+        ev2.horaInicioHr = 16;
+        ev2.horaInicioMin = 0;
+        ev2.diaEvento = 12;
+        ev2.mesEvento = 6;
+        ev2.imagen = R.drawable.agenda3;
+        result.add(ev2);
+
+        //Agenda4
+        Evento ev3 = new Evento();
+        ev3.titulo = "Sunday Hot";
+        ev3.horaInicioHr = 16;
+        ev3.horaInicioMin = 0;
+        ev3.diaEvento = 29;
+        ev3.mesEvento = 5;
+        ev3.imagen = R.drawable.agenda4;
+        result.add(ev3);
+
+        return result;
+    }//end lisst
 
     //TYiene los mismos atributos de evento
 /*    private List<Evento> createList() {

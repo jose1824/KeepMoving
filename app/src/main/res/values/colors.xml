@@ -9,6 +9,7 @@
     <color name="colorSecundaryText">#727272</color>
     <color name="colorDivider">#B6B6B6</color>
     <color name="colorFloatingAcerca">#CD96E3</color>
+    <color name="colorPrimaryTransparent">#80673ab7</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <!--Color Usuario -->
     <color name="fondo_imagen_usuario">#E7E7E6</color>

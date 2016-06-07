@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.example.shipp.keepmoving.Clases.Evento;
 import com.example.shipp.keepmoving.R;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,9 +41,9 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.EventoView
         eventoViewHolder.vDescripcion.setText(ci.descripcion);
         //eventoViewHolder.vImagen.setImageResource(ci.getImgDraw());
 
-        /*byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
-        Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);*/
-        //eventoViewHolder.vImagen.setImageBitmap(ci.imgEvento);
+        //byte[] decodedString  = Base64.decode(ci.imagenEvento64, Base64.DEFAULT);
+        //Bitmap decodedImage = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        //eventoViewHolder.vImagen.setImageBitmap(decodedImage);
         eventoViewHolder.vImagen.setImageResource(ci.img);
     }
 

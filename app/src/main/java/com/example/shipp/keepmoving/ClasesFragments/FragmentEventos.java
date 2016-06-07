@@ -64,10 +64,9 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         recList.setLayoutManager(llm);
         validarFloating();
 
-        System.out.println("eventos moshos");
 
-        EventoAdapter ea = new EventoAdapter(crearLista());
-        System.out.println("AQUIIIIIII ARRAY");
+        EventoAdapter ea = new EventoAdapter(createList());
+        //EventoAdapter ea = new EventoAdapter(crearLista());
         recList.setAdapter(ea);
 
 
@@ -127,8 +126,8 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
         });
     }
 
-    public ArrayList<Evento> crearLista() {
-        final ArrayList<Evento> result = new ArrayList<Evento>();//AQUI A VER
+    public List<Evento> crearLista() {
+        final List<Evento> result = new ArrayList<Evento>();//AQUI A VER
         final Firebase ref = new Firebase("https://keep-moving-data.firebaseio.com/eventototales");
         ref.addValueEventListener(new ValueEventListener() {
 
@@ -152,16 +151,17 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
                                 Long horaInicioMin = (Long) dataSnapshot.child("horaInicioMin").getValue();
                                 Long horaFinHr = (Long) dataSnapshot.child("horaFinHr").getValue();
                                 Long horaFinMin = (Long) dataSnapshot.child("horaFinMin").getValue();
-                                String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
+                                //String imagenEvento64 = (String) dataSnapshot.child("imagenEvento64").getValue();
 
-                                System.out.println(titulo);
+                                /*System.out.println(titulo);
                                 System.out.println(diaEvento + "");
                                 System.out.println(mesEvento + "");
                                 System.out.println(horaInicioHr + "");
-                                System.out.println(horaInicioMin + "");
+                                System.out.println(horaInicioMin + "");*/
 
                                 Evento evento = new Evento();
                                 evento.titulo = titulo;
+                                evento.descripcion = descripcion;
                                 evento.diaEvento = (int) (long) diaEvento;
                                 evento.mesEvento = (int) (long) mesEvento;
                                 evento.anioEvento = (int) (long) anioEvento;
@@ -169,7 +169,7 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
                                 evento.horaInicioMin = (int) (long) horaInicioMin;
                                 evento.horaFinHr = (int) (long) horaFinHr;
                                 evento.horaFinMin = (int) (long) horaFinMin;
-                                evento.imagenEvento64 = imagenEvento64;
+                                //evento.imagenEvento64 = imagenEvento64;
                                 System.out.println("\n\t" + evento.titulo + "\t" + evento.horaInicioMin);
 
                                 result.add(evento);
@@ -196,6 +196,44 @@ public class FragmentEventos  extends android.support.v4.app.Fragment {
 
         return result;
     }
+
+    private List<Evento> createList() {
+
+        List<Evento> result = new ArrayList<Evento>();
+        //for (int i = 1; i <= tamano; i++) {
+        Evento ev = new Evento();
+        ev.titulo = Evento.TITULO_PREFIX + "Retro party";
+        ev.fechaHora = Evento.FECHA_PREFIX + "12 de Junio a las 16:00";
+        ev.descripcion = Evento.DESCRIPCION_PREFIX + "Un evento chidogro.";
+        String mDrawableName = "myappicon";
+        //Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.evento1);
+        //ev.imgEvento = largeIcon;
+        ev.img = R.drawable.agenda1;
+
+        result.add(ev);
+
+        Evento ev1 = new Evento();
+        ev1.titulo = Evento.TITULO_PREFIX + "Sunday Hot";
+        ev1.fechaHora = Evento.FECHA_PREFIX + "29 de Junio a las 14:00";
+        ev1.descripcion = Evento.DESCRIPCION_PREFIX + "Festejando el día internacional de la bachata.";
+        //Bitmap largeIcon2 = BitmapFactory.decodeResource(getResources(), R.drawable.evento2);
+        ev1.img = R.drawable.agenda2;
+
+        result.add(ev1);
+
+        Evento ev2 = new Evento();
+        ev2.titulo = Evento.TITULO_PREFIX + "DNL";
+        ev2.fechaHora = Evento.FECHA_PREFIX + "16 de Junio a las 18:00";
+        ev2.descripcion = Evento.DESCRIPCION_PREFIX + "Competencia bachatera.";
+        //Bitmap largeIcon3 = BitmapFactory.decodeResource(getResources(), R.drawable.evento3);
+        //ev2.imgEvento = largeIcon3;
+        ev2.img = R.drawable.agenda4;
+
+        result.add(ev2);
+        //}
+        return result;
+    }
+
 
 }
         /*System.out.println("aqui va");
